@@ -7,7 +7,9 @@ class Game {
     }
 
     _drawStages() {
-        new Stage(`0x09ff0F`);
+        new Stage(`0x2d1c38`);
+        //0x2d1c38
+        //0x26152f
     }
 }
 
