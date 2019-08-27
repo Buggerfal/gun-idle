@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import IMAGES from "@images";
-
+import WeaponDescription from "./components/weapons/WeaponDescription";
 export default class GraphicsHelper {
     static createContainer(settings = {}) {
         const { x = 0, y = 0, width = 0, height = 0 } = settings;
@@ -16,15 +16,37 @@ export default class GraphicsHelper {
 
     static createColorContainer(settings = {}) {
         const { x = 0, y = 0, width = 0, height = 0, color } = settings;
-
         const container = new PIXI.Sprite(PIXI.Texture.WHITE);
         container.x = x;
         container.y = y;
         container.width = width;
         container.height = height;
-        container.tint = 0xff0000;
+        container.tint = color;
 
         return container;
+    }
+
+    static createSpriteFromAtlas(settings = {}) {
+        const { x = 0, y = 0, name } = settings;
+        const description = { ...WeaponDescription[name] };
+        const base64source = IMAGES[`SpriteSheet`];
+        const texture = PIXI.Texture.fromLoader(base64source);
+
+        const rectangle = new PIXI.Rectangle(
+            description.x,
+            description.y,
+            description.width,
+            description.height
+        );
+
+        texture.frame = rectangle;
+
+        const rocket = new PIXI.Sprite(texture);
+
+        rocket.x = x;
+        rocket.y = y;
+
+        return rocket;
     }
 
     static createSprite(settings) {

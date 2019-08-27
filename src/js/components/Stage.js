@@ -1,6 +1,7 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
 import settings from "../settings/settings";
+import BaseWeapon from "./weapons/BaseWeapon";
 
 class Stage {
     constructor(color) {
@@ -20,6 +21,8 @@ class Stage {
             color: color,
         });
         this.container.setParent(starter.app.stage);
+
+        new BaseWeapon();
     }
 }
 
