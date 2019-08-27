@@ -14,6 +14,19 @@ export default class GraphicsHelper {
         return container;
     }
 
+    static createColorContainer(settings = {}) {
+        const { x = 0, y = 0, width = 0, height = 0, color } = settings;
+
+        const container = new PIXI.Sprite(PIXI.Texture.WHITE);
+        container.x = x;
+        container.y = y;
+        container.width = width;
+        container.height = height;
+        container.tint = 0xff0000;
+
+        return container;
+    }
+
     static createSprite(settings) {
         const { name, x = 0, y = 0, onClick } = settings;
 

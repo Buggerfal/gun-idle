@@ -1,31 +1,25 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
-import * as PIXI from "pixi.js";
+import settings from "../settings/settings";
 
 class Stage {
-    constructor() {}
+    constructor(color) {
+        this.container = null;
 
-    _init(config) {
-        const { x, y, level } = config;
+        this.size = { ...settings.app };
 
-        this.sprite = GraphicsHelper.createSprite({
-            name: "asteroid",
-            x,
-            y,
+        this._init(color);
+    }
+
+    _init(color) {
+        this.container = GraphicsHelper.createColorContainer({
+            x: 0,
+            y: 0,
+            width: this.size.width,
+            height: 200,
+            color: color,
         });
-        this.sprite.anchor.set(0.5);
-        this.sprite.setParent(starter.app.stage);
-
-        CollisionManager.registerObject(this);
-
-        this._ticker = new PIXI.Ticker();
-        this._ticker.start();
-        this._ticker.add(() => {
-            TWEEN.update();
-            this._tick();
-        });
-
-        this._move(level);
+        this.container.setParent(starter.app.stage);
     }
 }
 
