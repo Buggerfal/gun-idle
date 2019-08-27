@@ -41,12 +41,12 @@ export default class GraphicsHelper {
 
         texture.frame = rectangle;
 
-        const rocket = new PIXI.Sprite(texture);
+        const sprite = new PIXI.Sprite(texture);
 
-        rocket.x = x;
-        rocket.y = y;
+        sprite.x = x;
+        sprite.y = y;
 
-        return rocket;
+        return sprite;
     }
 
     static createSprite(settings) {
