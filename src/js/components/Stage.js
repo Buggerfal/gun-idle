@@ -28,7 +28,7 @@ class Stage {
         });
         this._container.setParent(starter.app.stage);
 
-        const weapon = new BaseWeapon();
+        this._weapon = new BaseWeapon({ y: y });
     }
 }
 
