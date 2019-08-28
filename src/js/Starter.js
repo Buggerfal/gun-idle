@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import settings from "./settings/settings";
+import appSettings from "./settings/appSettings";
 
 class Starter {
     constructor() {
@@ -11,7 +11,7 @@ class Starter {
             this._init.setInitiated = resolve;
         });
 
-        this.size = { ...settings.app };
+        this.size = { ...appSettings.app };
     }
 
     init(container = document.body) {
