@@ -1,20 +1,20 @@
 export default {
     1: {
-        name: `colt1911`,
+        name: `colt`,
     },
     2: {
-        name: `ak47`,
+        name: `colt`,
     },
     5: {
-        name: `TODO`,
+        name: `colt`,
     },
     10: {
-        name: `TODO`,
+        name: `colt`,
     },
     15: {
-        name: `TODO`,
+        name: `colt`,
     },
     25: {
-        name: `TODO`,
+        name: `colt`,
     },
 };
