@@ -3,9 +3,18 @@ export default {
         name: `colt1911`,
     },
     2: {
-        name: `colt1911`,
+        name: `ak47`,
     },
     5: {
-        name: `colt1911`,
+        name: `TODO`,
+    },
+    10: {
+        name: `TODO`,
+    },
+    15: {
+        name: `TODO`,
+    },
+    25: {
+        name: `TODO`,
     },
 };
