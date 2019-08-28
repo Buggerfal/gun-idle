@@ -1,7 +1,7 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
 import settings from "../settings/settings";
-import BaseWeapon from "./weapons/BaseWeapon";
+import { BaseWeapon, Colt1911 } from "./weapons/BaseWeapon";
 
 class Stage {
     constructor(config) {
@@ -28,7 +28,7 @@ class Stage {
         });
         this._container.setParent(starter.app.stage);
 
-        this._weapon = new BaseWeapon({ y: y });
+        this._weapon = new Colt1911({ y: y });
     }
 }
 

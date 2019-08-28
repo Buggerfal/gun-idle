@@ -1,12 +1,8 @@
 import starter from "../../Starter";
-import settings from "../../settings/settings";
 import GraphicsHelper from "../../GraphicsHelper";
 
-class BaseWeapon {
+export default class BaseWeapon {
     constructor(config) {
-        this._mainSprite = null;
-        this._slideSprite = null;
-
         this._config = { ...config };
 
         this._init();
@@ -16,20 +12,47 @@ class BaseWeapon {
         const { y } = this._config;
         const margin = 50;
 
-        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
-            x: 50,
-            y: y + 50,
-            name: `colt1911`,
+        this._container = GraphicsHelper.createContainer({
+            x: margin,
+            y: y,
         });
-        this._mainSprite.setParent(starter.app.stage);
+        this._container.setParent(starter.app.stage);
 
-        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
-            x: 50,
-            y: y + 50,
-            name: `slide1911`,
+        this._container.interactive = true;
+        this._container.on("pointerdown", () => {
+            console.log(1234);
         });
-        this._slideSprite.setParent(starter.app.stage);
     }
 }
 
-export default BaseWeapon;
+export class Colt1911 extends BaseWeapon {
+    constructor(config) {
+        super(config);
+
+        this._container = null;
+        this._mainSprite = null;
+        this._slideSprite = null;
+
+        this._shotCost = 5;
+    }
+
+    _init() {
+        super._init();
+
+        const margin = 50;
+
+        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
+            x: margin,
+            y: margin,
+            name: `colt1911`,
+        });
+        this._mainSprite.setParent(this._container);
+
+        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
+            x: margin,
+            y: margin,
+            name: `slide1911`,
+        });
+        this._slideSprite.setParent(this._container);
+    }
+}
