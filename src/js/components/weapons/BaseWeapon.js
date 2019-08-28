@@ -20,7 +20,7 @@ export default class BaseWeapon {
 
         this._container.interactive = true;
         this._container.on("pointerdown", () => {
-            console.log(1234);
+            this.shot();
         });
     }
 }
