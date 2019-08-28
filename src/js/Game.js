@@ -1,7 +1,7 @@
 import Stage from "./components/Stage";
 import starter from "./Starter";
 import appSettings from "./settings/appSettings";
-import stagesSettings from "./settings/stagesSettings";
+import stages from "./settings/stagesSettings";
 
 class Game {
     constructor() {
@@ -13,21 +13,34 @@ class Game {
     }
 
     _drawStages() {
-        const stages = { ...stagesSettings };
         const stageHeight = appSettings.stage.height;
-        let yPosition = this._sizes.height - stageHeight;
-        let color = `0x2d1c38`;
+        const appHeight = this._sizes.height;
 
-        for (var level in stages) {
-            const stage = new Stage({
+        const gameProgress = 20;
+
+        stages.forEach((stageInfo, index) => {
+            if (stageInfo.gameProgressToUnlock > gameProgress) {
+                return;
+            }
+
+            const stageNumber = index + 1;
+            const color = this._getStageBackgroundColor(stageNumber);
+            const yPosition = appHeight - stageHeight * stageNumber;
+
+            new Stage({
                 color: color,
                 y: yPosition,
-                level: level,
+                info: stageInfo,
             });
+        });
+    }
 
-            yPosition -= stageHeight;
-            color = color === `0x2d1c38` ? `0x26152f` : `0x2d1c38`;
-        }
+    _getStageBackgroundColor(stageNumber) {
+        const oddsColor = `0x2d1c38`;
+        const evenColor = `0x26152f`;
+        const isEven = stageNumber % 2;
+
+        return isEven ? evenColor : oddsColor;
     }
 }
 

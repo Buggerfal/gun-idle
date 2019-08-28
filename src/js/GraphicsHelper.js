@@ -29,6 +29,7 @@ export default class GraphicsHelper {
     }
 
     static createSpriteFromAtlas(settings = {}) {
+        // PIXI.utils.TextureCache[IMAGES[`SpriteSheet`]];
         const { x = 0, y = 0, name } = settings;
         const description = { ...WeaponDescription[name] };
         const base64source = IMAGES[`SpriteSheet`];
@@ -49,37 +50,6 @@ export default class GraphicsHelper {
         sprite.y = y;
 
         return sprite;
-    }
-
-    static createSprite(settings) {
-        const { name, x = 0, y = 0, onClick } = settings;
-
-        const base64source = IMAGES[name];
-        const texture = PIXI.Texture.fromLoader(base64source);
-
-        const sprite = new PIXI.Sprite(texture);
-        sprite.x = x;
-        sprite.y = y;
-
-        if (onClick) {
-            sprite.buttonMode = true;
-            sprite.interactive = true;
-            sprite.on("pointerdown", onClick);
-        }
-
-        return sprite;
-    }
-
-    static drawCircleGraphics(settings) {
-        const { color = 0x000000, x = 0, y = 0, radius = 0 } = settings;
-
-        const graphics = new PIXI.Graphics();
-        graphics.lineStyle(0);
-        graphics.beginFill(color, 1);
-        graphics.drawCircle(x, y, radius);
-        graphics.endFill();
-
-        return graphics;
     }
 
     static drawText(settings) {

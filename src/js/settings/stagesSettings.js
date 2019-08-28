@@ -1,20 +1,6 @@
-export default {
-    1: {
-        name: `colt`,
-    },
-    2: {
-        name: `colt`,
-    },
-    5: {
-        name: `colt`,
-    },
-    10: {
-        name: `colt`,
-    },
-    15: {
-        name: `colt`,
-    },
-    25: {
-        name: `colt`,
-    },
-};
+import WEAPONS from "../components/weapons/Constants";
+
+export default [
+    { name: `colt`, weaponType: WEAPONS.colt, gameProgressToUnlock: 0 },
+    { name: `colt1`, weaponType: WEAPONS.ak47, gameProgressToUnlock: 3 },
+];

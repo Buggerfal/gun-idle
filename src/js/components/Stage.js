@@ -1,7 +1,7 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
-import { BaseWeapon, Colt1911 } from "./weapons/BaseWeapon";
 import appSettings from "../settings/appSettings";
+import WeaponFactory from "./weapons/WeaponFactory";
 
 class Stage {
     constructor(config) {
@@ -14,13 +14,25 @@ class Stage {
             width: appSettings.app.width,
         };
 
-        this._level = this._config.level;
+        this._progress = 0;
 
         this._init();
     }
 
+    static _lockedLevelPreview() {
+        // TODO: draw preview
+    }
+
+    unlock() {}
+
     _init() {
-        const { width, height, color, y } = this._config;
+        const {
+            width,
+            height,
+            color,
+            y,
+            info: { weaponType },
+        } = this._config;
 
         this._container = GraphicsHelper.createColorContainer({
             x: 0,
@@ -30,26 +42,8 @@ class Stage {
             color: color,
         });
         this._container.setParent(starter.app.stage);
-        this._weapon = this._initWeapon({ y: y });
-    }
 
-    _initWeapon(config) {
-        let weapon;
-
-        switch (this._level) {
-            case `1`:
-                weapon = new Colt1911(config);
-            case `2`:
-                weapon = new Colt1911(config);
-            case `5`:
-                weapon = new Colt1911(config);
-            case `10`:
-                weapon = new Colt1911(config);
-            case `15`:
-                weapon = new Colt1911(config);
-        }
-
-        return weapon;
+        this._weapon = WeaponFactory.createWeapon(weaponType, { y });
     }
 }
 
