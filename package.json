@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "component-emitter": "github:component/emitter",
+    "http-server": "^0.11.1",
     "pixi.js": "^5.0.0",
     "tween.js": "^16.6.0"
   }
