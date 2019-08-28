@@ -1,7 +1,7 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
-import settings from "../settings/settings";
 import { BaseWeapon, Colt1911 } from "./weapons/BaseWeapon";
+import appSettings from "../settings/appSettings";
 
 class Stage {
     constructor(config) {
@@ -10,9 +10,12 @@ class Stage {
 
         this._config = {
             ...config,
-            ...settings.stage,
-            width: settings.app.width,
+            ...appSettings.stage,
+            width: appSettings.app.width,
         };
+
+        this._level = this._config.level;
+
         this._init();
     }
 
