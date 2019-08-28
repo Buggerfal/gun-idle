@@ -7,17 +7,19 @@ class Stage {
     constructor(color) {
         this.container = null;
 
-        this.size = { ...settings.app };
+        this._sizes = { ...settings.app };
+        this._sizes.height = 300;
 
         this._init(color);
     }
 
     _init(color) {
+        const { width, height } = this._sizes;
         this.container = GraphicsHelper.createColorContainer({
             x: 0,
             y: 0,
-            width: this.size.width,
-            height: 200,
+            width: width,
+            height: height,
             color: color,
         });
         this.container.setParent(starter.app.stage);

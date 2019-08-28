@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import settings from "./settings/settings";
+
 class Starter {
     constructor() {
         this.app = null;

@@ -4,7 +4,7 @@ import GraphicsHelper from "../../GraphicsHelper";
 
 class BaseWeapon {
     constructor() {
-        this.container = null;
+        this._mainSprite = null;
 
         this.size = { ...settings.app };
 
@@ -12,13 +12,19 @@ class BaseWeapon {
     }
 
     _init() {
-        const rocket = GraphicsHelper.createSpriteFromAtlas({
+        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
             x: 50,
             y: 50,
-            name: `colt911`,
+            name: `colt1911`,
         });
+        this._mainSprite.setParent(starter.app.stage);
 
-        rocket.setParent(starter.app.stage);
+        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
+            x: 50,
+            y: 50,
+            name: `slide1911`,
+        });
+        this._slideSprite.setParent(starter.app.stage);
     }
 }
 

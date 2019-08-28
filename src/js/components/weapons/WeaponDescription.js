@@ -1,8 +1,14 @@
 export default {
-    colt911: {
-        x: 0,
-        y: 1565,
-        width: 400,
-        height: 280,
+    colt1911: {
+        x: 1035,
+        y: 5,
+        width: 285,
+        height: 170,
+    },
+    slide1911: {
+        x: 1313,
+        y: 0,
+        width: 285,
+        height: 65,
     },
 };
