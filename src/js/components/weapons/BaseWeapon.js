@@ -7,6 +7,18 @@ export default class BaseWeapon {
 
         this._init();
     }
+}
+
+export class Colt1911 extends BaseWeapon {
+    constructor(config) {
+        super(config);
+
+        this._container = null;
+        this._mainSprite = null;
+        this._slideSprite = null;
+
+        this._shotCost = 5;
+    }
 
     _init() {
         const { y } = this._config;
@@ -22,24 +34,6 @@ export default class BaseWeapon {
         this._container.on("pointerdown", () => {
             this.shot();
         });
-    }
-}
-
-export class Colt1911 extends BaseWeapon {
-    constructor(config) {
-        super(config);
-
-        this._container = null;
-        this._mainSprite = null;
-        this._slideSprite = null;
-
-        this._shotCost = 5;
-    }
-
-    _init() {
-        super._init();
-
-        const margin = 50;
 
         this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
             x: margin,
