@@ -4,27 +4,31 @@ import settings from "../settings/settings";
 import BaseWeapon from "./weapons/BaseWeapon";
 
 class Stage {
-    constructor(color) {
-        this.container = null;
+    constructor(config) {
+        this._container = null;
+        this._weapon = null;
 
-        this._sizes = { ...settings.app };
-        this._sizes.height = 300;
-
-        this._init(color);
+        this._config = {
+            ...config,
+            ...settings.stage,
+            width: settings.app.width,
+        };
+        this._init();
     }
 
-    _init(color) {
-        const { width, height } = this._sizes;
-        this.container = GraphicsHelper.createColorContainer({
+    _init() {
+        const { width, height, color, y } = this._config;
+
+        this._container = GraphicsHelper.createColorContainer({
             x: 0,
-            y: 0,
+            y,
             width: width,
             height: height,
             color: color,
         });
-        this.container.setParent(starter.app.stage);
+        this._container.setParent(starter.app.stage);
 
-        new BaseWeapon();
+        const weapon = new BaseWeapon();
     }
 }
 
