@@ -10,6 +10,5 @@ export default {
         width: 1280,
         height: 200,
         mainBgColor: `0x553d6f`,
-        moneyBgColor: `0x6d5884`,
     },
 };
