@@ -2,7 +2,7 @@ import starter from "../../engine/Starter";
 import GraphicsHelper from "../../utils/GraphicsHelper";
 import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
-
+import Emitter from "component-emitter";
 export default class BaseWeapon {
     constructor(config) {
         this.config = { ...config };
@@ -14,6 +14,7 @@ export default class BaseWeapon {
             this.tick(delta);
             TWEEN.update();
         });
+        new Emitter(this);
 
         this.init();
     }
@@ -24,6 +25,7 @@ export default class BaseWeapon {
 
     shot() {
         this.animated();
+        this.emit("makeHole");
     }
 
     tick() {}

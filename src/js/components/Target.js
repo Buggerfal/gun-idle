@@ -20,6 +20,10 @@ class Target {
         this._target.scale.set(1.4);
         this._target.setParent(owner);
     }
+
+    makeHole() {
+        console.log("MAKE HOLE");
+    }
 }
 
 export default Target;

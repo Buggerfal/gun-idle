@@ -101,6 +101,9 @@ class Stage {
         this._weaponName.setParent(this._nameContainer);
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
+        this._weapon.on(`makeHole`, () => {
+            this._target.makeHole();
+        });
     }
 
     hide() {
