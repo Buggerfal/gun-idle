@@ -30,9 +30,9 @@ export default {
         height: 15,
     },
     target: {
-        x: 262,
+        x: 263,
         y: 0,
-        width: 95,
+        width: 94,
         height: 117,
     },
     sleeve: {
