@@ -32,7 +32,6 @@ class Starter {
 
         this._init.setInitiated();
         this.resize();
-
         return this._init.initPromise;
     }
 

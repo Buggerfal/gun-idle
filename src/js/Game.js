@@ -2,7 +2,7 @@ import Stage from "./components/Stage";
 import starter from "./Starter";
 import appSettings from "./settings/appSettings";
 import stages from "./settings/stagesSettings";
-
+import ScoreBar from "./components/ScoreBar";
 class Game {
     constructor() {
         starter.initiated.then(() => {
@@ -10,13 +10,14 @@ class Game {
         });
 
         this._sizes = { ...appSettings.app };
+        this.scoreBar = ScoreBar;
     }
 
     _drawStages() {
         const stageHeight = appSettings.stage.height;
         const appHeight = this._sizes.height;
 
-        const gameProgress = 20;
+        const gameProgress = 0;
 
         stages.forEach((stageInfo, index) => {
             if (stageInfo.gameProgressToUnlock > gameProgress) {
@@ -33,6 +34,8 @@ class Game {
                 info: stageInfo,
             });
         });
+
+        this.scoreBar.init();
     }
 
     _getStageBackgroundColor(stageNumber) {
