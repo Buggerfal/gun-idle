@@ -20,19 +20,19 @@ class Game {
         const gameProgress = 0;
 
         stages.forEach((stageInfo, index) => {
-            if (stageInfo.gameProgressToUnlock > gameProgress) {
-                return;
-            }
-
             const stageNumber = index + 1;
             const color = this._getStageBackgroundColor(stageNumber);
             const yPosition = appHeight - stageHeight * stageNumber;
 
-            new Stage({
+            const stage = new Stage({
                 color: color,
                 y: yPosition,
                 info: stageInfo,
             });
+
+            if (stageInfo.gameProgressToUnlock > gameProgress) {
+                stage.hide();
+            }
         });
 
         this.scoreBar.init();

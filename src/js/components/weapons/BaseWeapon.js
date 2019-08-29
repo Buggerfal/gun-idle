@@ -20,6 +20,8 @@ export default class BaseWeapon {
 
     init() {}
 
+    hide() {}
+
     shot() {
         console.log(this.config, "SHOT");
         this.animated();
@@ -73,6 +75,16 @@ export class Colt1911 extends BaseWeapon {
         this._sleeveSprite.scale.set(0.4);
 
         this._sleeveSprite.setParent(this._container);
+    }
+
+    hide() {
+        this._container.alpha = 0;
+        this._container.interactive = false;
+    }
+
+    show() {
+        this._container.alpha = 1;
+        this._container.interactive = true;
     }
 
     animated() {
@@ -147,7 +159,15 @@ export class AK47 extends BaseWeapon {
         this._slide.setParent(this._container);
     }
 
-    animated() {
-        console.log(2);
+    hide() {
+        this._container.alpha = 0;
+        this._container.interactive = false;
     }
+
+    show() {
+        this._container.alpha = 1;
+        this._container.interactive = true;
+    }
+
+    animated() {}
 }

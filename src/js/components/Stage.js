@@ -58,6 +58,11 @@ class Stage {
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
     }
+
+    hide() {
+        this._target.alpha = 0;
+        this._weapon.hide();
+    }
 }
 
 export default Stage;
