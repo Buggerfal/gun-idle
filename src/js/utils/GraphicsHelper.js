@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import IMAGES from "@images";
-import WeaponDescription from "./components/weapons/WeaponDescription";
+import WeaponDescription from "./ImagesDescriptions";
 
 export default class GraphicsHelper {
     static createContainer(settings = {}) {
@@ -29,7 +29,6 @@ export default class GraphicsHelper {
     }
 
     static createSpriteFromAtlas(settings = {}) {
-        // PIXI.utils.TextureCache[IMAGES[`SpriteSheet`]];
         const { x = 0, y = 0, name } = settings;
         const description = { ...WeaponDescription[name] };
         const base64source = IMAGES[`SpriteSheet`];

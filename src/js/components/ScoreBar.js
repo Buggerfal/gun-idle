@@ -1,5 +1,5 @@
-import starter from "../Starter";
-import GraphicsHelper from "../GraphicsHelper";
+import starter from "../enginee/Starter";
+import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Button from "./Button";
 class ScoreBar {

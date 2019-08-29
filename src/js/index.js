@@ -1,6 +1,6 @@
 import "@styles";
-import starter from "./Starter";
-import Game from "./Game.js";
+import starter from "./enginee/Starter";
+import Game from "./enginee/Game.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.querySelector(".content");

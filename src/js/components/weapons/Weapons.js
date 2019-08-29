@@ -1,5 +1,5 @@
-import starter from "../../Starter";
-import GraphicsHelper from "../../GraphicsHelper";
+import starter from "../../enginee/Starter";
+import GraphicsHelper from "../../utils/GraphicsHelper";
 import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
 

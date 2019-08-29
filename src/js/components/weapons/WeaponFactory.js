@@ -1,4 +1,4 @@
-import { AK47, Colt1911 } from "./BaseWeapon";
+import { AK47, Colt1911 } from "./Weapons";
 import WEAPONS from "./Constants";
 
 export default class WeaponFactory {

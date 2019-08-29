@@ -1,8 +1,9 @@
-import Stage from "./components/Stage";
+import Stage from "../components/Stage";
 import starter from "./Starter";
-import appSettings from "./settings/appSettings";
-import stages from "./settings/stagesSettings";
-import ScoreBar from "./components/ScoreBar";
+import appSettings from "../settings/appSettings";
+import stages from "../settings/stagesSettings";
+import ScoreBar from "../components/ScoreBar";
+
 class Game {
     constructor() {
         starter.initiated.then(() => {
