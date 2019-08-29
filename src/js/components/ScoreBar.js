@@ -47,7 +47,7 @@ class ScoreBar {
             y: 50,
             width: 300,
             height: 100,
-            color: "0x2323ff",
+            color: "0xf902ff",
             text: `INSTALL`,
             onClick: () => {
                 this._ctaHandler();
