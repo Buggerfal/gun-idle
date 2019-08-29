@@ -4,6 +4,12 @@ export default {
         height: 1920,
     },
     stage: {
-        height: 300,
+        height: 400,
+    },
+    score: {
+        width: 1280,
+        height: 200,
+        mainBgColor: `0x553d6f`,
+        moneyBgColor: `0x6d5884`,
     },
 };
