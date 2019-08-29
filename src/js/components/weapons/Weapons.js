@@ -23,7 +23,6 @@ export default class BaseWeapon {
     hide() {}
 
     shot() {
-        console.log(this.config, "SHOT");
         this.animated();
     }
 

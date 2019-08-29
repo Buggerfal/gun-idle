@@ -1,14 +1,23 @@
 import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
+import TWEEN from "tween.js";
+import * as PIXI from "pixi.js";
 
 class IntroScene {
     constructor() {
         this._container = null;
         this._substrate = null;
         this._hintText = null;
+        this._hand = null;
 
         this._sizes = { ...appSettings.app };
+
+        this._ticker = new PIXI.Ticker();
+        this._ticker.start();
+        this._ticker.add(() => {
+            this._tick();
+        });
     }
 
     init() {
@@ -36,12 +45,23 @@ class IntroScene {
             text: `TAP TO PLAY`,
             style: {
                 fill: "white",
-                fontFamily: "Tahoma, Geneva, sans-serif",
-                fontSize: 120,
+                fontFamily: "Courier New",
+                fontSize: 140,
+                fontWeight: 900,
             },
         });
 
         this._hintText.setParent(this._container);
+
+        this._hand = GraphicsHelper.createSpriteFromAtlas({
+            x: 250,
+            y: height - 180,
+            name: `hand`,
+        });
+        this._hand.scale.set(1.6);
+        this._hand.setParent(this._container);
+
+        this._runHint();
     }
 
     show() {
@@ -52,6 +72,16 @@ class IntroScene {
         e.stopPropagation();
         this._container.alpha = 0;
         this._substrate.interactive = false;
+    }
+
+    _runHint() {
+        this._hand = new TWEEN.Tween(this._hand.pivot)
+            .to({ x: [45, 0] }, 300)
+            .start();
+    }
+
+    _tick() {
+        TWEEN.update();
     }
 }
 

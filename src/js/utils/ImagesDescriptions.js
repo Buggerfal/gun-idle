@@ -47,6 +47,10 @@ export default {
         width: 50,
         height: 60,
     },
+    hand: {
+        x: 673,
+        y: 292,
+        width: 53,
+        height: 82,
+    },
 };
-
-//TODO : rename
