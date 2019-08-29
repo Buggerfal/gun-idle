@@ -41,7 +41,7 @@ export class Colt1911 extends BaseWeapon {
 
         this._container = GraphicsHelper.createContainer({
             x: margin,
-            y: y,
+            y: y + margin,
         });
         this._container.setParent(starter.app.stage);
         this._container.interactive = true;
@@ -64,15 +64,42 @@ export class Colt1911 extends BaseWeapon {
         this._slideSprite.setParent(this._container);
     }
 
+    _drawSleeve() {
+        this._sleeveSprite = GraphicsHelper.createSpriteFromAtlas({
+            x: 145,
+            y: 70,
+            name: `sleeve`,
+        });
+        this._sleeveSprite.scale.set(0.4);
+
+        this._sleeveSprite.setParent(this._container);
+    }
+
     animated() {
-        console.log(this._container, "this._container");
+        // this._drawSleeve();
+
         this.rotationTween = new TWEEN.Tween(this._container)
-            .to({ rotation: [-0.17, 0] }, 100)
+            .to({ rotation: [-0.17, 0] }, 80)
             .start();
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
-            .to({ x: [45, 0] }, 100)
+            .to({ x: [45, 0] }, 80)
             .start();
+
+        // this.sleeveTween = new TWEEN.Tween(this._sleeveSprite.pivot)
+        //     .to(
+        //         {
+        //             x: [50, 100, 150, 200, 250],
+        //             y: [100, 250, 300, 350, 400, 450],
+        //         },
+        //         180
+        //     )
+        //     .onUpdate(k => {
+        //         this._sleeveSprite.rotation = -k;
+        //     })
+        //     // .interpolation(TWEEN.Interpolation.Bezier)
+        //     // .easing(TWEEN.Easing.Linear.None)
+        //     .start();
     }
 }
 

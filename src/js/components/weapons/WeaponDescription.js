@@ -35,4 +35,18 @@ export default {
         width: 95,
         height: 117,
     },
+    sleeve: {
+        x: 358,
+        y: 0,
+        width: 100,
+        height: 45,
+    },
+    setting: {
+        x: 846,
+        y: 650,
+        width: 75,
+        height: 72,
+    },
 };
+
+//TODO : rename
