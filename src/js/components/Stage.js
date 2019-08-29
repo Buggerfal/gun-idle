@@ -2,6 +2,7 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import WeaponFactory from "./weapons/WeaponFactory";
+import Target from "./Target";
 
 class Stage {
     constructor(config) {
@@ -49,13 +50,11 @@ class Stage {
         });
         this._targetContainer.setParent(starter.app.stage);
 
-        this._target = GraphicsHelper.createSpriteFromAtlas({
+        this._target = new Target({
             x: width - 150,
             y: 50,
-            name: `target`,
+            owner: this._targetContainer,
         });
-        this._target.scale.set(1.4);
-        this._target.setParent(this._targetContainer);
 
         this._lockContainer = GraphicsHelper.createContainer({
             x: width / 2,
