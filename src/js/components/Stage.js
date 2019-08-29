@@ -12,6 +12,8 @@ class Stage {
         this._weapon = null;
         this._lock = null;
         this._levelText = null;
+        this._nameContainer = null;
+        this._weaponName = null;
 
         this._config = {
             ...config,
@@ -30,9 +32,8 @@ class Stage {
             height,
             color,
             y,
-            info: { weaponType, level },
+            info: { weaponType, level, name },
         } = this._config;
-
         this._container = GraphicsHelper.createColorContainer({
             x: 0,
             y,
@@ -79,8 +80,26 @@ class Stage {
                 fontSize: 40,
             },
         });
-
         this._levelText.setParent(this._lockContainer);
+
+        this._nameContainer = GraphicsHelper.createContainer({
+            x: 100,
+            y: y + 50,
+        });
+        this._nameContainer.setParent(starter.app.stage);
+
+        this._weaponName = GraphicsHelper.drawText({
+            x: 0,
+            y: 0,
+            text: `${name}`,
+            style: {
+                fill: "white",
+                fontFamily: "Comic Sans MS",
+                fontSize: 40,
+            },
+        });
+
+        this._weaponName.setParent(this._nameContainer);
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
     }
@@ -89,12 +108,14 @@ class Stage {
         this._target.alpha = 0;
         this._weapon.hide();
         this._lockContainer.alpha = 1;
+        this._nameContainer.alpha = 0;
     }
 
     show() {
         this._target.alpha = 1;
         this._weapon.show();
         this._lockContainer.alpha = 0;
+        this._nameContainer.alpha = 1;
     }
 }
 
