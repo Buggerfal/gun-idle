@@ -1,22 +1,19 @@
 import starter from "../Starter";
 import GraphicsHelper from "../GraphicsHelper";
 import appSettings from "../settings/appSettings";
-
+import Button from "./Button";
 class ScoreBar {
     constructor() {
         this._container = null;
         this._mainBackground = null;
-        this._settingsIcon = null;
-        this._moneyContainer = null;
-        this._moneyBackground = null;
         this._moneyText = null;
-        this._costText = null;
+        this._ctaDownload = null;
 
         this._config = { ...appSettings.score };
     }
 
     init() {
-        const { width, height, mainBgColor, moneyBgColor } = this._config;
+        const { width, height, mainBgColor } = this._config;
 
         this._container = GraphicsHelper.createContainer({
             x: 0,
@@ -33,31 +30,9 @@ class ScoreBar {
         });
         this._mainBackground.setParent(this._container);
 
-        this._settingsIcon = GraphicsHelper.createSpriteFromAtlas({
-            x: 50,
-            y: 50,
-            name: `setting`,
-        });
-        this._settingsIcon.setParent(this._container);
-
-        this._moneyContainer = GraphicsHelper.createContainer({
-            x: 200,
-            y: 0,
-        });
-        this._moneyContainer.setParent(starter.app.stage);
-
-        this._moneyBackground = GraphicsHelper.createColorContainer({
-            x: 0,
-            y: 0,
-            width: 400,
-            height: 220,
-            color: moneyBgColor,
-        });
-        this._moneyBackground.setParent(this._moneyContainer);
-
         this._moneyText = GraphicsHelper.drawText({
-            x: 50,
-            y: 20,
+            x: width / 2,
+            y: height / 2,
             text: `$0`,
             style: {
                 fill: "white",
@@ -65,19 +40,24 @@ class ScoreBar {
                 fontSize: 110,
             },
         });
-        this._moneyText.setParent(this._moneyContainer);
+        this._moneyText.setParent(this._container);
 
-        this._costText = GraphicsHelper.drawText({
-            x: 50,
-            y: 140,
-            text: `$3/s`,
-            style: {
-                fill: "gray",
-                fontFamily: "Comic Sans MS",
-                fontSize: 55,
+        this._ctaDownload = new Button({
+            x: width - 350,
+            y: 50,
+            width: 300,
+            height: 100,
+            color: "0x2323ff",
+            text: `INSTALL`,
+            onClick: () => {
+                this._ctaHandler();
             },
+            fontSize: 70,
         });
-        this._costText.setParent(this._moneyContainer);
+    }
+
+    _ctaHandler() {
+        console.log("DOWNLOAD");
     }
 }
 
