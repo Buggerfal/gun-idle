@@ -76,7 +76,9 @@ class IntroScene {
 
     _runHint() {
         this._hand = new TWEEN.Tween(this._hand.pivot)
-            .to({ x: [45, 0] }, 300)
+            .to({ x: -40, y: 40 }, 500)
+            .yoyo(true)
+            .repeat(Infinity)
             .start();
     }
 
