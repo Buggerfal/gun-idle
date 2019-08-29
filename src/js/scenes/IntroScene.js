@@ -16,7 +16,7 @@ class IntroScene {
         this._ticker = new PIXI.Ticker();
         this._ticker.start();
         this._ticker.add(() => {
-            this._tick();
+            TWEEN.update();
         });
     }
 
@@ -70,6 +70,7 @@ class IntroScene {
 
     hide(e) {
         e.stopPropagation();
+
         this._container.alpha = 0;
         this._substrate.interactive = false;
     }
@@ -80,10 +81,6 @@ class IntroScene {
             .yoyo(true)
             .repeat(Infinity)
             .start();
-    }
-
-    _tick() {
-        TWEEN.update();
     }
 }
 
