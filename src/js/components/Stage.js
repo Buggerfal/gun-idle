@@ -6,7 +6,12 @@ import WeaponFactory from "./weapons/WeaponFactory";
 class Stage {
     constructor(config) {
         this._container = null;
+        this._targetContainer = null;
+        this._lockContainer = null;
+        this._target = null;
         this._weapon = null;
+        this._lock = null;
+        this._levelText = null;
 
         this._config = {
             ...config,
@@ -19,19 +24,13 @@ class Stage {
         this._init();
     }
 
-    static _lockedLevelPreview() {
-        // TODO: draw preview
-    }
-
-    unlock() {}
-
     _init() {
         const {
             width,
             height,
             color,
             y,
-            info: { weaponType },
+            info: { weaponType, level },
         } = this._config;
 
         this._container = GraphicsHelper.createColorContainer({
@@ -56,12 +55,45 @@ class Stage {
         });
         this._target.setParent(this._targetContainer);
 
+        this._lockContainer = GraphicsHelper.createContainer({
+            x: width / 2,
+            y: y + height / 2,
+        });
+        this._lockContainer.setParent(starter.app.stage);
+
+        this._lock = GraphicsHelper.createSpriteFromAtlas({
+            x: -100,
+            y: 0,
+            name: `lockedIcon`,
+        });
+        this._lock.setParent(this._lockContainer);
+
+        this._levelText = GraphicsHelper.drawText({
+            x: 50,
+            y: 30,
+            text: `level ${level}`,
+            style: {
+                fill: "white",
+                fontFamily: "Comic Sans MS",
+                fontSize: 40,
+            },
+        });
+
+        this._levelText.setParent(this._lockContainer);
+
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
     }
 
     hide() {
         this._target.alpha = 0;
         this._weapon.hide();
+        this._lockContainer.alpha = 1;
+    }
+
+    show() {
+        this._target.alpha = 1;
+        this._weapon.show();
+        this._lockContainer.alpha = 0;
     }
 }
 

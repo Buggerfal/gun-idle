@@ -32,7 +32,10 @@ class Game {
 
             if (stageInfo.gameProgressToUnlock > gameProgress) {
                 stage.hide();
+                return;
             }
+
+            stage.show();
         });
 
         this.scoreBar.init();
