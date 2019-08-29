@@ -1,4 +1,4 @@
-import starter from "../enginee/Starter";
+import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Button from "./Button";

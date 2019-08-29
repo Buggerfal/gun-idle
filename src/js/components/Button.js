@@ -1,5 +1,5 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
-import starter from "../enginee/Starter";
+import starter from "../engine/Starter";
 
 class Button {
     constructor(settings) {

@@ -3,15 +3,19 @@ import starter from "./Starter";
 import appSettings from "../settings/appSettings";
 import stages from "../settings/stagesSettings";
 import ScoreBar from "../components/ScoreBar";
+import SceneManager from "../scenes/SceneManager";
+import IntroScene from "../scenes/IntroScene";
 
 class Game {
     constructor() {
         starter.initiated.then(() => {
             this._drawStages();
+            this._initApp();
         });
 
         this._sizes = { ...appSettings.app };
         this.scoreBar = ScoreBar;
+        this.introScene = new IntroScene();
     }
 
     _drawStages() {
@@ -38,8 +42,13 @@ class Game {
 
             stage.show();
         });
+    }
 
+    _initApp() {
         this.scoreBar.init();
+        this.introScene.init();
+        SceneManager.registerScene(`intro`, this.introScene);
+        SceneManager.showScene(`intro`);
     }
 
     _getStageBackgroundColor(stageNumber) {
