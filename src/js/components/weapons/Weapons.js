@@ -25,7 +25,6 @@ export default class BaseWeapon {
 
     shot() {
         this.animated();
-        this.emit("makeHole");
     }
 
     tick() {}
@@ -67,25 +66,6 @@ export class Colt1911 extends BaseWeapon {
         this._slideSprite.setParent(this._container);
     }
 
-    _drawSleeve() {
-        this._sleeveSprite = GraphicsHelper.createSpriteFromAtlas({
-            x: 145,
-            y: 70,
-            name: `sleeve`,
-        });
-        this._sleeveSprite.scale.set(0.4);
-
-        this._sleeveSprite.setParent(this._container);
-
-        this._bulletSprite = GraphicsHelper.createSpriteFromAtlas({
-            x: 100,
-            y: 100,
-            name: `bullet`,
-        });
-        this._bulletSprite.scale.set(0.4);
-        this._bulletSprite.setParent(this._container);
-    }
-
     hide() {
         this._container.alpha = 0;
         this._container.interactive = false;
@@ -97,7 +77,7 @@ export class Colt1911 extends BaseWeapon {
     }
 
     animated() {
-        // this._drawSleeve();
+        this.emit("makeHole");
 
         this.rotationTween = new TWEEN.Tween(this._container)
             .to({ rotation: [-0.17, 0] }, 80)
@@ -106,19 +86,6 @@ export class Colt1911 extends BaseWeapon {
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
             .to({ x: [45, 0] }, 80)
             .start();
-
-        // this.sleeveTween = new TWEEN.Tween(this._sleeveSprite.pivot)
-        //     .to(
-        //         {
-        //             x: [50, 100, 150, 200, 250],
-        //             y: [100, 250, 300, 350, 400, 450],
-        //         },
-        //         180
-        //     )
-        //     .onUpdate(k => {
-        //         this._sleeveSprite.rotation = -k;
-        //     })
-        //     .start();
     }
 }
 

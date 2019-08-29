@@ -22,7 +22,25 @@ class Target {
     }
 
     makeHole() {
-        console.log("MAKE HOLE");
+        const { x, owner } = this._config;
+
+        if (this._lives <= 0) {
+            owner.removeChildren();
+            return;
+        }
+
+        const initXposition = x + Math.floor(Math.random() * 85 + 15);
+        const initYposition = scrollY + Math.floor(Math.random() * 135 + 50);
+
+        const hole = GraphicsHelper.createSpriteFromAtlas({
+            x: initXposition,
+            y: initYposition,
+            name: `hole`,
+        });
+        hole.scale.set(0.3);
+        hole.setParent(owner);
+
+        this._lives -= 1;
     }
 }
 

@@ -59,4 +59,10 @@ export default {
         width: 98,
         height: 50,
     },
+    hole: {
+        x: 750,
+        y: 0,
+        width: 90,
+        height: 90,
+    },
 };
