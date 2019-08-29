@@ -53,6 +53,7 @@ class Stage {
             y: 50,
             name: `target`,
         });
+        this._target.scale.set(1.4);
         this._target.setParent(this._targetContainer);
 
         this._lockContainer = GraphicsHelper.createContainer({
