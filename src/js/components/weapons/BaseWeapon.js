@@ -11,7 +11,7 @@ export default class BaseWeapon {
     init() {}
 
     shot() {
-        console.log(this.config, "TEST");
+        console.log(this.config, "SHOT");
     }
 }
 
@@ -27,8 +27,6 @@ export class Colt1911 extends BaseWeapon {
     }
 
     init() {
-        console.log("init Colt1911");
-
         const { y } = this.config;
         const margin = 50;
 
@@ -65,14 +63,13 @@ export class AK47 extends BaseWeapon {
 
         this._container = null;
         this._mainSprite = null;
-        this._slideSprite = null;
+        this._knife = null;
+        this._slide = null;
 
-        this._shotCost = 5;
+        this._shotCost = 15;
     }
 
     init() {
-        console.log("init AK47");
-
         const { y } = this.config;
         const margin = 50;
 
@@ -87,11 +84,25 @@ export class AK47 extends BaseWeapon {
             this.shot();
         });
 
-        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
+        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
             x: margin,
             y: margin,
-            name: `slide1911`,
+            name: `ak47`,
         });
-        this._slideSprite.setParent(this._container);
+        this._mainSprite.setParent(this._container);
+
+        this._knife = GraphicsHelper.createSpriteFromAtlas({
+            x: 400,
+            y: 125,
+            name: `ak47_knife`,
+        });
+        this._knife.setParent(this._container);
+
+        this._slide = GraphicsHelper.createSpriteFromAtlas({
+            x: 125,
+            y: 67,
+            name: `ak47_slide`,
+        });
+        this._slide.setParent(this._container);
     }
 }

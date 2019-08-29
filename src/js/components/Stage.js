@@ -43,6 +43,19 @@ class Stage {
         });
         this._container.setParent(starter.app.stage);
 
+        this._targetContainer = GraphicsHelper.createContainer({
+            x: 0,
+            y,
+        });
+        this._targetContainer.setParent(starter.app.stage);
+
+        this._target = GraphicsHelper.createSpriteFromAtlas({
+            x: width - 150,
+            y: 50,
+            name: `target`,
+        });
+        this._target.setParent(this._targetContainer);
+
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
     }
 }
