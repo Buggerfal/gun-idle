@@ -1,9 +1,19 @@
 import starter from "../../Starter";
 import GraphicsHelper from "../../GraphicsHelper";
+import TWEEN from "tween.js";
+import * as PIXI from "pixi.js";
 
 export default class BaseWeapon {
     constructor(config) {
         this.config = { ...config };
+
+        this._ticker = new PIXI.Ticker();
+        this._ticker.start();
+
+        this._ticker.add(delta => {
+            this.tick(delta);
+            TWEEN.update();
+        });
 
         this.init();
     }
@@ -12,16 +22,15 @@ export default class BaseWeapon {
 
     shot() {
         console.log(this.config, "SHOT");
+        this.animated();
     }
+
+    tick() {}
 }
 
 export class Colt1911 extends BaseWeapon {
     constructor(config) {
         super(config);
-
-        this._container = null;
-        this._mainSprite = null;
-        this._slideSprite = null;
 
         this._shotCost = 5;
     }
@@ -35,7 +44,6 @@ export class Colt1911 extends BaseWeapon {
             y: y,
         });
         this._container.setParent(starter.app.stage);
-
         this._container.interactive = true;
         this._container.on("pointerdown", () => {
             this.shot();
@@ -55,16 +63,22 @@ export class Colt1911 extends BaseWeapon {
         });
         this._slideSprite.setParent(this._container);
     }
+
+    animated() {
+        console.log(this._container, "this._container");
+        this.rotationTween = new TWEEN.Tween(this._container)
+            .to({ rotation: [-0.17, 0] }, 100)
+            .start();
+
+        this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
+            .to({ x: [45, 0] }, 100)
+            .start();
+    }
 }
 
 export class AK47 extends BaseWeapon {
     constructor(config) {
         super(config);
-
-        this._container = null;
-        this._mainSprite = null;
-        this._knife = null;
-        this._slide = null;
 
         this._shotCost = 15;
     }
@@ -104,5 +118,9 @@ export class AK47 extends BaseWeapon {
             name: `ak47_slide`,
         });
         this._slide.setParent(this._container);
+    }
+
+    animated() {
+        console.log(2);
     }
 }
