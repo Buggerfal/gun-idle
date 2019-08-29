@@ -59,7 +59,7 @@ export default class GraphicsHelper {
         const txt = new PIXI.Text(text, style);
         txt.x = x;
         txt.y = y;
-
+        txt.anchor.set(0.5);
         return txt;
     }
 
