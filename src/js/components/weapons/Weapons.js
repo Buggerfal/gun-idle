@@ -74,6 +74,14 @@ export class Colt1911 extends BaseWeapon {
         this._sleeveSprite.scale.set(0.4);
 
         this._sleeveSprite.setParent(this._container);
+
+        this._bulletSprite = GraphicsHelper.createSpriteFromAtlas({
+            x: 100,
+            y: 100,
+            name: `bullet`,
+        });
+        this._bulletSprite.scale.set(0.4);
+        this._bulletSprite.setParent(this._container);
     }
 
     hide() {
@@ -108,8 +116,6 @@ export class Colt1911 extends BaseWeapon {
         //     .onUpdate(k => {
         //         this._sleeveSprite.rotation = -k;
         //     })
-        //     // .interpolation(TWEEN.Interpolation.Bezier)
-        //     // .easing(TWEEN.Easing.Linear.None)
         //     .start();
     }
 }

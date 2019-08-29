@@ -53,4 +53,10 @@ export default {
         width: 53,
         height: 82,
     },
+    bullet: {
+        x: 360,
+        y: 50,
+        width: 98,
+        height: 50,
+    },
 };
