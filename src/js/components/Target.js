@@ -1,4 +1,6 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
+import TWEEN from "tween.js";
+import * as PIXI from "pixi.js";
 
 class Target {
     constructor(config) {
@@ -6,6 +8,13 @@ class Target {
         this._container = null;
 
         this._lives = 10;
+
+        this._ticker = new PIXI.Ticker();
+        this._ticker.start();
+
+        this._ticker.add(delta => {
+            TWEEN.update();
+        });
 
         this._init();
     }
@@ -21,8 +30,17 @@ class Target {
         this._target.setParent(owner);
     }
 
+    _shake() {
+        const { x, y, owner } = this._config;
+
+        this._targetTween = new TWEEN.Tween(owner.pivot)
+            .to({ x: [-10, 0, 10, -5, 0, 5, 0] }, 180)
+            .start();
+    }
+
     makeHole() {
         const { x, owner } = this._config;
+        this._shake();
 
         if (this._lives <= 0) {
             owner.removeChildren();
