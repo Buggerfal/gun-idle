@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import appSettings from "../settings/appSettings";
+import TexturesLoader from "./TexturesLoader";
 
 class Starter {
     constructor() {
@@ -32,7 +33,7 @@ class Starter {
 
         this._init.setInitiated();
         this.resize();
-        return this._init.initPromise;
+        return this._init.initPromise.then(() => TexturesLoader.ensureLoaded());
     }
 
     resize() {

@@ -31,12 +31,12 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.1.7",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "http-server": "^0.11.1"
   },
   "dependencies": {
     "component-emitter": "github:component/emitter",
-    "http-server": "^0.11.1",
-    "pixi.js": "^5.0.0",
+    "pixi.js": "^5.1.2",
     "tween.js": "^16.6.0"
   }
 }

@@ -21,7 +21,6 @@ class Game {
     _drawStages() {
         const stageHeight = appSettings.stage.height;
         const appHeight = this._sizes.height;
-
         const gameProgress = 0;
 
         stages.forEach((stageInfo, index) => {

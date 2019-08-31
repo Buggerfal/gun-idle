@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
-import IMAGES from "@images";
-import WeaponDescription from "./ImagesDescriptions";
+import texturesLoader from "../engine/TexturesLoader";
 
 export default class GraphicsHelper {
     static createContainer(settings = {}) {
@@ -30,18 +29,7 @@ export default class GraphicsHelper {
 
     static createSpriteFromAtlas(settings = {}) {
         const { x = 0, y = 0, name } = settings;
-        const description = { ...WeaponDescription[name] };
-        const base64source = IMAGES[`SpriteSheet`];
-        const texture = PIXI.Texture.fromLoader(base64source);
-
-        const rectangle = new PIXI.Rectangle(
-            description.x,
-            description.y,
-            description.width,
-            description.height
-        );
-
-        texture.frame = rectangle;
+        const texture = texturesLoader.getByName(name);
 
         const sprite = new PIXI.Sprite(texture);
 
