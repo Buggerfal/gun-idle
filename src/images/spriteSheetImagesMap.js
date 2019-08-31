@@ -65,4 +65,22 @@ export default {
         width: 90,
         height: 90,
     },
+    fireAnimation_1: {
+        x: 15,
+        y: 335,
+        width: 255,
+        height: 100,
+    },
+    fireAnimation_2: {
+        x: 15,
+        y: 150,
+        width: 220,
+        height: 150,
+    },
+    fireAnimation_3: {
+        x: 45,
+        y: 635,
+        width: 200,
+        height: 290,
+    },
 };

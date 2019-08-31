@@ -3,6 +3,7 @@ import GraphicsHelper from "../../utils/GraphicsHelper";
 import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
 import Emitter from "component-emitter";
+import TexturesLoader from "../../engine/TexturesLoader";
 export default class BaseWeapon {
     constructor(config) {
         this.config = { ...config };
@@ -45,24 +46,27 @@ export class Colt1911 extends BaseWeapon {
             y: y + margin,
         });
         this._container.setParent(starter.app.stage);
-        this._container.interactive = true;
-        this._container.on("pointerdown", () => {
+
+        this._weaponContainer = GraphicsHelper.createContainer();
+        this._weaponContainer.on("pointerdown", () => {
             this.shot();
         });
+        this._weaponContainer.interactive = true;
+        this._weaponContainer.setParent(this._container);
 
         this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
             x: margin,
             y: margin,
             name: `colt1911`,
         });
-        this._mainSprite.setParent(this._container);
+        this._mainSprite.setParent(this._weaponContainer);
 
         this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
             x: margin,
             y: margin,
             name: `slide1911`,
         });
-        this._slideSprite.setParent(this._container);
+        this._slideSprite.setParent(this._weaponContainer);
     }
 
     hide() {
@@ -84,6 +88,16 @@ export class Colt1911 extends BaseWeapon {
         sleeve.scale.set(0.4);
         sleeve.setParent(this._container);
 
+        const bullet = GraphicsHelper.createSpriteFromAtlas({
+            x: 320,
+            y: 70,
+            name: `bullet`,
+        });
+        bullet.scale.set(0.3);
+        bullet.setParent(this._container);
+
+        new TWEEN.Tween(bullet).to({ x: 1500 }, 60).start();
+
         this.emit("makeHole");
 
         this.rotationTween = new TWEEN.Tween(sleeve)
@@ -97,13 +111,27 @@ export class Colt1911 extends BaseWeapon {
             })
             .start();
 
-        this.rotationTween = new TWEEN.Tween(this._container)
+        this.rotationTween = new TWEEN.Tween(this._weaponContainer)
             .to({ rotation: [-0.17, 0] }, 80)
             .start();
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
             .to({ x: [45, 0] }, 80)
             .start();
+
+        const animatedSprite = new PIXI.AnimatedSprite([
+            TexturesLoader.getByName(`fireAnimation_1`),
+            TexturesLoader.getByName(`fireAnimation_2`),
+            // TexturesLoader.getByName(`fireAnimation_3`),
+        ]);
+        animatedSprite.animationSpeed = 0.7;
+        animatedSprite.loop = false;
+        animatedSprite.position.set(280, 10);
+        animatedSprite.onComplete = () => {
+            animatedSprite.destroy();
+        };
+        this._weaponContainer.addChild(animatedSprite);
+        animatedSprite.play();
     }
 
     rnd(min, max) {
