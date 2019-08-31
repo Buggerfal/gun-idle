@@ -3,7 +3,7 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import WeaponFactory from "./weapons/WeaponFactory";
 import Target from "./Target";
-
+import ScoreBar from "./ScoreBar";
 class Stage {
     constructor(config) {
         this._container = null;
@@ -33,7 +33,7 @@ class Stage {
             height,
             color,
             y,
-            info: { weaponType, level, name },
+            info: { weaponType, level, name, shotReward },
         } = this._config;
         this._container = GraphicsHelper.createColorContainer({
             x: 0,
@@ -101,8 +101,9 @@ class Stage {
         this._weaponName.setParent(this._nameContainer);
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
-        this._weapon.on(`makeHole`, () => {
-            this._target.makeHole();
+        this._weapon.on(`shotIsDone`, y => {
+            this._target.makeHole(y);
+            ScoreBar.update(shotReward);
         });
     }
 

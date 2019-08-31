@@ -8,6 +8,7 @@ class ScoreBar {
         this._mainBackground = null;
         this._moneyText = null;
         this._ctaDownload = null;
+        this._money = 0;
 
         this._config = { ...appSettings.score };
     }
@@ -33,7 +34,7 @@ class ScoreBar {
         this._moneyText = GraphicsHelper.drawText({
             x: width / 2,
             y: height / 2,
-            text: `$0`,
+            // text: `$${this._money}`,
             style: {
                 fill: "white",
                 fontFamily: "Comic Sans MS",
@@ -41,6 +42,7 @@ class ScoreBar {
             },
         });
         this._moneyText.setParent(this._container);
+        this.update();
 
         this._ctaDownload = new Button({
             x: width - 350,
@@ -54,6 +56,11 @@ class ScoreBar {
             },
             fontSize: 70,
         });
+    }
+
+    update(val = 0) {
+        this._money += val;
+        this._moneyText.text = `$${this._money}`;
     }
 
     _ctaHandler() {

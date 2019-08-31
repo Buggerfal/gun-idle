@@ -33,8 +33,6 @@ export default class BaseWeapon {
 export class Colt1911 extends BaseWeapon {
     constructor(config) {
         super(config);
-
-        this._shotCost = 5;
     }
 
     init() {
@@ -98,7 +96,7 @@ export class Colt1911 extends BaseWeapon {
 
         new TWEEN.Tween(bullet).to({ x: 1500 }, 60).start();
 
-        this.emit("makeHole");
+        this.emit("shotIsDone");
 
         this.rotationTween = new TWEEN.Tween(sleeve)
             .to({ x: sleeve.x - this.rnd(100, 150), y: [-30, 0, 300] }, 180)
@@ -142,8 +140,6 @@ export class Colt1911 extends BaseWeapon {
 export class AK47 extends BaseWeapon {
     constructor(config) {
         super(config);
-
-        this._shotCost = 15;
     }
 
     init() {
