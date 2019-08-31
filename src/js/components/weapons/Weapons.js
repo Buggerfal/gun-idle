@@ -76,7 +76,26 @@ export class Colt1911 extends BaseWeapon {
     }
 
     animated() {
+        const sleeve = GraphicsHelper.createSpriteFromAtlas({
+            x: 165,
+            y: 60,
+            name: `sleeve`,
+        });
+        sleeve.scale.set(0.4);
+        sleeve.setParent(this._container);
+
         this.emit("makeHole");
+
+        this.rotationTween = new TWEEN.Tween(sleeve)
+            .to({ x: sleeve.x - this.rnd(100, 150), y: [-30, 0, 300] }, 180)
+            .onUpdate(k => {
+                sleeve.rotation = -k;
+            })
+            .onComplete(() => {
+                this._container.removeChild(sleeve);
+                sleeve.destroy();
+            })
+            .start();
 
         this.rotationTween = new TWEEN.Tween(this._container)
             .to({ rotation: [-0.17, 0] }, 80)
@@ -85,6 +104,10 @@ export class Colt1911 extends BaseWeapon {
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
             .to({ x: [45, 0] }, 80)
             .start();
+    }
+
+    rnd(min, max) {
+        return Math.floor(Math.random() * max) + min;
     }
 }
 
