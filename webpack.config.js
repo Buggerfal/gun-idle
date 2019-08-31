@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -21,11 +22,11 @@ module.exports = {
                     name: "vendors",
                     chunks: "initial",
                 },
-                images: {
-                    test: /[\\/]src[\\/]base64[\\/]/,
-                    name: "images",
-                    chunks: "initial",
-                },
+                // images: {
+                //     test: /[\\/]src[\\/]base64[\\/]/,
+                //     name: "images",
+                //     chunks: "initial",
+                // },
             },
         },
     },
@@ -56,14 +57,14 @@ module.exports = {
     plugins: [
         new ExtractTextPlugin("styles.css"),
         new HtmlWebpackPlugin({
-            title: "Galaxy",
+            title: "idle gun",
             template: "index.html",
         }),
+        new CopyPlugin([{ from: "src/images/SpriteSheet.png" }]),
     ],
-    
+
     resolve: {
         alias: {
-            "@images": path.resolve(__dirname, "./src/base64/images.js"),
             "@styles": path.resolve(__dirname, "./src/styles/default.sass"),
         },
     },

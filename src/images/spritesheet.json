@@ -1,8 +1,0 @@
-{ "testSprite": {
-    "frame": {"x":1035,"y":5,"w":285,"h":170},
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": {"x":0,"y":0,"w":285,"h":170},
-    "sourceSize": {"w":285,"h":170}
-  }
-}
