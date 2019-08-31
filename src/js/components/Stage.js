@@ -4,6 +4,8 @@ import appSettings from "../settings/appSettings";
 import WeaponFactory from "./weapons/WeaponFactory";
 import Target from "./Target";
 import ScoreBar from "./ScoreBar";
+import TargetsManager from "./TargetsManager";
+
 class Stage {
     constructor(config) {
         this._container = null;
@@ -44,17 +46,23 @@ class Stage {
         });
         this._container.setParent(starter.app.stage);
 
-        this._targetContainer = GraphicsHelper.createContainer({
-            x: 0,
-            y,
+        this.targetsManager = new TargetsManager({
+            x: width - 250,
+            y: y,
+            lives: 5,
         });
-        this._targetContainer.setParent(starter.app.stage);
 
-        this._target = new Target({
-            x: width - 150,
-            y: 50,
-            owner: this._targetContainer,
-        });
+        // this._targetContainer = GraphicsHelper.createContainer({
+        //     x: 0,
+        //     y,
+        // });
+        // this._targetContainer.setParent(starter.app.stage);
+
+        // this._target = new Target({
+        //     x: width - 150,
+        //     y: 50,
+        //     owner: this._targetContainer,
+        // });
 
         this._lockContainer = GraphicsHelper.createContainer({
             x: width / 2,
@@ -102,20 +110,20 @@ class Stage {
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
         this._weapon.on(`shotIsDone`, y => {
-            this._target.makeHole(y);
+            this.targetsManager.makeHole(y);
             ScoreBar.update(shotReward);
         });
     }
 
     hide() {
-        this._target.alpha = 0;
+        //this._target.alpha = 0;
         this._weapon.hide();
         this._lockContainer.alpha = 1;
         this._nameContainer.alpha = 0;
     }
 
     show() {
-        this._target.alpha = 1;
+        //this._target.alpha = 1;
         this._weapon.show();
         this._lockContainer.alpha = 0;
         this._nameContainer.alpha = 1;
