@@ -9,13 +9,6 @@ class Target {
 
         this._lives = 10;
 
-        this._ticker = new PIXI.Ticker();
-        this._ticker.start();
-
-        this._ticker.add(delta => {
-            TWEEN.update();
-        });
-
         this._init();
     }
 

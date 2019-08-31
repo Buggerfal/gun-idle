@@ -12,7 +12,6 @@ export default class BaseWeapon {
 
         this._ticker.add(delta => {
             this.tick(delta);
-            TWEEN.update();
         });
         new Emitter(this);
 

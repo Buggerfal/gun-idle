@@ -8,12 +8,6 @@ class IntroScene {
         this._container = null;
         this._substrate = null;
         this._hintTween = null;
-
-        this._ticker = new PIXI.Ticker();
-        this._ticker.start();
-        this._ticker.add(() => {
-            TWEEN.update();
-        });
     }
 
     init() {

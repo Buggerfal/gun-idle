@@ -17,7 +17,7 @@ export default [
         name: `colt`,
         weaponType: WEAPONS.colt,
         gameProgressToUnlock: 5,
-        level: `5`,
+        level: `3`,
     },
     {
         name: `colt`,

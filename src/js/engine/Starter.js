@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import appSettings from "../settings/appSettings";
 import TexturesLoader from "./TexturesLoader";
+import TWEEN from "tween.js";
 
 class Starter {
     constructor() {
@@ -26,6 +27,12 @@ class Starter {
         });
         this.app.renderer.autoResize = true;
         container.appendChild(this.app.view);
+
+        this._ticker = new PIXI.Ticker();
+        this._ticker.start();
+        this._ticker.add(() => {
+            TWEEN.update();
+        });
 
         window.onresize = () => {
             this.resize();
