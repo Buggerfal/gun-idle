@@ -156,8 +156,6 @@ export class AK47 extends BaseWeapon {
     }
 
     init() {
-        console.log("init");
-        // const { y } = this.config;
         const { x, y } = { ...appSettings.weaponPosition };
 
         this._container = GraphicsHelper.createContainer({});
@@ -193,12 +191,29 @@ export class AK47 extends BaseWeapon {
     }
 
     shot(coordinates) {
-        // this._bulletAnimation(coordinates);
+        this._bulletAnimation(coordinates);
         // this._sleeveAnimation();
         this.emit("shotIsDone");
         // this._weaponAnimation();
 
         // this._fireAnimation();
+    }
+
+    _bulletAnimation(coordinates) {
+        const bullet = GraphicsHelper.createSpriteFromAtlas({
+            x: this._weaponContainer.x + this._mainSprite.width,
+            y: this._weaponContainer.y + 60,
+            name: `bullet`,
+        });
+        bullet.scale.set(0.3);
+        bullet.setParent(this._container);
+
+        new TWEEN.Tween(bullet)
+            .to({ x: coordinates.x, y: coordinates.y + 100 }, 60)
+            .onComplete(() => {
+                bullet.destroy();
+            })
+            .start();
     }
 
     animated() {}

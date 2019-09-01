@@ -18,8 +18,8 @@ export default {
         height: 215,
     },
     ak47_knife: {
-        x: 1488,
-        y: 1985,
+        x: 1492,
+        y: 1990,
         width: 190,
         height: 45,
     },
