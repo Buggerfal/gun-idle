@@ -25,7 +25,7 @@ class Stage {
             width: appSettings.app.width,
         };
 
-        this._timeBeetwenShoot = 1000;
+        this._timeBetweenShoot = 1000;
         this._autoGameStart = false;
         this._shotReward = 0;
 
@@ -91,6 +91,8 @@ class Stage {
 
             this._weapon.shot(coordinates);
             this.emit("openStage");
+
+            this._timeBetweenShoot = 1000;
         });
 
         this._setTimer(level);
@@ -128,25 +130,23 @@ class Stage {
             });
 
             this._weapon.once(`timerStart`, () => {
-                this._timerStart();
+                this._autoGameStart = true;
             });
         }
     }
 
-    _timerStart() {
-        this._autoGameStart = true;
-        console.log("TIMER START");
-    }
+    _timerStart() {}
 
     _tick(delta) {
         if (!this._autoGameStart) {
             return;
         }
-        this._timeBeetwenShoot -= delta;
 
-        if (this._timeBeetwenShoot <= 0) {
+        this._timeBetweenShoot -= delta;
+
+        if (this._timeBetweenShoot <= 0) {
             this._makeShot();
-            this._timeBeetwenShoot = 1000;
+            this._timeBetweenShoot = 1000;
         }
     }
 
