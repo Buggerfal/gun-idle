@@ -188,24 +188,44 @@ export class AK47 extends BaseWeapon {
         });
         this._knife.setParent(this._weaponContainer);
 
-        this._slide = GraphicsHelper.createSpriteFromAtlas({
+        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
             x: 75,
             y: 18,
             name: `ak47_slide`,
         });
-        this._slide.setParent(this._weaponContainer);
+        this._slideSprite.setParent(this._weaponContainer);
     }
 
     shot(coordinates) {
-        this._bulletAnimation(coordinates);
         this.sleeveAnimation();
-        this.emit("shotIsDone");
-        // this._weaponAnimation();
-
         this.fireAnimation({
             x: 420,
             y: 0,
         });
+
+        this._bulletAnimation(coordinates);
+        this.emit("shotIsDone");
+        this._weaponAnimation();
+    }
+
+    _weaponAnimation() {
+        const endXPosition = this._weaponContainer.x;
+
+        this.rotationTween = new TWEEN.Tween(this._weaponContainer)
+            .to({ rotation: [-0.17, 0] }, 80)
+            .start();
+
+        this.moveTween = new TWEEN.Tween(this._weaponContainer)
+            .to({ x: [-20, endXPosition] }, 80)
+            .start();
+
+        this.slideTween = new TWEEN.Tween(this._slideSprite.scale)
+            .to({ x: [1, 0, 1] }, 80)
+            .start();
+
+        this.knifeRotationTween = new TWEEN.Tween(this._knife)
+            .to({ rotation: [-0.3, 0.3, -0.2, 0.2, 0.1, 0.1, 0] }, 180)
+            .start();
     }
 
     _bulletAnimation(coordinates) {
