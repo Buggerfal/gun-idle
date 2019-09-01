@@ -48,7 +48,7 @@ export default class BaseWeapon {
         sleeve.setParent(this._container);
 
         this.rotationTween = new TWEEN.Tween(sleeve)
-            .to({ x: sleeve.x - Utils.random(100, 150), y: [-30, 0, 300] }, 180)
+            .to({ x: sleeve.x - Utils.random(100, 150), y: [20, 300] }, 180)
             .onUpdate(k => {
                 sleeve.rotation = -k;
             })
