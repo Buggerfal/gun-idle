@@ -52,18 +52,6 @@ class Stage {
             lives: 5,
         });
 
-        // this._targetContainer = GraphicsHelper.createContainer({
-        //     x: 0,
-        //     y,
-        // });
-        // this._targetContainer.setParent(starter.app.stage);
-
-        // this._target = new Target({
-        //     x: width - 150,
-        //     y: 50,
-        //     owner: this._targetContainer,
-        // });
-
         this._lockContainer = GraphicsHelper.createContainer({
             x: width / 2,
             y: y + height / 2,

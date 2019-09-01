@@ -27,6 +27,8 @@ export default class BaseWeapon {
         this.animated();
     }
 
+    animated() {}
+
     tick() {}
 }
 

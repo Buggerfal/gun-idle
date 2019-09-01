@@ -31,13 +31,15 @@ class TargetsManager {
 
     createTarget() {
         const target = new Target({
-            x: 0,
-            y: 50,
-            owner: this._container,
+            x: 150,
+            y: 0,
         });
-        target.on("destroyTarget", () => {
+        target.container.setParent(this._container);
+
+        target.on("destroy", () => {
             this._target1 = null;
             this.updateTargets();
+            this._container.removeChild(target.container);
         });
         return target;
     }
@@ -49,12 +51,19 @@ class TargetsManager {
 
         this._target1 = this._target2;
 
-        this._targetTween = new TWEEN.Tween(this._target1.sprite.pivot)
+        this._targetTween = new TWEEN.Tween(this._target1.container)
             .to({ x: 0 }, 180)
             .start()
             .onComplete(x => {
                 this._target2 = this.createTarget();
             });
+    }
+
+    getBounds() {
+        return{
+            x: this._target1.x,
+            y: this._target1.y
+        }
     }
 }
 

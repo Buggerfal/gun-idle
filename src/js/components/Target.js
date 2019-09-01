@@ -3,70 +3,142 @@ import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
 import starter from "../engine/Starter";
 import Emitter from "component-emitter";
+import Utils from "../utils/utils";
 
 class Target {
     constructor(config) {
         this._config = { ...config };
-
         this._lives = 5;
+        this._container = null;
+        this._shakeAnimation = null;
+
+        this._scale = 1.4;
+
         new Emitter(this);
 
         this._init();
     }
 
     _init() {
-        const { x, y, owner } = this._config;
+        const { x, y } = this._config;
 
-        this._target = GraphicsHelper.createSpriteFromAtlas({
+        this._container = GraphicsHelper.createContainer({
             x,
             y,
+        });
+
+        this._target = GraphicsHelper.createSpriteFromAtlas({
             name: `target`,
         });
-        this._target.scale.set(1.4);
-        this._target.pivot.x = -130;
-        this._target.setParent(owner);
+        this._target.scale.set(this._scale);
+        this._target.setParent(this._container);
     }
 
-    _shake() {
-        const { x, y, owner } = this._config;
-
-        // this._targetTween = new TWEEN.Tween(owner.pivot)
-        //     .to({ x: [-10, 0, 10, -5, 0, 5, 0] }, 180)
-        //     .start();
+    get container() {
+        return this._container;
     }
 
-    makeHole(y) {
-        const { x, owner } = this._config;
-        this._shake();
+    makeHole(verticalPosition) {
+        this._lives -= 1;
 
         if (this._lives <= 0) {
-            this.destroy();
+            if (this._lives == 0) {
+                this.destroy();
+            }
+
             return;
         }
 
-        const initXposition = x + Math.floor(Math.random() * 85 + 15);
-        const initYposition = scrollY + Math.floor(Math.random() * 135 + 50);
+        const { width: w, height: h } = this._target;
+
+        const x = Utils.random(w * 0.1, w * 0.55);
+        const y = verticalPosition; //Utils.random(h * 0.2, h * 0.55);
 
         const hole = GraphicsHelper.createSpriteFromAtlas({
-            x: initXposition,
-            y: initYposition,
+            x,
+            y,
             name: `hole`,
         });
         hole.scale.set(0.3);
-        hole.setParent(owner);
+        hole.setParent(this._container);
 
-        this._lives -= 1;
+        this._shake();
     }
 
-    get sprite() {
-        return this._target;
+    _shake() {
+        this._shakeAnimation = new TWEEN.Tween(this._container)
+            .to({ x: [-10, 0, 10, -5, 0, 5, 0] }, 180)
+            .start();
+    }
+
+    _destroyAnimation() {
+        this._target.alpha = 0;
+        const animationsCompletions = [];
+
+        const addAnimation = ({ x, y, name, tweenAnimationSettings }) => {
+            const animation = GraphicsHelper.createSpriteFromAtlas({
+                name,
+                x,
+                y,
+            });
+
+            animation.scale.set(this._scale);
+            animation.setParent(this._container);
+
+            animationsCompletions.push(
+                new Promise(resolve => {
+                    const sign = Utils.random(0, 1) === 0 ? -1 : 1;
+
+                    new TWEEN.Tween(animation)
+                        .to(tweenAnimationSettings, 180)
+                        .onUpdate(k => {
+                            //animation.rotation = k * 2 * sign;
+                        })
+                        .onComplete(() => {
+                            resolve();
+                        })
+                        .start();
+                })
+            );
+        };
+
+        addAnimation({
+            name: `targetDestroyAnimation_1`,
+            x: 0,
+            y: 5,
+            tweenAnimationSettings: { x: -30, y: 300 },
+        });
+
+        addAnimation({
+            name: `targetDestroyAnimation_2`,
+            x: 30,
+            y: 0,
+            tweenAnimationSettings: { x: 80, y: 260 },
+        });
+
+        addAnimation({
+            name: `targetDestroyAnimation_3`,
+            x: 60,
+            y: 75,
+            tweenAnimationSettings: { x: 100, y: 290 },
+        });
+
+        addAnimation({
+            name: `targetDestroyAnimation_4`,
+            x: 20,
+            y: 95,
+            tweenAnimationSettings: { x: 20, y: 310 },
+        });
+
+        return Promise.all(animationsCompletions);
     }
 
     destroy() {
-        const { owner } = this._config;
-        this.emit("destroyTarget");
-        owner.removeChild(this._target);
-        this._target.destroy();
+        this._destroyAnimation().then(() => {
+            this.emit("destroy");
+            this._container.removeChildren();
+        });
+        this._shakeAnimation.stop();
     }
 }
 

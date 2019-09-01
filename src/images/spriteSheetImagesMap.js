@@ -83,4 +83,28 @@ export default {
         width: 200,
         height: 290,
     },
+    targetDestroyAnimation_1: {
+        x: 842,
+        y: 0,
+        width: 44,
+        height: 82,
+    },
+    targetDestroyAnimation_2: {
+        x: 886,
+        y: 0,
+        width: 76,
+        height: 61,
+    },
+    targetDestroyAnimation_3: {
+        x: 962,
+        y: 0,
+        width: 58,
+        height: 60,
+    },
+    targetDestroyAnimation_4: {
+        x: 888,
+        y: 63,
+        width: 64,
+        height: 47,
+    },
 };
