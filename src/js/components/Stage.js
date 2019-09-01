@@ -2,7 +2,6 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import WeaponFactory from "./weapons/WeaponFactory";
-import Target from "./Target";
 import ScoreBar from "./ScoreBar";
 import TargetsManager from "./TargetsManager";
 
