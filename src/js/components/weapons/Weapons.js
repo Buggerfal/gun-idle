@@ -139,7 +139,10 @@ export class Colt1911 extends BaseWeapon {
         ]);
         animatedSprite.animationSpeed = 0.7;
         animatedSprite.loop = false;
-        animatedSprite.position.set(280, 10);
+        animatedSprite.position.set(
+            this._mainSprite.x + 240,
+            this._mainSprite.y - 30
+        );
         animatedSprite.onComplete = () => {
             animatedSprite.destroy();
         };
