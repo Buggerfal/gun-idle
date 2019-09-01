@@ -206,6 +206,7 @@ export class AK47 extends BaseWeapon {
         });
 
         this._bulletAnimation(coordinates);
+        this.emit("timerStart");
         this.emit("shotIsDone");
         this._weaponAnimation();
     }

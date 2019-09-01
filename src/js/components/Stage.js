@@ -128,29 +128,35 @@ class Stage {
     _setTimerLogic(level) {
         switch (level) {
             case "1":
-                //TODO: hint must be one element on two scenes
-                const hint = new Hint({ x: 250, y: 220 });
-
-                this._mainContainer.addChild(hint.sprite);
-
-                this._ticker = new PIXI.Ticker();
-                this._ticker.start();
-                this._ticker.add(() => {
-                    this._tick(this._ticker.deltaMS);
-                });
-
-                this._weapon.once(`timerStart`, () => {
-                    this._autoGameStart = true;
-                    hint.sprite.alpha = 0;
-                });
+                this._setAutoPlayLogic();
                 break;
 
-            case 2:
+            case "2":
+                this._setAutoPlayLogic();
+
                 break;
 
             default:
                 console.log("This stage not hase logic");
         }
+    }
+
+    _setAutoPlayLogic() {
+        //TODO: hint must be one element on two scenes
+        const hint = new Hint({ x: 250, y: 220 });
+
+        this._weapon.once(`timerStart`, () => {
+            this._autoGameStart = true;
+            hint.sprite.alpha = 0;
+        });
+
+        this._mainContainer.addChild(hint.sprite);
+
+        this._ticker = new PIXI.Ticker();
+        this._ticker.start();
+        this._ticker.add(() => {
+            this._tick(this._ticker.deltaMS);
+        });
     }
 
     _timerStart() {}
