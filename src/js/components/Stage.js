@@ -25,6 +25,8 @@ class Stage {
             width: appSettings.app.width,
         };
 
+        this._autoGameCounter = 4;
+
         this._timeBetweenShoot = 1000;
         this._autoGameStart = false;
         this._shotReward = 0;
@@ -92,10 +94,11 @@ class Stage {
             this._weapon.shot(coordinates);
             this.emit("openStage");
 
+            this._autoGameCounter -= 1;
             this._timeBetweenShoot = 1000;
         });
 
-        this._setTimer(level);
+        this._setTimerLogic(level);
 
         //Locked stage elements
         this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
@@ -121,7 +124,8 @@ class Stage {
         }).setParent(this._lockContainer);
     }
 
-    _setTimer(level) {
+    _setTimerLogic(level) {
+        //TODO: switch-case
         if (level === "1") {
             this._ticker = new PIXI.Ticker();
             this._ticker.start();
@@ -151,6 +155,11 @@ class Stage {
     }
 
     _makeShot() {
+        if (this._autoGameCounter <= 0) {
+            this._autoGameStart = false;
+        }
+        this._autoGameCounter -= 1;
+
         const coordinates = this.targetsManager.getHolePosition();
         this._weapon.shot(coordinates);
         this.targetsManager.makeHole(coordinates);
