@@ -4,6 +4,8 @@ import appSettings from "../settings/appSettings";
 import WeaponFactory from "./weapons/WeaponFactory";
 import ScoreBar from "./ScoreBar";
 import TargetsManager from "./TargetsManager";
+import Utils from "../utils/utils";
+import TWEEN from "tween.js";
 
 class Stage {
     constructor(config) {
@@ -46,7 +48,7 @@ class Stage {
         this._unlockContainer = GraphicsHelper.createContainer();
         this._unlockContainer.setParent(this._mainContainer);
 
-        this.targetsManager = new TargetsManager(width - 250);
+        this.targetsManager = new TargetsManager(width - 250, shotReward);
 
         this.targetsManager.container.setParent(this._unlockContainer);
 
@@ -72,6 +74,7 @@ class Stage {
             this._weapon.once(`shotIsDone`, y => {
                 this.targetsManager.makeHole(coordinates);
                 ScoreBar.update(shotReward);
+                this._drawRewardText(shotReward);
             });
 
             this._weapon.shot(coordinates);
@@ -111,6 +114,29 @@ class Stage {
         this._weapon.show();
         this._lockContainer.alpha = 0;
         this._unlockContainer.alpha = 1;
+    }
+
+    _drawRewardText(value) {
+        const y = Utils.random(100, 240);
+        const sign = Utils.random(0, 1) === 0 ? -1 : 1;
+
+        this._rewardContainer = GraphicsHelper.createContainer({});
+        this._rewardContainer.setParent(this._mainContainer);
+
+        const rewardText = GraphicsHelper.drawText({
+            text: `$${value}`,
+            x: this._mainContainer.width - 350,
+            y,
+            style: {
+                fill: "white",
+                fontFamily: "Comic Sans MS",
+                fontSize: 50,
+            },
+        });
+        rewardText.setParent(this._rewardContainer);
+        rewardText.rotation = Math.random() * sign;
+
+        new TWEEN.Tween(this._rewardContainer).to({ alpha: 0 }, 300).start();
     }
 }
 

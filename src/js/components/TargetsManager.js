@@ -4,12 +4,12 @@ import TWEEN from "tween.js";
 import Utils from "../utils/utils";
 
 class TargetsManager {
-    constructor(x) {
+    constructor(x, reward) {
         this._container = null;
 
         this._target1 = null;
         this._target2 = null;
-
+        this._reward = reward;
         this._init(x);
     }
 
@@ -37,6 +37,7 @@ class TargetsManager {
         const target = new Target({
             x: 150,
             y: 0,
+            reward: this._reward,
         });
         target.container.setParent(this._container);
 

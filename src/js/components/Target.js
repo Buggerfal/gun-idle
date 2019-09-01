@@ -1,7 +1,5 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
 import TWEEN from "tween.js";
-import * as PIXI from "pixi.js";
-import starter from "../engine/Starter";
 import Emitter from "component-emitter";
 import Utils from "../utils/utils";
 
