@@ -57,7 +57,7 @@ class TargetsManager {
         this._target1 = this._target2;
 
         this._targetTween = new TWEEN.Tween(this._target1.container)
-            .to({ x: 0 }, 180)
+            .to({ x: 0 }, 80)
             .start()
             .onComplete(x => {
                 this._target2 = this.createTarget();

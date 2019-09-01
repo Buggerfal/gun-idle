@@ -7,6 +7,7 @@ import TargetsManager from "./TargetsManager";
 import Utils from "../utils/utils";
 import TWEEN from "tween.js";
 import Emitter from "component-emitter";
+import * as PIXI from "pixi.js";
 
 class Stage {
     constructor(config) {
@@ -16,11 +17,17 @@ class Stage {
         this._weapon = null;
         this._lock = null;
 
+        this._ticker = null;
+
         this._config = {
             ...config,
             ...appSettings.stage,
             width: appSettings.app.width,
         };
+
+        this._timeBeetwenShoot = 1000;
+        this._autoGameStart = false;
+        this._shotReward = 0;
 
         new Emitter(this);
 
@@ -38,6 +45,8 @@ class Stage {
             info: { weaponType, level, name, shotReward },
         } = this._config;
 
+        this._shotReward = shotReward;
+
         this._mainContainer = GraphicsHelper.createColorContainer({
             x: 0,
             y,
@@ -51,7 +60,7 @@ class Stage {
         this._unlockContainer = GraphicsHelper.createContainer();
         this._unlockContainer.setParent(this._mainContainer);
 
-        this.targetsManager = new TargetsManager(width - 250, shotReward);
+        this.targetsManager = new TargetsManager(width - 250, this._shotReward);
 
         this.targetsManager.container.setParent(this._unlockContainer);
 
@@ -74,15 +83,17 @@ class Stage {
         this._weapon.on(`shotRequest`, () => {
             const coordinates = this.targetsManager.getHolePosition();
 
-            this._weapon.once(`shotIsDone`, y => {
+            this._weapon.once(`shotIsDone`, () => {
                 this.targetsManager.makeHole(coordinates);
-                ScoreBar.update(shotReward);
-                this._drawRewardText(shotReward);
+                ScoreBar.update(this._shotReward);
+                this._drawRewardText(this._shotReward);
             });
 
             this._weapon.shot(coordinates);
             this.emit("openStage");
         });
+
+        this._setTimer(level);
 
         //Locked stage elements
         this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
@@ -106,6 +117,45 @@ class Stage {
                 fontSize: 40,
             },
         }).setParent(this._lockContainer);
+    }
+
+    _setTimer(level) {
+        if (level === "1") {
+            this._ticker = new PIXI.Ticker();
+            this._ticker.start();
+            this._ticker.add(() => {
+                this._tick(this._ticker.deltaMS);
+            });
+
+            this._weapon.once(`timerStart`, () => {
+                this._timerStart();
+            });
+        }
+    }
+
+    _timerStart() {
+        this._autoGameStart = true;
+        console.log("TIMER START");
+    }
+
+    _tick(delta) {
+        if (!this._autoGameStart) {
+            return;
+        }
+        this._timeBeetwenShoot -= delta;
+
+        if (this._timeBeetwenShoot <= 0) {
+            this._makeShot();
+            this._timeBeetwenShoot = 1000;
+        }
+    }
+
+    _makeShot() {
+        const coordinates = this.targetsManager.getHolePosition();
+        this._weapon.shot(coordinates);
+        this.targetsManager.makeHole(coordinates);
+        ScoreBar.update(this._shotReward);
+        this._drawRewardText(this._shotReward);
     }
 
     hide() {

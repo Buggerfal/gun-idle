@@ -126,6 +126,8 @@ export class Colt1911 extends BaseWeapon {
             x: 230,
             y: -20,
         });
+
+        this.emit("timerStart");
     }
 
     _weaponAnimation() {
