@@ -11,7 +11,7 @@ export default [
     {
         name: `AK-47`,
         weaponType: WEAPONS.ak47,
-        gameProgressToUnlock: 3,
+        gameProgressToUnlock: 0,
         level: `2`,
         shotReward: 40,
     },

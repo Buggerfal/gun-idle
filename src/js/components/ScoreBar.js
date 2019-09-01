@@ -2,6 +2,7 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Button from "./Button";
+
 class ScoreBar {
     constructor() {
         this._container = null;

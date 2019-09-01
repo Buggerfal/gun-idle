@@ -8,12 +8,12 @@ import IntroScene from "../scenes/IntroScene";
 
 class Game {
     constructor() {
+        this._stages = [];
+
         starter.initiated.then(() => {
             this._drawStages();
-            this._initApp();
+            this._initAppComponents();
         });
-
-        this._stages = [];
 
         this._sizes = { ...appSettings.app };
         this.scoreBar = ScoreBar;
@@ -37,17 +37,18 @@ class Game {
                 info: stageInfo,
             });
 
+            this._stages.push(stage);
+
             if (stageInfo.gameProgressToUnlock > gameProgress) {
                 stage.hide();
                 return;
             }
 
-            this._stages.push(stage);
             stage.show();
         });
     }
 
-    _initApp() {
+    _initAppComponents() {
         this.scoreBar.init();
         this.introScene.init();
         SceneManager.registerScene(`intro`, this.introScene);

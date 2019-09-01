@@ -6,6 +6,7 @@ import ScoreBar from "./ScoreBar";
 import TargetsManager from "./TargetsManager";
 import Utils from "../utils/utils";
 import TWEEN from "tween.js";
+import Emitter from "component-emitter";
 
 class Stage {
     constructor(config) {
@@ -21,7 +22,9 @@ class Stage {
             width: appSettings.app.width,
         };
 
-        this._progress = 0;
+        new Emitter(this);
+
+        this.progress = 0;
 
         this._init();
     }
@@ -78,6 +81,7 @@ class Stage {
             });
 
             this._weapon.shot(coordinates);
+            this.emit("openStage");
         });
 
         //Locked stage elements

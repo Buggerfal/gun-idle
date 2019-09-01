@@ -11,6 +11,7 @@ export default class BaseWeapon {
         this.config = { ...config };
 
         this._container = null;
+        this._weaponContainer = null;
 
         this._ticker = new PIXI.Ticker();
         this._ticker.start();
@@ -25,7 +26,15 @@ export default class BaseWeapon {
 
     init() {}
 
-    hide() {}
+    hide() {
+        this._container.alpha = 0;
+        this._weaponContainer.interactive = false;
+    }
+
+    show() {
+        this._container.alpha = 1;
+        this._weaponContainer.interactive = true;
+    }
 
     shot() {}
 
@@ -66,16 +75,6 @@ export class Colt1911 extends BaseWeapon {
         this._slideSprite.setParent(this._weaponContainer);
     }
 
-    hide() {
-        this._container.alpha = 0;
-        this._weaponContainer.interactive = false;
-    }
-
-    show() {
-        this._container.alpha = 1;
-        this._weaponContainer.interactive = true;
-    }
-
     shot(coordinates) {
         this._bulletAnimation(coordinates);
         this._sleeveAnimation();
@@ -97,8 +96,8 @@ export class Colt1911 extends BaseWeapon {
 
     _sleeveAnimation() {
         const sleeve = GraphicsHelper.createSpriteFromAtlas({
-            x: 165,
-            y: 60,
+            x: 190,
+            y: 160,
             name: `sleeve`,
         });
         sleeve.scale.set(0.4);
@@ -157,49 +156,49 @@ export class AK47 extends BaseWeapon {
     }
 
     init() {
-        const { y } = this.config;
-        const margin = 50;
+        console.log("init");
+        // const { y } = this.config;
+        const { x, y } = { ...appSettings.weaponPosition };
 
-        this._container = GraphicsHelper.createContainer({
-            x: margin,
-            y: y,
-        });
-        // this._container.setParent(starter.app.stage);
+        this._container = GraphicsHelper.createContainer({});
 
-        this._container.on("pointerdown", () => {
-            this.shot();
+        this._weaponContainer = GraphicsHelper.createContainer({
+            x,
+            y,
         });
+        this._weaponContainer.on("pointerdown", () => {
+            this.emit("shotRequest");
+        });
+        this._weaponContainer.interactive = true;
+        this._weaponContainer.setParent(this._container);
 
         this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
-            x: margin,
-            y: margin,
             name: `ak47`,
         });
-        this._mainSprite.setParent(this._container);
+        this._mainSprite.setParent(this._weaponContainer);
 
         this._knife = GraphicsHelper.createSpriteFromAtlas({
-            x: 400,
-            y: 125,
+            x: 350,
+            y: 80,
             name: `ak47_knife`,
         });
-        this._knife.setParent(this._container);
+        this._knife.setParent(this._weaponContainer);
 
         this._slide = GraphicsHelper.createSpriteFromAtlas({
-            x: 125,
-            y: 67,
+            x: 75,
+            y: 18,
             name: `ak47_slide`,
         });
-        this._slide.setParent(this._container);
+        this._slide.setParent(this._weaponContainer);
     }
 
-    hide() {
-        this._container.alpha = 0;
-        this._container.interactive = false;
-    }
+    shot(coordinates) {
+        // this._bulletAnimation(coordinates);
+        // this._sleeveAnimation();
+        this.emit("shotIsDone");
+        // this._weaponAnimation();
 
-    show() {
-        this._container.alpha = 1;
-        this._container.interactive = true;
+        // this._fireAnimation();
     }
 
     animated() {}
