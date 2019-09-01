@@ -68,12 +68,12 @@ export class Colt1911 extends BaseWeapon {
 
     hide() {
         this._container.alpha = 0;
-        this._container.interactive = false;
+        this._weaponContainer.interactive = false;
     }
 
     show() {
         this._container.alpha = 1;
-        this._container.interactive = true;
+        this._weaponContainer.interactive = true;
     }
 
     shot(coordinates) {

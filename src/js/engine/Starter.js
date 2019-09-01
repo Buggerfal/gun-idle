@@ -17,7 +17,8 @@ class Starter {
     }
 
     init(container = document.body) {
-        const { width, height } = this.size;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
         this.app = new PIXI.Application({
             width,
