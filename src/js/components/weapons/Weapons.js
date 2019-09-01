@@ -1,4 +1,3 @@
-import starter from "../../engine/Starter";
 import GraphicsHelper from "../../utils/GraphicsHelper";
 import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
@@ -6,6 +5,7 @@ import Emitter from "component-emitter";
 import TexturesLoader from "../../engine/TexturesLoader";
 import Utils from "../../utils/utils";
 import appSettings from "../../settings/appSettings";
+
 export default class BaseWeapon {
     constructor(config) {
         this.config = { ...config };

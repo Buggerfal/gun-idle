@@ -13,8 +13,11 @@ class Game {
             this._initApp();
         });
 
+        this._stages = [];
+
         this._sizes = { ...appSettings.app };
         this.scoreBar = ScoreBar;
+
         this.introScene = new IntroScene();
     }
 
@@ -39,6 +42,7 @@ class Game {
                 return;
             }
 
+            this._stages.push(stage);
             stage.show();
         });
     }

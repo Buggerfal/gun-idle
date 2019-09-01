@@ -2,12 +2,16 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import TWEEN from "tween.js";
+import Emitter from "component-emitter";
+import Timer from "../components/Timer";
 
 class IntroScene {
     constructor() {
         this._container = null;
         this._substrate = null;
         this._hintTween = null;
+
+        new Emitter(this);
     }
 
     init() {
@@ -30,6 +34,7 @@ class IntroScene {
             height,
             onClick: e => {
                 this.hide(e);
+                Timer.start(1000);
             },
         });
         this._substrate.setParent(this._container);
