@@ -14,15 +14,37 @@ export default class GraphicsHelper {
         return container;
     }
 
+    // static createColorContainer(settings = {}) {
+    //     const { x = 0, y = 0, width = 0, height = 0, color } = settings;
+    //     const container = new PIXI.Sprite(PIXI.Texture.WHITE);
+
+    //     container.x = x;
+    //     container.y = y;
+    //     container.width = width;
+    //     container.height = height;
+    //     container.tint = color;
+
+    //     return container;
+    // }
+
     static createColorContainer(settings = {}) {
         const { x = 0, y = 0, width = 0, height = 0, color } = settings;
-        const container = new PIXI.Sprite(PIXI.Texture.WHITE);
 
+        const container = new PIXI.Container();
+
+        // move container to screen center
         container.x = x;
         container.y = y;
+
         container.width = width;
         container.height = height;
-        container.tint = color;
+
+        const sprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+
+        sprite.width = width;
+        sprite.height = height;
+        sprite.tint = color;
+        sprite.setParent(container);
 
         return container;
     }

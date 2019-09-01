@@ -1,32 +1,36 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
 import Target from "./Target";
-import starter from "../engine/Starter";
 import TWEEN from "tween.js";
+import Utils from "../utils/utils";
 
 class TargetsManager {
-    constructor(config) {
-        this._config = { ...config };
+    constructor(x) {
         this._container = null;
 
         this._target1 = null;
         this._target2 = null;
 
-        this._init();
+        this._init(x);
     }
 
-    _init() {
-        const { x, y } = this._config;
+    _init(x) {
         this._container = GraphicsHelper.createContainer({
             x,
-            y,
         });
-        this._container.setParent(starter.app.stage);
 
         this.updateTargets();
     }
 
-    makeHole(y) {
-        this._target1.makeHole(y);
+    get container() {
+        return this._container;
+    }
+
+    makeHole(coordinates) {
+        const { x, y } = this._container;
+        this._target1.makeHole({
+            x: coordinates.x - x,
+            y: coordinates.y - y,
+        });
     }
 
     createTarget() {
@@ -59,11 +63,16 @@ class TargetsManager {
             });
     }
 
-    getBounds() {
-        return{
-            x: this._target1.x,
-            y: this._target1.y
-        }
+    getHolePosition() {
+        const { width, height } = this._target1.container;
+        const { x, y } = this._container;
+
+        const xShift = Utils.random(width * 0.1, width * 0.55);
+        const yShift = Utils.random(height * 0.2, height * 0.55);
+        return {
+            x: xShift + x,
+            y: yShift + y,
+        };
     }
 }
 

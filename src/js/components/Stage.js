@@ -14,9 +14,6 @@ class Stage {
         this._target = null;
         this._weapon = null;
         this._lock = null;
-        this._levelText = null;
-        this._nameContainer = null;
-        this._weaponName = null;
 
         this._config = {
             ...config,
@@ -37,6 +34,7 @@ class Stage {
             y,
             info: { weaponType, level, name, shotReward },
         } = this._config;
+
         this._container = GraphicsHelper.createColorContainer({
             x: 0,
             y,
@@ -46,17 +44,15 @@ class Stage {
         });
         this._container.setParent(starter.app.stage);
 
-        this.targetsManager = new TargetsManager({
-            x: width - 250,
-            y: y,
-            lives: 5,
-        });
+        this.targetsManager = new TargetsManager(width - 250);
+
+        this.targetsManager.container.setParent(this._container);
 
         this._lockContainer = GraphicsHelper.createContainer({
             x: width / 2,
-            y: y + height / 2,
+            y: height / 2,
         });
-        this._lockContainer.setParent(starter.app.stage);
+        this._lockContainer.setParent(this._container);
 
         this._lock = GraphicsHelper.createSpriteFromAtlas({
             x: -100,
@@ -65,7 +61,7 @@ class Stage {
         });
         this._lock.setParent(this._lockContainer);
 
-        this._levelText = GraphicsHelper.drawText({
+        GraphicsHelper.drawText({
             x: 50,
             y: 30,
             text: `level ${level}`,
@@ -74,18 +70,11 @@ class Stage {
                 fontFamily: "Comic Sans MS",
                 fontSize: 40,
             },
-        });
-        this._levelText.setParent(this._lockContainer);
-
-        this._nameContainer = GraphicsHelper.createContainer({
-            x: 100,
-            y: y + 50,
-        });
-        this._nameContainer.setParent(starter.app.stage);
+        }).setParent(this._lockContainer);
 
         this._weaponName = GraphicsHelper.drawText({
-            x: 0,
-            y: 0,
+            x: 100,
+            y: 50,
             text: `${name}`,
             style: {
                 fill: "white",
@@ -94,27 +83,33 @@ class Stage {
             },
         });
 
-        this._weaponName.setParent(this._nameContainer);
+        this._weaponName.setParent(this._container);
 
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
-        this._weapon.on(`shotIsDone`, y => {
-            this.targetsManager.makeHole(y);
-            ScoreBar.update(shotReward);
+        this._weapon.container.setParent(this._container);
+
+        this._weapon.on(`shotRequest`, () => {
+            const coordinates = this.targetsManager.getHolePosition();
+
+            this._weapon.once(`shotIsDone`, y => {
+                this.targetsManager.makeHole(coordinates);
+                ScoreBar.update(shotReward);
+            });
+
+            this._weapon.shot(coordinates);
         });
     }
 
     hide() {
-        //this._target.alpha = 0;
-        this._weapon.hide();
-        this._lockContainer.alpha = 1;
-        this._nameContainer.alpha = 0;
+        // this._weapon.hide();
+        // this._lockContainer.alpha = 1;
+        // this._nameContainer.alpha = 0;
     }
 
     show() {
-        //this._target.alpha = 1;
-        this._weapon.show();
-        this._lockContainer.alpha = 0;
-        this._nameContainer.alpha = 1;
+        // this._weapon.show();
+        // this._lockContainer.alpha = 0;
+        // this._nameContainer.alpha = 1;
     }
 }
 

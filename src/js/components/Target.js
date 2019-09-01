@@ -24,7 +24,7 @@ class Target {
 
         this._container = GraphicsHelper.createContainer({
             x,
-            y,
+            y: y + 100,
         });
 
         this._target = GraphicsHelper.createSpriteFromAtlas({
@@ -38,7 +38,8 @@ class Target {
         return this._container;
     }
 
-    makeHole(verticalPosition) {
+    makeHole(coordinates) {
+        const { x, y } = coordinates;
         this._lives -= 1;
 
         if (this._lives <= 0) {
@@ -48,11 +49,6 @@ class Target {
 
             return;
         }
-
-        const { width: w, height: h } = this._target;
-
-        const x = Utils.random(w * 0.1, w * 0.55);
-        const y = verticalPosition; //Utils.random(h * 0.2, h * 0.55);
 
         const hole = GraphicsHelper.createSpriteFromAtlas({
             x,
@@ -92,7 +88,7 @@ class Target {
                     new TWEEN.Tween(animation)
                         .to(tweenAnimationSettings, 180)
                         .onUpdate(k => {
-                            //animation.rotation = k * 2 * sign;
+                            animation.rotation = k * sign;
                         })
                         .onComplete(() => {
                             resolve();
@@ -106,28 +102,28 @@ class Target {
             name: `targetDestroyAnimation_1`,
             x: 0,
             y: 5,
-            tweenAnimationSettings: { x: -30, y: 300 },
+            tweenAnimationSettings: { x: -30, y: [-20, 300] },
         });
 
         addAnimation({
             name: `targetDestroyAnimation_2`,
             x: 30,
             y: 0,
-            tweenAnimationSettings: { x: 80, y: 260 },
+            tweenAnimationSettings: { x: 80, y: [-20, 300] },
         });
 
         addAnimation({
             name: `targetDestroyAnimation_3`,
             x: 60,
             y: 75,
-            tweenAnimationSettings: { x: 100, y: 290 },
+            tweenAnimationSettings: { x: 100, y: [-20, 300] },
         });
 
         addAnimation({
             name: `targetDestroyAnimation_4`,
             x: 20,
             y: 95,
-            tweenAnimationSettings: { x: 20, y: 310 },
+            tweenAnimationSettings: { x: 20, y: [-20, 300] },
         });
 
         return Promise.all(animationsCompletions);

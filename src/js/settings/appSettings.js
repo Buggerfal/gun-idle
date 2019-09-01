@@ -11,4 +11,8 @@ export default {
         height: 200,
         mainBgColor: `0x553d6f`,
     },
+    weaponPosition: {
+        x: 100,
+        y: 150,
+    },
 };
