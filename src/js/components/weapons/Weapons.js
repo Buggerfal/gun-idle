@@ -38,6 +38,27 @@ export default class BaseWeapon {
 
     shot() {}
 
+    sleeveAnimation() {
+        const sleeve = GraphicsHelper.createSpriteFromAtlas({
+            x: 190,
+            y: 160,
+            name: `sleeve`,
+        });
+        sleeve.scale.set(0.4);
+        sleeve.setParent(this._container);
+
+        this.rotationTween = new TWEEN.Tween(sleeve)
+            .to({ x: sleeve.x - Utils.random(100, 150), y: [-30, 0, 300] }, 180)
+            .onUpdate(k => {
+                sleeve.rotation = -k;
+            })
+            .onComplete(() => {
+                this._container.removeChild(sleeve);
+                sleeve.destroy();
+            })
+            .start();
+    }
+
     get container() {
         return this._container;
     }
@@ -77,7 +98,7 @@ export class Colt1911 extends BaseWeapon {
 
     shot(coordinates) {
         this._bulletAnimation(coordinates);
-        this._sleeveAnimation();
+        this.sleeveAnimation();
         this.emit("shotIsDone");
         this._weaponAnimation();
 
@@ -91,26 +112,6 @@ export class Colt1911 extends BaseWeapon {
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
             .to({ x: [45, 0] }, 80)
-            .start();
-    }
-
-    _sleeveAnimation() {
-        const sleeve = GraphicsHelper.createSpriteFromAtlas({
-            x: 190,
-            y: 160,
-            name: `sleeve`,
-        });
-        sleeve.scale.set(0.4);
-        sleeve.setParent(this._container);
-        this.rotationTween = new TWEEN.Tween(sleeve)
-            .to({ x: sleeve.x - Utils.random(100, 150), y: [-30, 0, 300] }, 180)
-            .onUpdate(k => {
-                sleeve.rotation = -k;
-            })
-            .onComplete(() => {
-                this._container.removeChild(sleeve);
-                sleeve.destroy();
-            })
             .start();
     }
 
@@ -192,7 +193,7 @@ export class AK47 extends BaseWeapon {
 
     shot(coordinates) {
         this._bulletAnimation(coordinates);
-        // this._sleeveAnimation();
+        this.sleeveAnimation();
         this.emit("shotIsDone");
         // this._weaponAnimation();
 
@@ -214,6 +215,24 @@ export class AK47 extends BaseWeapon {
                 bullet.destroy();
             })
             .start();
+    }
+
+    _fireAnimation() {
+        const animatedSprite = new PIXI.AnimatedSprite([
+            TexturesLoader.getByName(`fireAnimation_1`),
+            TexturesLoader.getByName(`fireAnimation_2`),
+        ]);
+        animatedSprite.animationSpeed = 0.7;
+        animatedSprite.loop = false;
+        animatedSprite.position.set(
+            this._mainSprite.x + 240,
+            this._mainSprite.y - 30
+        );
+        animatedSprite.onComplete = () => {
+            animatedSprite.destroy();
+        };
+        this._weaponContainer.addChild(animatedSprite);
+        animatedSprite.play();
     }
 
     animated() {}
