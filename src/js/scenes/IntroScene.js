@@ -1,8 +1,8 @@
 import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
-import TWEEN from "tween.js";
 import Emitter from "component-emitter";
+import Hint from "../components/Hint";
 
 class IntroScene {
     constructor() {
@@ -68,20 +68,9 @@ class IntroScene {
 
     _runHint() {
         const { height } = { ...appSettings.app };
+        const hint = new Hint({ x: 250, y: height - 180 });
 
-        const hand = GraphicsHelper.createSpriteFromAtlas({
-            x: 250,
-            y: height - 180,
-            name: `hand`,
-        });
-        hand.scale.set(1.6);
-        hand.setParent(this._container);
-
-        this._hintTween = new TWEEN.Tween(hand.pivot)
-            .to({ x: -40, y: 40 }, 500)
-            .yoyo(true)
-            .repeat(Infinity)
-            .start();
+        this._container.addChild(hint.sprite);
     }
 }
 

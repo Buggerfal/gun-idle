@@ -8,6 +8,7 @@ import Utils from "../utils/utils";
 import TWEEN from "tween.js";
 import Emitter from "component-emitter";
 import * as PIXI from "pixi.js";
+import Hint from "./Hint";
 
 class Stage {
     constructor(config) {
@@ -127,6 +128,11 @@ class Stage {
     _setTimerLogic(level) {
         //TODO: switch-case
         if (level === "1") {
+            //TODO: hint must be one element on two scenes
+            const hint = new Hint({ x: 250, y: 220 });
+
+            this._mainContainer.addChild(hint.sprite);
+
             this._ticker = new PIXI.Ticker();
             this._ticker.start();
             this._ticker.add(() => {
@@ -135,6 +141,7 @@ class Stage {
 
             this._weapon.once(`timerStart`, () => {
                 this._autoGameStart = true;
+                hint.sprite.alpha = 0;
             });
         }
     }
