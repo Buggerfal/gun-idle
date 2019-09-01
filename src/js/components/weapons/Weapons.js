@@ -59,6 +59,26 @@ export default class BaseWeapon {
             .start();
     }
 
+    fireAnimation(positions) {
+        const { x, y } = positions;
+
+        const animatedSprite = new PIXI.AnimatedSprite([
+            TexturesLoader.getByName(`fireAnimation_1`),
+            TexturesLoader.getByName(`fireAnimation_2`),
+        ]);
+        animatedSprite.animationSpeed = 0.7;
+        animatedSprite.loop = false;
+        animatedSprite.position.set(
+            this._mainSprite.x + x,
+            this._mainSprite.y + y
+        );
+        animatedSprite.onComplete = () => {
+            animatedSprite.destroy();
+        };
+        this._weaponContainer.addChild(animatedSprite);
+        animatedSprite.play();
+    }
+
     get container() {
         return this._container;
     }
@@ -102,7 +122,10 @@ export class Colt1911 extends BaseWeapon {
         this.emit("shotIsDone");
         this._weaponAnimation();
 
-        this._fireAnimation();
+        this.fireAnimation({
+            x: 230,
+            y: -20,
+        });
     }
 
     _weaponAnimation() {
@@ -130,24 +153,6 @@ export class Colt1911 extends BaseWeapon {
                 bullet.destroy();
             })
             .start();
-    }
-
-    _fireAnimation() {
-        const animatedSprite = new PIXI.AnimatedSprite([
-            TexturesLoader.getByName(`fireAnimation_1`),
-            TexturesLoader.getByName(`fireAnimation_2`),
-        ]);
-        animatedSprite.animationSpeed = 0.7;
-        animatedSprite.loop = false;
-        animatedSprite.position.set(
-            this._mainSprite.x + 240,
-            this._mainSprite.y - 30
-        );
-        animatedSprite.onComplete = () => {
-            animatedSprite.destroy();
-        };
-        this._weaponContainer.addChild(animatedSprite);
-        animatedSprite.play();
     }
 }
 
@@ -197,7 +202,10 @@ export class AK47 extends BaseWeapon {
         this.emit("shotIsDone");
         // this._weaponAnimation();
 
-        // this._fireAnimation();
+        this.fireAnimation({
+            x: 420,
+            y: 0,
+        });
     }
 
     _bulletAnimation(coordinates) {
@@ -215,24 +223,6 @@ export class AK47 extends BaseWeapon {
                 bullet.destroy();
             })
             .start();
-    }
-
-    _fireAnimation() {
-        const animatedSprite = new PIXI.AnimatedSprite([
-            TexturesLoader.getByName(`fireAnimation_1`),
-            TexturesLoader.getByName(`fireAnimation_2`),
-        ]);
-        animatedSprite.animationSpeed = 0.7;
-        animatedSprite.loop = false;
-        animatedSprite.position.set(
-            this._mainSprite.x + 240,
-            this._mainSprite.y - 30
-        );
-        animatedSprite.onComplete = () => {
-            animatedSprite.destroy();
-        };
-        this._weaponContainer.addChild(animatedSprite);
-        animatedSprite.play();
     }
 
     animated() {}
