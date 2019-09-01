@@ -22,11 +22,6 @@ module.exports = {
                     name: "vendors",
                     chunks: "initial",
                 },
-                // images: {
-                //     test: /[\\/]src[\\/]base64[\\/]/,
-                //     name: "images",
-                //     chunks: "initial",
-                // },
             },
         },
     },
@@ -60,7 +55,7 @@ module.exports = {
             title: "idle gun",
             template: "index.html",
         }),
-        new CopyPlugin([{ from: "src/images/SpriteSheet.png" }]),
+        new CopyPlugin([{ from: "src/assets/SpriteSheet.png" }]),
     ],
 
     resolve: {

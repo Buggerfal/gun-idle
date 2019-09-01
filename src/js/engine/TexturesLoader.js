@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import WeaponDescription from "../../images/spriteSheetImagesMap";
+import WeaponDescription from "../../assets/spriteSheetImagesMap";
 
 const spriteSheetName = "SpriteSheet.png";
 const debug = false;
