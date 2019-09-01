@@ -3,7 +3,6 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import TWEEN from "tween.js";
 import Emitter from "component-emitter";
-import Timer from "../components/Timer";
 
 class IntroScene {
     constructor() {
@@ -34,7 +33,6 @@ class IntroScene {
             height,
             onClick: e => {
                 this.hide(e);
-                Timer.start(1000);
             },
         });
         this._substrate.setParent(this._container);
