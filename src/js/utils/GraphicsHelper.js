@@ -14,19 +14,6 @@ export default class GraphicsHelper {
         return container;
     }
 
-    // static createColorContainer(settings = {}) {
-    //     const { x = 0, y = 0, width = 0, height = 0, color } = settings;
-    //     const container = new PIXI.Sprite(PIXI.Texture.WHITE);
-
-    //     container.x = x;
-    //     container.y = y;
-    //     container.width = width;
-    //     container.height = height;
-    //     container.tint = color;
-
-    //     return container;
-    // }
-
     static createColorContainer(settings = {}) {
         const { x = 0, y = 0, width = 0, height = 0, color } = settings;
 
@@ -50,13 +37,16 @@ export default class GraphicsHelper {
     }
 
     static createSpriteFromAtlas(settings = {}) {
-        const { x = 0, y = 0, name } = settings;
+        const { x = 0, y = 0, name, anchor } = settings;
         const texture = texturesLoader.getByName(name);
 
         const sprite = new PIXI.Sprite(texture);
-
         sprite.x = x;
         sprite.y = y;
+
+        if (anchor) {
+            sprite.anchor.set(anchor);
+        }
 
         return sprite;
     }

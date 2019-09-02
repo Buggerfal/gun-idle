@@ -2,6 +2,7 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import ScoreBar from "../components/ScoreBar";
+import Button from "../components/Button";
 
 class OutroScene {
     constructor() {
@@ -13,27 +14,13 @@ class OutroScene {
 
     init() {
         const { width, height } = { ...appSettings.app };
-        const textStyles = {
-            fill: "white",
-            fontFamily: "Courier New",
-            fontSize: 200,
-            fontWeight: 900,
-        };
 
-        this._container = GraphicsHelper.createContainer({
-            x: 0,
-            y: 0,
-        });
+        this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
         this._substrate = GraphicsHelper.drawGraphics({
             width,
             height,
-            onClick: e => {
-                e.stopPropagation();
-                this.hide();
-                ScoreBar.show();
-            },
         });
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
@@ -51,19 +38,74 @@ class OutroScene {
         });
         rect.setParent(this._container);
 
-        // GraphicsHelper.drawText({
-        //     x: width / 2,
-        //     y: height / 2,
-        //     text: `TAP TO`,
-        //     style: textStyles,
-        // }).setParent(this._container);
+        GraphicsHelper.drawText({
+            x: width / 2,
+            y: 380,
+            text: `Congratulations`,
+            style: {
+                fill: "white",
+                fontFamily: "Courier New",
+                fontSize: 70,
+                fontWeight: 900,
+            },
+        }).setParent(this._container);
 
-        // GraphicsHelper.drawText({
-        //     x: width / 2,
-        //     y: height / 2 + 220,
-        //     text: `PLAY`,
-        //     style: textStyles,
-        // }).setParent(this._container);
+        this._weaponContainer = GraphicsHelper.createContainer({
+            x: width / 2,
+            y: 550,
+        });
+        this._weaponContainer.setParent(this._container);
+
+        const shotGun = GraphicsHelper.createSpriteFromAtlas({
+            x: 0,
+            y: 0,
+            anchor: 0.5,
+            name: `shotgun`,
+        });
+        shotGun.setParent(this._weaponContainer);
+
+        const shotGunRefresh = GraphicsHelper.createSpriteFromAtlas({
+            x: 150,
+            y: 0,
+            anchor: 0.5,
+            name: `shotgunRefresh`,
+        });
+        shotGunRefresh.setParent(this._weaponContainer);
+
+        const shotGunSlide = GraphicsHelper.createSpriteFromAtlas({
+            x: -8,
+            y: -32,
+            anchor: 0.5,
+            name: `shotgunSlide`,
+        });
+        shotGunSlide.setParent(this._weaponContainer);
+
+        GraphicsHelper.drawText({
+            x: width / 2,
+            y: 940,
+            text: `To keep using your bonus`,
+            style: {
+                fill: "white",
+                fontFamily: "Courier New",
+                fontSize: 50,
+                fontWeight: 900,
+            },
+        }).setParent(this._container);
+
+        this._ctaDownload = new Button({
+            width: 350,
+            height: 150,
+            color: "0xf902ff",
+            text: `INSTALL`,
+            onClick: () => {
+                this._ctaHandler();
+            },
+            fontSize: 70,
+        });
+        const ctaContainer = this._ctaDownload.container;
+
+        ctaContainer.position.set(width / 2 - 175, 700);
+        ctaContainer.setParent(this._container);
 
         this.hide();
     }
@@ -72,17 +114,17 @@ class OutroScene {
         this._container.alpha = 1;
         this._substrate.interactive = true;
 
-        this._runAnimation();
-
         ScoreBar.hide();
     }
 
-    hide(e) {
+    hide() {
         this._container.alpha = 0;
         this._substrate.interactive = false;
     }
 
-    _runAnimation() {}
+    _ctaHandler() {
+        console.log("DOWNLOAD");
+    }
 }
 
 export default OutroScene;

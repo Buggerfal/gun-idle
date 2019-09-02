@@ -129,7 +129,7 @@ export default {
         x: 1487,
         y: 1544,
         width: 85,
-        height: 44,
+        height: 42,
     },
     shotgunSlide: {
         x: 1485,
