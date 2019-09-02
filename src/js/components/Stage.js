@@ -175,11 +175,11 @@ class Stage {
     _setTimerLogic(level) {
         switch (level) {
             case "1":
-                this._setAutoPlayLogic({ x: 250, y: 220 });
+                this._setAutoPlayLogic({ x: 250, y: 200 });
                 break;
 
             case "2":
-                this._setAutoPlayLogic({ x: 350, y: 220 });
+                this._setAutoPlayLogic({ x: 350, y: 180 });
                 break;
 
             default:
@@ -285,7 +285,7 @@ class Stage {
 
         const hint = new Hint({
             x: 60,
-            y: 90,
+            y: 70,
         });
 
         hint.sprite.setParent(this._openBtnContainer);

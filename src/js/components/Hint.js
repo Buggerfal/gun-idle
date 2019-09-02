@@ -1,5 +1,6 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
 import TWEEN from "tween.js";
+import starter from "../engine/Starter";
 
 class Hint {
     constructor(coordinates) {
@@ -10,22 +11,28 @@ class Hint {
     _init(coordinates) {
         const { x, y } = { ...coordinates };
 
+        this._container = GraphicsHelper.createContainer({ x, y });
+
         this._sprite = GraphicsHelper.createSpriteFromAtlas({
-            x,
-            y,
             name: `hand`,
         });
         this._sprite.scale.set(1.6);
+        this._sprite.setParent(this._container);
 
-        this._hintTween = new TWEEN.Tween(this._sprite.pivot)
-            .to({ x: -40, y: 40 }, 500)
-            .yoyo(true)
-            .repeat(Infinity)
+        this._animation();
+    }
+
+    _animation() {
+        this._hintTween = new TWEEN.Tween(this._sprite.scale)
+            .to({ x: [2, 1.6], y: [2, 1.6] }, 1000)
+            .onComplete(() => {
+                this._animation();
+            })
             .start();
     }
 
     get sprite() {
-        return this._sprite;
+        return this._container;
     }
 
     hide() {}

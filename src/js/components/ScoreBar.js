@@ -59,6 +59,8 @@ class ScoreBar {
         this._ctaDownload.container.setParent(this._container);
 
         new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 0).start();
+
+        this._container.visible = false;
     }
 
     update(val = 0) {
@@ -72,6 +74,7 @@ class ScoreBar {
 
     show() {
         new TWEEN.Tween(this._container.pivot).to({ y: 0 }, 260).start();
+        this._container.visible = true;
     }
 
     hide() {
