@@ -108,7 +108,7 @@ export default {
         height: 47,
     },
     flameTarget: {
-        x: 922,
+        x: 924,
         y: 120,
         width: 100,
         height: 120,

@@ -4,16 +4,19 @@ import TWEEN from "tween.js";
 import Utils from "../utils/utils";
 
 class TargetsManager {
-    constructor(x, reward) {
+    constructor(config) {
         this._container = null;
 
         this._target1 = null;
         this._target2 = null;
-        this._reward = reward;
-        this._init(x);
+        this._config = config;
+        //TODO: bonusManager, not stupid logic
+        this._isFirstTarget = true;
+        this._init(config);
     }
 
-    _init(x) {
+    _init(config) {
+        const { x } = config;
         this._container = GraphicsHelper.createContainer({
             x,
         });
@@ -34,10 +37,19 @@ class TargetsManager {
     }
 
     createTarget() {
+        const level = this._config.level;
+        let name = `target`;
+
+        //TODO: refactoring
+        if (level === `2` && this._isFirstTarget) {
+            name = `flameTarget`;
+            this._isFirstTarget = false;
+        }
+
         const target = new Target({
             x: 150,
             y: 0,
-            name: `target`,
+            name: name,
         });
         target.container.setParent(this._container);
 

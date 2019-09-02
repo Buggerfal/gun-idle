@@ -64,7 +64,10 @@ class Stage {
         this._unlockContainer = GraphicsHelper.createContainer();
         this._unlockContainer.setParent(this._mainContainer);
 
-        this.targetsManager = new TargetsManager(width - 250, this._shotReward);
+        this.targetsManager = new TargetsManager({
+            x: width - 250,
+            level: level,
+        });
 
         this.targetsManager.container.setParent(this._unlockContainer);
 
