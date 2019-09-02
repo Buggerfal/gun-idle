@@ -10,6 +10,7 @@ import Emitter from "component-emitter";
 import * as PIXI from "pixi.js";
 import Hint from "./Hint";
 import Button from "./Button";
+import i18n from "../settings/i18n";
 
 class Stage {
     constructor(config) {
@@ -104,7 +105,7 @@ class Stage {
         this._levelInfoText = GraphicsHelper.drawText({
             x: this._lock.x + this._lock.width + 80,
             y: 30,
-            text: `level ${level}`,
+            text: `${i18n.level} ${level}`,
             style: {
                 fill: "white",
                 fontFamily: "Comic Sans MS",
@@ -118,12 +119,13 @@ class Stage {
         });
         this._openBtnContainer.setParent(this._lockContainer);
 
+        const { openStageButton } = appSettings.colors;
         this._openButton = new Button({
             width: 250,
             height: 85,
             offset: 30,
-            color: "0x4ccea8",
-            text: `$${openLevelCost}`,
+            color: openStageButton,
+            text: `${i18n.usdIcon}${openLevelCost}`,
             onClick: () => {
                 this.show();
             },
@@ -224,7 +226,7 @@ class Stage {
         this._rewardContainer.setParent(this._mainContainer);
 
         const rewardText = GraphicsHelper.drawText({
-            text: `$${value}`,
+            text: `${i18n.usdIcon}${value}`,
             x: this._mainContainer.width - 350,
             y,
             style: {

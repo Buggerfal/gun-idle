@@ -70,11 +70,10 @@ class Game {
     }
 
     _getStageBackgroundColor(stageNumber) {
-        const oddsColor = `0x2d1c38`;
-        const evenColor = `0x26152f`;
+        const { stage1, stage2 } = appSettings.colors;
         const isEven = stageNumber % 2;
 
-        return isEven ? evenColor : oddsColor;
+        return isEven ? stage2 : stage1;
     }
 }
 

@@ -4,6 +4,7 @@ import appSettings from "../settings/appSettings";
 import Emitter from "component-emitter";
 import Hint from "../components/Hint";
 import ScoreBar from "../components/ScoreBar";
+import i18n from "../settings/i18n";
 
 class IntroScene {
     constructor() {
@@ -43,14 +44,14 @@ class IntroScene {
         GraphicsHelper.drawText({
             x: width / 2,
             y: height / 2,
-            text: `TAP TO`,
+            text: i18n.introScene_1,
             style: textStyles,
         }).setParent(this._container);
 
         GraphicsHelper.drawText({
             x: width / 2,
             y: height / 2 + 220,
-            text: `PLAY`, //TODO config
+            text: i18n.introScene_2,
             style: textStyles,
         }).setParent(this._container);
 

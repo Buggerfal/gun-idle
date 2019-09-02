@@ -3,7 +3,7 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Button from "./Button";
 import TWEEN from "tween.js";
-
+import i18n from "../settings/i18n";
 class ScoreBar {
     constructor() {
         this._container = null;
@@ -42,11 +42,13 @@ class ScoreBar {
         this._moneyText.setParent(this._container);
         this.update();
 
+        const { installButton } = appSettings.colors;
+
         this._ctaDownload = new Button({
             width: 300,
             height: 100,
-            color: "0xf902ff",
-            text: `INSTALL`,
+            color: installButton,
+            text: i18n.installButton,
             onClick: () => {
                 this._ctaHandler();
             },
@@ -60,7 +62,7 @@ class ScoreBar {
 
     update(val = 0) {
         this._money += val;
-        this._moneyText.text = `$${this._money}`;
+        this._moneyText.text = `${i18n.usdIcon}${this._money}`;
     }
 
     show() {
@@ -72,7 +74,7 @@ class ScoreBar {
     }
 
     _ctaHandler() {
-        console.log("DOWNLOAD");
+        console.log(i18n.download);
     }
 }
 

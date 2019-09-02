@@ -19,5 +19,7 @@ export default {
         installButton: `0xf902ff`,
         openStageButton: `0x4ccea8`,
         substrateOutro: `0x696969`,
+        stage1: `0x2d1c38`,
+        stage2: `0x26152f`,
     },
 };
