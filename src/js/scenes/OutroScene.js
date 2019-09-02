@@ -38,15 +38,18 @@ class OutroScene {
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
 
-        const substrateWidth = 500;
+        const substrateWidth = 800;
+        const substrateHeight = 700;
+
         const rect = GraphicsHelper.drawGraphics({
-            x: substrateWidth / 2,
+            x: width / 2 - substrateWidth / 2,
+            y: 300,
             width: substrateWidth,
+            height: substrateHeight,
             color: `0x696969`,
-            height,
+            rounded: 100,
         });
         rect.setParent(this._container);
-        // rect.alpha = 1;
 
         // GraphicsHelper.drawText({
         //     x: width / 2,

@@ -66,7 +66,7 @@ class Game {
         SceneManager.registerScene(`intro`, this.introScene);
         SceneManager.registerScene(`outro`, this.OutroScene);
 
-        SceneManager.showScene(`intro`);
+        SceneManager.showScene(`outro`);
     }
 
     _getStageBackgroundColor(stageNumber) {

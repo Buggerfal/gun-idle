@@ -119,4 +119,22 @@ export default {
         width: 140,
         height: 175,
     },
+    shotgun: {
+        x: 1024,
+        y: 1528,
+        width: 460,
+        height: 150,
+    },
+    shotgunRefresh: {
+        x: 1487,
+        y: 1544,
+        width: 85,
+        height: 44,
+    },
+    shotgunSlide: {
+        x: 1485,
+        y: 1588,
+        width: 60,
+        height: 25,
+    },
 };
