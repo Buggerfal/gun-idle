@@ -14,6 +14,7 @@ class Button {
             text,
             onClick,
             fontSize,
+            rounded,
         } = settings;
 
         this._spriteContainer = GraphicsHelper.createContainer();
@@ -24,7 +25,7 @@ class Button {
             width,
             height,
             color,
-            rounded: 15,
+            rounded: rounded,
             onClick: onClick,
         });
         this._sprite.setParent(this._spriteContainer);

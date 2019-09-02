@@ -121,6 +121,8 @@ class OutroScene {
 
     hide() {
         this._container.alpha = 0;
+        this._container.visible = false;
+
         this._substrate.interactive = false;
     }
 

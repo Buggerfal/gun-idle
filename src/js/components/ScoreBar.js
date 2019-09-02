@@ -50,6 +50,7 @@ class ScoreBar {
             height: 100,
             color: installButton,
             text: i18n.installButton,
+            rounded: 25,
             onClick: () => {
                 this._ctaHandler();
             },

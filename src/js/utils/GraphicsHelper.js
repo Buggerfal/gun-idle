@@ -80,9 +80,9 @@ export default class GraphicsHelper {
         const graphics = new PIXI.Graphics();
 
         graphics.beginFill(color);
-        graphics.drawRect(x, y, width, height);
+        graphics.drawRoundedRect(x, y, width, height, rounded); //TODO Nine splice
         graphics.beginHole();
-        graphics.drawRect(holeX, holeY, holeWidth, holeHeight, rounded);
+        graphics.drawRoundedRect(holeX, holeY, holeWidth, holeHeight, rounded);
 
         graphics.endHole();
         graphics.endFill();
