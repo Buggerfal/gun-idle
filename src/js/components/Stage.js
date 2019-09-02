@@ -30,7 +30,7 @@ class Stage {
 
         this.level = this._config.info.level;
 
-        this._autoGameCounter = 4;
+        this._autoGameCounter = 5;
         this._timeBetweenShoot = 1000;
         this._shotReward = 0;
 

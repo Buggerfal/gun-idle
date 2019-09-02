@@ -95,4 +95,17 @@ export default class GraphicsHelper {
 
         return graphics;
     }
+
+    static drawPolygon(settings = {}) {
+        const { color = 0x000000, path, alpha = 1 } = settings;
+
+        const graphics = new PIXI.Graphics();
+
+        graphics.lineStyle(0);
+        graphics.beginFill(color, alpha);
+        graphics.drawPolygon(path);
+        graphics.endFill();
+
+        return graphics;
+    }
 }

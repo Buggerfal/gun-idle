@@ -20,6 +20,6 @@ export default {
         substrateOutro: `0x696969`,
         stage1: `0x2d1c38`,
         stage2: `0x26152f`,
-        scoreBar: `0x553d6f`,
+        scoreBar: `0x4c4c4c`,
     },
 };

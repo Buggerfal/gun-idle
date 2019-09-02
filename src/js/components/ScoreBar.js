@@ -4,10 +4,11 @@ import appSettings from "../settings/appSettings";
 import Button from "./Button";
 import TWEEN from "tween.js";
 import i18n from "../settings/i18n";
+import polygonsPath from "../settings/polygonsPath";
+
 class ScoreBar {
     constructor() {
         this._container = null;
-        this._mainBackground = null;
         this._moneyText = null;
         this._ctaDownload = null;
         this._money = 0;
@@ -16,20 +17,18 @@ class ScoreBar {
     }
 
     init() {
-        const { width, height, mainBgColor } = this._config;
+        const { width, height } = this._config;
         const { scoreBar } = appSettings.colors;
 
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
-        this._mainBackground = GraphicsHelper.createColorContainer({
-            x: 0,
-            y: 0,
-            width: width,
-            height: height,
+        const backgroundPolygon = GraphicsHelper.drawPolygon({
+            path: polygonsPath.scoreBar,
             color: scoreBar,
         });
-        this._mainBackground.setParent(this._container);
+
+        this._container.addChild(backgroundPolygon);
 
         this._moneyText = GraphicsHelper.drawText({
             x: width / 2,
