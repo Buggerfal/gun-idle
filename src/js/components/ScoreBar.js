@@ -66,6 +66,10 @@ class ScoreBar {
         this._moneyText.text = `${i18n.usdIcon}${this._money}`;
     }
 
+    get money() {
+        return this._money;
+    }
+
     show() {
         new TWEEN.Tween(this._container.pivot).to({ y: 0 }, 260).start();
     }

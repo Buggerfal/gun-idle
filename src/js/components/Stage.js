@@ -127,7 +127,13 @@ class Stage {
             color: openStageButton,
             text: `${i18n.usdIcon}${openLevelCost}`,
             onClick: () => {
+                if (ScoreBar.money < openLevelCost) {
+                    console.log(`not enough money`);
+                    return;
+                }
+
                 this.show();
+                ScoreBar.update(-openLevelCost);
             },
             fontSize: 50,
         });
