@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "component-emitter": "github:component/emitter",
+    "pixi-particles": "^4.1.2",
     "pixi.js": "^5.1.2",
     "tween.js": "^16.6.0"
   }

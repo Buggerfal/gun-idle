@@ -39,9 +39,10 @@ class IntroScene {
             holeWidth: 340,
             holeHeight: 240,
             onClick: e => {
-                e.stopPropagation();
                 this.hide();
                 ScoreBar.show();
+                e.stopPropagation();
+                this._container.removeChild(this._blockedInteractionGraphics);
             },
         });
         this._substrate.setParent(this._container);
@@ -54,10 +55,10 @@ class IntroScene {
             x: 80,
             y: height - 280,
             onClick: e => {
-                e.stopPropagation();
                 this.hide();
                 ScoreBar.show();
                 this._blockedInteractionGraphics.visible = false;
+                e.stopPropagation();
             },
         });
         this._blockedInteractionGraphics.setParent(this._container);
