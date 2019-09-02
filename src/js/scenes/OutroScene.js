@@ -1,16 +1,11 @@
 import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
-import Emitter from "component-emitter";
-import Hint from "../components/Hint";
 
-class IntroScene {
+class OutroScene {
     constructor() {
         this._container = null;
         this._substrate = null;
-        this._hintTween = null;
-
-        new Emitter(this);
 
         this.init();
     }
@@ -24,7 +19,10 @@ class IntroScene {
             fontWeight: 900,
         };
 
-        this._container = GraphicsHelper.createContainer({});
+        this._container = GraphicsHelper.createContainer({
+            x: 0,
+            y: 0,
+        });
         this._container.setParent(starter.app.stage);
 
         this._substrate = GraphicsHelper.drawGraphics({
@@ -38,41 +36,43 @@ class IntroScene {
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
 
-        GraphicsHelper.drawText({
-            x: width / 2,
-            y: height / 2,
-            text: `TAP TO`,
-            style: textStyles,
-        }).setParent(this._container);
+        const rect = GraphicsHelper.drawGraphics({
+            width: width / 3,
+            color: `0x99ff00`,
+            height,
+        });
+        rect.setParent(this._container);
+        // rect.alpha = 1;
 
-        GraphicsHelper.drawText({
-            x: width / 2,
-            y: height / 2 + 220,
-            text: `PLAY`, //TODO config
-            style: textStyles,
-        }).setParent(this._container);
+        // GraphicsHelper.drawText({
+        //     x: width / 2,
+        //     y: height / 2,
+        //     text: `TAP TO`,
+        //     style: textStyles,
+        // }).setParent(this._container);
+
+        // GraphicsHelper.drawText({
+        //     x: width / 2,
+        //     y: height / 2 + 220,
+        //     text: `PLAY`,
+        //     style: textStyles,
+        // }).setParent(this._container);
 
         this.hide();
     }
 
     show() {
-        this._runHint();
-
         this._container.alpha = 1;
         this._substrate.interactive = true;
+        this._runAnimation();
     }
 
-    hide() {
+    hide(e) {
         this._container.alpha = 0;
         this._substrate.interactive = false;
     }
 
-    _runHint() {
-        const { height } = { ...appSettings.app };
-        const hint = new Hint({ x: 250, y: height - 180 });
-
-        this._container.addChild(hint.sprite);
-    }
+    _runAnimation() {}
 }
 
-export default IntroScene;
+export default OutroScene;

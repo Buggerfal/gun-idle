@@ -5,20 +5,26 @@ import stages from "../settings/stagesSettings";
 import ScoreBar from "../components/ScoreBar";
 import SceneManager from "../scenes/SceneManager";
 import IntroScene from "../scenes/IntroScene";
+import OutroScene from "../scenes/OutroScene";
 
 class Game {
     constructor() {
         this._stages = [];
 
-        starter.initiated.then(() => {
-            this._drawStages();
-            this._initAppComponents();
-        });
+        starter.initiated
+            .then(() => {
+                this._drawStages();
+            })
+            .then(() => {
+                this.introScene = new IntroScene();
+                this.OutroScene = new OutroScene();
+            })
+            .then(() => {
+                this._initAppComponents();
+            });
 
         this._sizes = { ...appSettings.app };
         this.scoreBar = ScoreBar;
-
-        this.introScene = new IntroScene();
     }
 
     _drawStages() {
@@ -57,8 +63,10 @@ class Game {
 
     _initAppComponents() {
         this.scoreBar.init();
-        this.introScene.init();
+
         SceneManager.registerScene(`intro`, this.introScene);
+        SceneManager.registerScene(`outro`, this.OutroScene);
+
         SceneManager.showScene(`intro`);
     }
 
