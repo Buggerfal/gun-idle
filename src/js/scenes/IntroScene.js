@@ -80,8 +80,6 @@ class IntroScene {
     }
 
     show() {
-        this._runHint();
-
         this._container.alpha = 1;
         this._substrate.interactive = true;
     }
@@ -89,13 +87,6 @@ class IntroScene {
     hide() {
         this._container.alpha = 0;
         this._substrate.interactive = false;
-    }
-
-    _runHint() {
-        const { height } = { ...appSettings.app };
-        const hint = new Hint({ x: 250, y: height - 180 });
-
-        this._container.addChild(hint.sprite);
     }
 }
 
