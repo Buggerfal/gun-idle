@@ -8,8 +8,8 @@ class Button {
 
     _init(settings) {
         const {
-            x,
-            y,
+            x = 0,
+            y = 0,
             width,
             height,
             color,
@@ -18,13 +18,9 @@ class Button {
             fontSize,
         } = settings;
 
-        this._buttonContainer = GraphicsHelper.createContainer({
-            x,
-            y,
-        });
-        this._buttonContainer.setParent(starter.app.stage);
+        this._spriteContainer = GraphicsHelper.createContainer();
 
-        this._button = GraphicsHelper.drawGraphics({
+        this._sprite = GraphicsHelper.drawGraphics({
             x: 0,
             y: 0,
             width,
@@ -33,7 +29,7 @@ class Button {
             rounded: 15,
             onClick: onClick,
         });
-        this._button.setParent(this._buttonContainer);
+        this._sprite.setParent(this._spriteContainer);
 
         this.text = GraphicsHelper.drawText({
             x: width / 2,
@@ -47,17 +43,21 @@ class Button {
             },
         });
 
-        this.text.setParent(this._button);
+        this.text.setParent(this._sprite);
+    }
+
+    get container() {
+        return this._spriteContainer;
     }
 
     hide() {
-        this._button.alpha = 0;
-        this._button.interactive = false;
+        this._sprite.alpha = 0;
+        this._sprite.interactive = false;
     }
 
     show() {
-        this._button.alpha = 1;
-        this._button.interactive = true;
+        this._sprite.alpha = 1;
+        this._sprite.interactive = true;
     }
 }
 

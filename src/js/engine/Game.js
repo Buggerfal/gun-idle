@@ -37,8 +37,11 @@ class Game {
                 info: stageInfo,
             });
 
-            this._stages.push(stage);
+            stage.on("isOpenNextStage", level => {
+                this.isOpenStage(level);
+            });
 
+            this._stages.push(stage);
             if (stageInfo.gameProgressToUnlock > gameProgress) {
                 stage.hide();
                 return;
@@ -46,6 +49,10 @@ class Game {
 
             stage.show();
         });
+    }
+
+    isOpenStage(level) {
+        this._stages[level].showOpenButton();
     }
 
     _initAppComponents() {

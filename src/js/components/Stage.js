@@ -9,6 +9,7 @@ import TWEEN from "tween.js";
 import Emitter from "component-emitter";
 import * as PIXI from "pixi.js";
 import Hint from "./Hint";
+import Button from "./Button";
 
 class Stage {
     constructor(config) {
@@ -26,11 +27,13 @@ class Stage {
             width: appSettings.app.width,
         };
 
-        this._autoGameCounter = 4;
+        this.level = this._config.info.level;
 
+        this._autoGameCounter = 4;
         this._timeBetweenShoot = 1000;
-        this._autoGameStart = false;
         this._shotReward = 0;
+
+        this._autoGameStart = false;
 
         new Emitter(this);
 
@@ -45,7 +48,7 @@ class Stage {
             height,
             color,
             y,
-            info: { weaponType, level, name, shotReward },
+            info: { weaponType, level, name, shotReward, openLevelCost },
         } = this._config;
 
         this._shotReward = shotReward;
@@ -83,6 +86,54 @@ class Stage {
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
         this._weapon.container.setParent(this._unlockContainer);
 
+        this._setListener();
+
+        this._setTimerLogic(level);
+
+        //Locked stage elements
+        this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
+        this._lockContainer.setParent(this._mainContainer);
+
+        this._lock = GraphicsHelper.createSpriteFromAtlas({
+            x: width / 2 - 100,
+            name: `lockedIcon`,
+        });
+        this._lock.setParent(this._lockContainer);
+
+        this._levelInfoText = GraphicsHelper.drawText({
+            x: this._lock.x + this._lock.width + 80,
+            y: 30,
+            text: `level ${level}`,
+            style: {
+                fill: "white",
+                fontFamily: "Comic Sans MS",
+                fontSize: 40,
+            },
+        });
+        this._levelInfoText.setParent(this._lockContainer);
+
+        this._openBtnContainer = GraphicsHelper.createContainer({
+            x: width / 2 - 125, // 100- half width button
+        });
+        this._openBtnContainer.setParent(this._lockContainer);
+
+        this._openButton = new Button({
+            width: 250,
+            height: 85,
+            color: "0xf902ff",
+            text: `$${openLevelCost}`,
+            onClick: () => {
+                this.show();
+            },
+            fontSize: 70,
+        });
+
+        this._openButton.container.setParent(this._openBtnContainer);
+
+        this._openBtnContainer.visible = false;
+    }
+
+    _setListener() {
         this._weapon.on(`shotRequest`, () => {
             const coordinates = this.targetsManager.getHolePosition();
 
@@ -93,46 +144,24 @@ class Stage {
             });
 
             this._weapon.shot(coordinates);
-            this.emit("openStage");
+
+            if (this._autoGameCounter <= 0) {
+                this.emit("isOpenNextStage", this.level);
+            }
 
             this._autoGameCounter -= 1;
             this._timeBetweenShoot = 1000;
         });
-
-        this._setTimerLogic(level);
-
-        //Locked stage elements
-        this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
-        this._lockContainer.setParent(this._mainContainer);
-
-        this._lock = GraphicsHelper.createSpriteFromAtlas({
-            x: width / 2 - 50,
-            name: `lockedIcon`,
-        });
-        this._lock.setParent(this._lockContainer);
-
-        const margin = 100;
-
-        GraphicsHelper.drawText({
-            x: this._lock.x + this._lock.width + margin,
-            y: 30,
-            text: `level ${level}`,
-            style: {
-                fill: "white",
-                fontFamily: "Comic Sans MS",
-                fontSize: 40,
-            },
-        }).setParent(this._lockContainer);
     }
 
     _setTimerLogic(level) {
         switch (level) {
             case "1":
-                this._setAutoPlayLogic();
+                this._setAutoPlayLogic({ x: 250, y: 220 });
                 break;
 
             case "2":
-                this._setAutoPlayLogic();
+                this._setAutoPlayLogic({ x: 350, y: 220 });
 
                 break;
 
@@ -141,16 +170,17 @@ class Stage {
         }
     }
 
-    _setAutoPlayLogic() {
+    _setAutoPlayLogic(coordinates) {
+        const { x, y } = coordinates;
         //TODO: hint must be one element on two scenes
-        const hint = new Hint({ x: 250, y: 220 });
+        const hint = new Hint({ x, y });
 
         this._weapon.once(`timerStart`, () => {
             this._autoGameStart = true;
             hint.sprite.alpha = 0;
         });
 
-        this._mainContainer.addChild(hint.sprite);
+        this._unlockContainer.addChild(hint.sprite);
 
         this._ticker = new PIXI.Ticker();
         this._ticker.start();
@@ -161,8 +191,14 @@ class Stage {
 
     _makeShot() {
         if (this._autoGameCounter <= 0) {
+            this.emit("isOpenNextStage", this.level);
+            return;
+        }
+
+        if (this._autoGameCounter <= 0) {
             this._autoGameStart = false;
         }
+
         this._autoGameCounter -= 1;
 
         const coordinates = this.targetsManager.getHolePosition();
@@ -215,9 +251,16 @@ class Stage {
     }
 
     show() {
+        this._openBtnContainer.visible = true;
         this._weapon.show();
         this._lockContainer.alpha = 0;
         this._unlockContainer.alpha = 1;
+    }
+
+    showOpenButton() {
+        this._lock.alpha = 0;
+        this._levelInfoText.alpha = 0;
+        this._openBtnContainer.visible = true;
     }
 }
 

@@ -35,7 +35,6 @@ class ScoreBar {
         this._moneyText = GraphicsHelper.drawText({
             x: width / 2,
             y: height / 2,
-            // text: `$${this._money}`,
             style: {
                 fill: "white",
                 fontFamily: "Comic Sans MS",
@@ -46,8 +45,6 @@ class ScoreBar {
         this.update();
 
         this._ctaDownload = new Button({
-            x: width - 350,
-            y: 50,
             width: 300,
             height: 100,
             color: "0xf902ff",
@@ -57,6 +54,8 @@ class ScoreBar {
             },
             fontSize: 70,
         });
+        this._ctaDownload.container.position.set(width - 350, 50);
+        this._ctaDownload.container.setParent(starter.app.stage);
     }
 
     update(val = 0) {
