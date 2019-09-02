@@ -9,7 +9,6 @@ export default {
     score: {
         width: 1280,
         height: 200,
-        mainBgColor: `0x553d6f`,
     },
     weaponPosition: {
         x: 100,
@@ -21,5 +20,6 @@ export default {
         substrateOutro: `0x696969`,
         stage1: `0x2d1c38`,
         stage2: `0x26152f`,
+        scoreBar: `0x553d6f`,
     },
 };

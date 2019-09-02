@@ -17,6 +17,7 @@ class ScoreBar {
 
     init() {
         const { width, height, mainBgColor } = this._config;
+        const { scoreBar } = appSettings.colors;
 
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
@@ -26,7 +27,7 @@ class ScoreBar {
             y: 0,
             width: width,
             height: height,
-            color: mainBgColor,
+            color: scoreBar,
         });
         this._mainBackground.setParent(this._container);
 
