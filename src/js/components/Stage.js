@@ -124,6 +124,7 @@ class Stage {
             width: 250,
             height: 85,
             offset: 30,
+            rounded: 15,
             color: openStageButton,
             text: `${i18n.usdIcon}${openLevelCost}`,
             onClick: () => {
