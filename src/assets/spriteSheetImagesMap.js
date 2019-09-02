@@ -50,7 +50,7 @@ export default {
     hand: {
         x: 673,
         y: 292,
-        width: 53,
+        width: 52,
         height: 82,
     },
     bullet: {

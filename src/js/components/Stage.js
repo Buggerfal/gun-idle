@@ -37,8 +37,6 @@ class Stage {
 
         new Emitter(this);
 
-        this.progress = 0;
-
         this._init();
     }
 
@@ -120,17 +118,25 @@ class Stage {
         this._openButton = new Button({
             width: 250,
             height: 85,
-            color: "0xf902ff",
+            offset: 30,
+            color: "0x4ccea8",
             text: `$${openLevelCost}`,
             onClick: () => {
                 this.show();
             },
-            fontSize: 70,
+            fontSize: 50,
         });
 
         this._openButton.container.setParent(this._openBtnContainer);
 
         this._openBtnContainer.visible = false;
+
+        this._lockBtnIcon = GraphicsHelper.createSpriteFromAtlas({
+            x: 20,
+            y: 10,
+            name: `lockedIcon`,
+        });
+        this._lockBtnIcon.setParent(this._openBtnContainer);
     }
 
     _setListener() {
@@ -258,9 +264,20 @@ class Stage {
     }
 
     showOpenButton() {
+        if (this._openBtnContainer.visible) {
+            return;
+        }
+
         this._lock.alpha = 0;
         this._levelInfoText.alpha = 0;
         this._openBtnContainer.visible = true;
+
+        const hint = new Hint({
+            x: 60,
+            y: 90,
+        });
+
+        hint.sprite.setParent(this._openBtnContainer);
     }
 }
 

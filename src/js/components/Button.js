@@ -10,6 +10,7 @@ class Button {
         const {
             x = 0,
             y = 0,
+            offset = 0,
             width,
             height,
             color,
@@ -30,16 +31,15 @@ class Button {
             onClick: onClick,
         });
         this._sprite.setParent(this._spriteContainer);
-
+        console.log(offset);
         this.text = GraphicsHelper.drawText({
-            x: width / 2,
+            x: width / 2 + offset,
             y: height / 2,
             text,
             style: {
                 fill: "white",
                 fontFamily: "Comic Sans MS",
                 fontSize: fontSize,
-                strokeThickness: 3,
             },
         });
 
