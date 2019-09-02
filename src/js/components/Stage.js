@@ -156,6 +156,8 @@ class Stage {
             color: openStageButton,
             text: `${i18n.usdIcon}${openLevelCost}`,
             onClick: () => {
+                this._openButton.container.visible = false;
+
                 if (ScoreBar.money < openLevelCost) {
                     console.log(`not enough money`);
                     return;
@@ -290,6 +292,7 @@ class Stage {
 
     show() {
         //this._openBtnContainer.visible = true;
+
         this._weapon.show();
         this._lockContainer.alpha = 0;
         this._unlockContainer.alpha = 1;
