@@ -18,7 +18,7 @@ class Target {
     }
 
     _init() {
-        const { x, y } = this._config;
+        const { x, y, name } = this._config;
 
         this._container = GraphicsHelper.createContainer({
             x,
@@ -26,7 +26,7 @@ class Target {
         });
 
         this._target = GraphicsHelper.createSpriteFromAtlas({
-            name: `target`,
+            name: name,
         });
         this._target.scale.set(this._scale);
         this._target.setParent(this._container);

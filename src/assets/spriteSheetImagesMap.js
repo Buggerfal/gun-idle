@@ -107,4 +107,16 @@ export default {
         width: 64,
         height: 47,
     },
+    flameTarget: {
+        x: 922,
+        y: 120,
+        width: 100,
+        height: 120,
+    },
+    flameIcon: {
+        x: 400,
+        y: 100,
+        width: 140,
+        height: 175,
+    },
 };

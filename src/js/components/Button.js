@@ -31,7 +31,7 @@ class Button {
             onClick: onClick,
         });
         this._sprite.setParent(this._spriteContainer);
-        console.log(offset);
+
         this.text = GraphicsHelper.drawText({
             x: width / 2 + offset,
             y: height / 2,

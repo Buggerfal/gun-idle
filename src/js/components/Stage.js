@@ -168,7 +168,6 @@ class Stage {
 
             case "2":
                 this._setAutoPlayLogic({ x: 350, y: 220 });
-
                 break;
 
             default:

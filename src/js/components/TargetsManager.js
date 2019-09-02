@@ -37,7 +37,7 @@ class TargetsManager {
         const target = new Target({
             x: 150,
             y: 0,
-            reward: this._reward,
+            name: `target`,
         });
         target.container.setParent(this._container);
 
@@ -63,6 +63,8 @@ class TargetsManager {
                 this._target2 = this.createTarget();
             });
     }
+
+    setBonusTarget() {}
 
     getHolePosition() {
         const { width, height } = this._target1.container;
