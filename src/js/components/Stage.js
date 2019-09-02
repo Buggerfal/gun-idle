@@ -137,7 +137,7 @@ class Stage {
                 break;
 
             default:
-                console.log("This stage not hase logic");
+                console.log("This stage not has logic");
         }
     }
 
@@ -159,21 +159,6 @@ class Stage {
         });
     }
 
-    _timerStart() {}
-
-    _tick(delta) {
-        if (!this._autoGameStart) {
-            return;
-        }
-
-        this._timeBetweenShoot -= delta;
-
-        if (this._timeBetweenShoot <= 0) {
-            this._makeShot();
-            this._timeBetweenShoot = 1000;
-        }
-    }
-
     _makeShot() {
         if (this._autoGameCounter <= 0) {
             this._autoGameStart = false;
@@ -185,18 +170,6 @@ class Stage {
         this.targetsManager.makeHole(coordinates);
         ScoreBar.update(this._shotReward);
         this._drawRewardText(this._shotReward);
-    }
-
-    hide() {
-        this._weapon.hide();
-        this._lockContainer.alpha = 1;
-        this._unlockContainer.alpha = 0;
-    }
-
-    show() {
-        this._weapon.show();
-        this._lockContainer.alpha = 0;
-        this._unlockContainer.alpha = 1;
     }
 
     _drawRewardText(value) {
@@ -220,6 +193,31 @@ class Stage {
         rewardText.rotation = Math.random() * sign;
 
         new TWEEN.Tween(this._rewardContainer).to({ alpha: 0 }, 300).start();
+    }
+
+    _tick(delta) {
+        if (!this._autoGameStart) {
+            return;
+        }
+
+        this._timeBetweenShoot -= delta;
+
+        if (this._timeBetweenShoot <= 0) {
+            this._makeShot();
+            this._timeBetweenShoot = 1000;
+        }
+    }
+
+    hide() {
+        this._weapon.hide();
+        this._lockContainer.alpha = 1;
+        this._unlockContainer.alpha = 0;
+    }
+
+    show() {
+        this._weapon.show();
+        this._lockContainer.alpha = 0;
+        this._unlockContainer.alpha = 1;
     }
 }
 
