@@ -5,6 +5,7 @@ import Emitter from "component-emitter";
 import Hint from "../components/Hint";
 import ScoreBar from "../components/ScoreBar";
 import i18n from "../settings/i18n";
+import * as PIXI from "pixi.js";
 
 class IntroScene {
     constructor() {
@@ -32,6 +33,10 @@ class IntroScene {
         this._substrate = GraphicsHelper.drawGraphics({
             width,
             height,
+            holeX: 80,
+            holeY: height - 280,
+            holeWidth: 340,
+            holeHeight: 240,
             onClick: e => {
                 e.stopPropagation();
                 this.hide();
@@ -40,6 +45,22 @@ class IntroScene {
         });
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
+
+        //Block interaction in hole
+        this._blockedInteractionGraphics = GraphicsHelper.drawGraphics({
+            width: 340,
+            height: 240,
+            x: 80,
+            y: height - 280,
+            onClick: e => {
+                e.stopPropagation();
+                this.hide();
+                ScoreBar.show();
+                this._blockedInteractionGraphics.visible = false;
+            },
+        });
+        this._blockedInteractionGraphics.setParent(this._container);
+        this._blockedInteractionGraphics.alpha = 0;
 
         GraphicsHelper.drawText({
             x: width / 2,

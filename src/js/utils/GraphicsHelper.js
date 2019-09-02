@@ -71,11 +71,20 @@ export default class GraphicsHelper {
             height = 20,
             rounded = 0,
             onClick,
+            holeX = 0,
+            holeY = 0,
+            holeWidth = 0,
+            holeHeight = 0,
         } = settings;
 
         const graphics = new PIXI.Graphics();
-        graphics.beginFill(color, 1);
-        graphics.drawRoundedRect(x, y, width, height, rounded);
+
+        graphics.beginFill(color);
+        graphics.drawRect(x, y, width, height);
+        graphics.beginHole();
+        graphics.drawRect(holeX, holeY, holeWidth, holeHeight, rounded);
+
+        graphics.endHole();
         graphics.endFill();
 
         if (onClick) {
