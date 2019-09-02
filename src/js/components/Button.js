@@ -1,5 +1,4 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
-import starter from "../engine/Starter";
 
 class Button {
     constructor(settings) {
@@ -8,8 +7,6 @@ class Button {
 
     _init(settings) {
         const {
-            x = 0,
-            y = 0,
             offset = 0,
             width,
             height,

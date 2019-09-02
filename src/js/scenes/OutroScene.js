@@ -3,6 +3,7 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import ScoreBar from "../components/ScoreBar";
 import Button from "../components/Button";
+import i18n from "../settings/i18n";
 
 class OutroScene {
     constructor() {
@@ -26,14 +27,15 @@ class OutroScene {
         this._substrate.alpha = 0.5;
 
         const substrateWidth = 800;
-        const substrateHeight = 700;
+
+        const { substrateOutro, installButton } = appSettings.colors;
 
         const rect = GraphicsHelper.drawGraphics({
             x: width / 2 - substrateWidth / 2,
             y: 300,
             width: substrateWidth,
-            height: substrateHeight,
-            color: `0x696969`,
+            height: 700,
+            color: substrateOutro,
             rounded: 100,
         });
         rect.setParent(this._container);
@@ -41,7 +43,7 @@ class OutroScene {
         GraphicsHelper.drawText({
             x: width / 2,
             y: 380,
-            text: `Congratulations`,
+            text: i18n.outroHeader,
             style: {
                 fill: "white",
                 fontFamily: "Courier New",
@@ -83,7 +85,7 @@ class OutroScene {
         GraphicsHelper.drawText({
             x: width / 2,
             y: 940,
-            text: `To keep using your bonus`,
+            text: i18n.outroDescription,
             style: {
                 fill: "white",
                 fontFamily: "Courier New",
@@ -95,8 +97,8 @@ class OutroScene {
         this._ctaDownload = new Button({
             width: 350,
             height: 150,
-            color: "0xf902ff",
-            text: `INSTALL`,
+            color: installButton,
+            text: i18n.installButton,
             onClick: () => {
                 this._ctaHandler();
             },
@@ -123,7 +125,7 @@ class OutroScene {
     }
 
     _ctaHandler() {
-        console.log("DOWNLOAD");
+        console.log(i18n.download);
     }
 }
 

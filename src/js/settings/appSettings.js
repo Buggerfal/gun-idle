@@ -15,4 +15,9 @@ export default {
         x: 100,
         y: 150,
     },
+    colors: {
+        installButton: `0xf902ff`,
+        openStageButton: `0x4ccea8`,
+        substrateOutro: `0x696969`,
+    },
 };
