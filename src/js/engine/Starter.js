@@ -2,10 +2,13 @@ import * as PIXI from "pixi.js";
 import appSettings from "../settings/appSettings";
 import TexturesLoader from "./TexturesLoader";
 import TWEEN from "tween.js";
+import Emitter from "component-emitter";
 
 class Starter {
     constructor() {
         this.app = null;
+
+        this._orientation = null;
 
         this._init = {};
 
@@ -14,6 +17,8 @@ class Starter {
         });
 
         this.size = { ...appSettings.app };
+
+        new Emitter(this);
     }
 
     init(container = document.body) {
@@ -52,14 +57,25 @@ class Starter {
         if (window.innerWidth / window.innerHeight >= ratio) {
             w = window.innerHeight * ratio;
             h = window.innerHeight;
+
+            this._emitOrientationChangeEvent("landscape");
         } else {
             w = window.innerWidth;
             h = window.innerWidth / ratio;
+
+            this._emitOrientationChangeEvent("portrait");
         }
 
         this.app.renderer.resize(w, h);
         this.app.stage.scale.x = w / width;
         this.app.stage.scale.y = h / height;
+    }
+
+    _emitOrientationChangeEvent(newOrientation) {
+        if (this._orientation != newOrientation) {
+            this._orientation = newOrientation;
+            this.emit(`orientation_${newOrientation}`);
+        }
     }
 
     get initiated() {

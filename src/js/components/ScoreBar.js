@@ -5,9 +5,11 @@ import Button from "./Button";
 import TWEEN from "tween.js";
 import i18n from "../settings/i18n";
 import polygonsPath from "../settings/polygonsPath";
+import Resizable from "../engine/Resizable";
 
-class ScoreBar {
+class ScoreBar extends Resizable {
     constructor() {
+        super();
         this._container = null;
         this._moneyText = null;
         this._ctaDownload = null;
@@ -61,6 +63,14 @@ class ScoreBar {
         new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 0).start();
 
         this._container.visible = false;
+    }
+
+    onLandscape() {
+        console.log("LANDSCAPE");
+    }
+
+    onPortrait() {
+        console.log("PORTRAIT");
     }
 
     update(val = 0) {
