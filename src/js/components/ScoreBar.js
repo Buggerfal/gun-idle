@@ -65,6 +65,7 @@ class ScoreBar {
 
     update(val = 0) {
         this._money += val;
+
         this._moneyText.text = `${i18n.usdIcon}${this._money}`;
     }
 
@@ -73,6 +74,8 @@ class ScoreBar {
     }
 
     show() {
+        console.info("scoreBar - show");
+
         new TWEEN.Tween(this._container.pivot).to({ y: 0 }, 260).start();
         this._container.visible = true;
     }

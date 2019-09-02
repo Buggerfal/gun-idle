@@ -6,74 +6,22 @@ import ScoreBar from "../components/ScoreBar";
 import SceneManager from "../scenes/SceneManager";
 import IntroScene from "../scenes/IntroScene";
 import OutroScene from "../scenes/OutroScene";
+import StageManager from "../components/StageManager";
 
 class Game {
     constructor() {
-        this._stages = [];
+        starter.initiated.then(() => {
+            StageManager.init();
+            ScoreBar.init();
 
-        starter.initiated
-            .then(() => {
-                this._drawStages();
-                ScoreBar.init();
-            })
-            .then(() => {
-                this.introScene = new IntroScene();
-                this.OutroScene = new OutroScene();
-            })
-            .then(() => {
-                this._initAppComponents();
-            });
+            this.introScene = new IntroScene();
+            this.outroScene = new OutroScene();
 
-        this._sizes = { ...appSettings.app };
-        this.scoreBar = ScoreBar;
-    }
+            SceneManager.registerScene(`intro`, this.introScene);
+            SceneManager.registerScene(`outro`, this.outroScene);
 
-    _drawStages() {
-        const stageHeight = appSettings.stage.height;
-        const appHeight = this._sizes.height;
-        const gameProgress = 0;
-
-        stages.forEach((stageInfo, index) => {
-            const stageNumber = index + 1;
-            const color = this._getStageBackgroundColor(stageNumber);
-            const yPosition = appHeight - stageHeight * stageNumber;
-
-            const stage = new Stage({
-                color: color,
-                y: yPosition,
-                info: stageInfo,
-            });
-
-            stage.on("isOpenNextStage", level => {
-                this.isOpenStage(level);
-            });
-
-            this._stages.push(stage);
-            if (stageInfo.gameProgressToUnlock > gameProgress) {
-                stage.hide();
-                return;
-            }
-
-            stage.show();
+            SceneManager.showScene(`intro`);
         });
-    }
-
-    isOpenStage(level) {
-        this._stages[level].showOpenButton();
-    }
-
-    _initAppComponents() {
-        SceneManager.registerScene(`intro`, this.introScene);
-        SceneManager.registerScene(`outro`, this.OutroScene);
-
-        SceneManager.showScene(`intro`);
-    }
-
-    _getStageBackgroundColor(stageNumber) {
-        const { stage1, stage2 } = appSettings.colors;
-        const isEven = stageNumber % 2;
-
-        return isEven ? stage2 : stage1;
     }
 }
 

@@ -12,8 +12,32 @@ import Hint from "./Hint";
 import Button from "./Button";
 import i18n from "../settings/i18n";
 
+class StageStrategy {
+    availableToOpen() {
+        return false;
+    }
+}
+
+class ScoreDependentStrategy extends StageStrategy {
+    constructor(requiredScore) {
+        super();
+        this._requiredScore = requiredScore;
+    }
+
+    availableToOpen() {
+        return ScoreBar.score >= this._requiredScore;
+    }
+}
+
 class Stage {
-    constructor(config) {
+    constructor(config, stageStrategy) {
+        this._config = {
+            ...config,
+            ...appSettings.stage,
+            width: appSettings.app.width,
+        };
+        this._stageStrategy = stageStrategy;
+
         this._mainContainer = null;
         this._lockContainer = null;
         this._unlockContainer = null;
@@ -22,23 +46,16 @@ class Stage {
 
         this._ticker = null;
 
-        this._config = {
-            ...config,
-            ...appSettings.stage,
-            width: appSettings.app.width,
-        };
-
         this.level = this._config.info.level;
-
-        this._autoGameCounter = 5;
-        this._timeBetweenShoot = 1000;
-        this._shotReward = 0;
-
-        this._autoGameStart = false;
 
         new Emitter(this);
 
         this._init();
+        this.hide();
+    }
+
+    get configuration() {
+        return this._config.info;
     }
 
     _init() {
@@ -47,10 +64,8 @@ class Stage {
             height,
             color,
             y,
-            info: { weaponType, level, name, shotReward, openLevelCost },
+            info: { weaponType, level, name },
         } = this._config;
-
-        this._shotReward = shotReward;
 
         this._mainContainer = GraphicsHelper.createColorContainer({
             x: 0,
@@ -88,9 +103,11 @@ class Stage {
         this._weapon = WeaponFactory.createWeapon(weaponType, { y });
         this._weapon.container.setParent(this._unlockContainer);
 
-        this._setListener();
+        this._initShotListener();
 
-        this._setTimerLogic(level);
+        this._showStartHint(level);
+
+        this._initAutoPlay();
 
         //Locked stage elements
         this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
@@ -113,6 +130,15 @@ class Stage {
             },
         });
         this._levelInfoText.setParent(this._lockContainer);
+
+        // this._drawOpenLevelButton();
+    }
+
+    _drawOpenLevelButton() {
+        const {
+            width,
+            info: { openLevelCost },
+        } = this._config;
 
         this._openBtnContainer = GraphicsHelper.createContainer({
             x: width / 2 - 125, // 100- half width button
@@ -151,78 +177,84 @@ class Stage {
         this._lockBtnIcon.setParent(this._openBtnContainer);
     }
 
-    _setListener() {
+    _initShotListener() {
         this._weapon.on(`shotRequest`, () => {
-            const coordinates = this.targetsManager.getHolePosition();
-
-            this._weapon.once(`shotIsDone`, () => {
-                this.targetsManager.makeHole(coordinates);
-                ScoreBar.update(this._shotReward);
-                this._drawRewardText(this._shotReward);
-            });
-
-            this._weapon.shot(coordinates);
-
-            if (this._autoGameCounter <= 0) {
-                this.emit("isOpenNextStage", this.level);
-            }
-
-            this._autoGameCounter -= 1;
-            this._timeBetweenShoot = 1000;
+            this._makeShot();
         });
     }
 
-    _setTimerLogic(level) {
+    _showStartHint(level) {
+        // TODO: move hint coordinates settings to weapon
+        let hintCoordinates = null;
         switch (level) {
             case "1":
-                this._setAutoPlayLogic({ x: 250, y: 200 });
+                hintCoordinates = { x: 250, y: 200 };
                 break;
 
             case "2":
-                this._setAutoPlayLogic({ x: 350, y: 180 });
+                hintCoordinates = { x: 350, y: 180 };
                 break;
+        }
 
-            default:
-                console.log("This stage not has logic");
+        if (hintCoordinates !== null) {
+            // TODO: add 'destroy' method into hint
+            const hint = new Hint(hintCoordinates);
+            this._unlockContainer.addChild(hint.sprite);
+            this._weapon.once(`shotIsDone`, () => {
+                hint.hide();
+                this._unlockContainer.removeChild(hint.sprite);
+            });
         }
     }
 
-    _setAutoPlayLogic(coordinates) {
-        const { x, y } = coordinates;
-        //TODO: hint must be one element on two scenes
-        const hint = new Hint({ x, y });
+    _initAutoPlay() {
+        // TODO: move setting to config
 
-        this._weapon.once(`timerStart`, () => {
-            this._autoGameStart = true;
-            hint.sprite.alpha = 0;
+        const timeBetweenShoot = 1000;
+        let autoShotsLeft = 5;
+        let timeToNextShoot = timeBetweenShoot;
+
+        this._weapon.on(`shotIsDone`, () => {
+            autoShotsLeft -= 1;
+            timeToNextShoot = timeBetweenShoot;
         });
 
-        this._unlockContainer.addChild(hint.sprite);
+        this._weapon.once(`shotIsDone`, () => {
+            this._ticker = new PIXI.Ticker();
+            this._ticker.add(() => {
+                if (autoShotsLeft <= 0) {
+                    this._ticker.stop();
+                    this._ticker.destroy();
+                    return;
+                }
 
-        this._ticker = new PIXI.Ticker();
-        this._ticker.start();
-        this._ticker.add(() => {
-            this._tick(this._ticker.deltaMS);
+                const delta = this._ticker.deltaMS;
+
+                timeToNextShoot -= delta;
+
+                if (timeToNextShoot <= 0) {
+                    this._makeShot();
+                    timeToNextShoot = timeBetweenShoot;
+                }
+            });
+            this._ticker.start();
         });
     }
 
     _makeShot() {
-        if (this._autoGameCounter <= 0) {
-            this.emit("isOpenNextStage", this.level);
-            return;
-        }
-
-        if (this._autoGameCounter <= 0) {
-            this._autoGameStart = false;
-        }
-
-        this._autoGameCounter -= 1;
-
         const coordinates = this.targetsManager.getHolePosition();
+
+        this._weapon.once(`shotIsDone`, () => {
+            const {
+                info: { shotReward },
+            } = this._config;
+
+            this.targetsManager.makeHole(coordinates);
+            this._drawRewardText(shotReward);
+            this.emit("stageScoreUpdate");
+        });
+
         this._weapon.shot(coordinates);
-        this.targetsManager.makeHole(coordinates);
-        ScoreBar.update(this._shotReward);
-        this._drawRewardText(this._shotReward);
     }
 
     _drawRewardText(value) {
@@ -248,19 +280,6 @@ class Stage {
         new TWEEN.Tween(this._rewardContainer).to({ alpha: 0 }, 300).start();
     }
 
-    _tick(delta) {
-        if (!this._autoGameStart) {
-            return;
-        }
-
-        this._timeBetweenShoot -= delta;
-
-        if (this._timeBetweenShoot <= 0) {
-            this._makeShot();
-            this._timeBetweenShoot = 1000;
-        }
-    }
-
     hide() {
         this._weapon.hide();
         this._lockContainer.alpha = 1;
@@ -268,16 +287,18 @@ class Stage {
     }
 
     show() {
-        this._openBtnContainer.visible = true;
+        //this._openBtnContainer.visible = true;
         this._weapon.show();
         this._lockContainer.alpha = 0;
         this._unlockContainer.alpha = 1;
     }
 
     showOpenButton() {
-        if (this._openBtnContainer.visible) {
+        if (this._openBtnContainer) {
             return;
         }
+
+        this._drawOpenLevelButton();
 
         this._lock.alpha = 0;
         this._levelInfoText.alpha = 0;

@@ -117,17 +117,15 @@ export class Colt1911 extends BaseWeapon {
     }
 
     shot(coordinates) {
-        this._bulletAnimation(coordinates);
         this.sleeveAnimation();
-        this.emit("shotIsDone");
+        this._bulletAnimation(coordinates);
         this._weaponAnimation();
-
         this.fireAnimation({
             x: 230,
             y: -20,
         });
 
-        this.emit("timerStart");
+        this.emit("shotIsDone");
     }
 
     _weaponAnimation() {
@@ -200,15 +198,14 @@ export class AK47 extends BaseWeapon {
 
     shot(coordinates) {
         this.sleeveAnimation();
+        this._bulletAnimation(coordinates);
+        this._weaponAnimation();
         this.fireAnimation({
             x: 420,
             y: 0,
         });
 
-        this._bulletAnimation(coordinates);
-        this.emit("timerStart");
         this.emit("shotIsDone");
-        this._weaponAnimation();
     }
 
     _weaponAnimation() {
@@ -248,5 +245,5 @@ export class AK47 extends BaseWeapon {
             .start();
     }
 
-    animated() {}
+    startRageMode() {}
 }

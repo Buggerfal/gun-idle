@@ -12,7 +12,7 @@ export default [
     {
         name: `AK-47`,
         weaponType: WEAPONS.ak47,
-        gameProgressToUnlock: 3,
+        gameProgressToUnlock: 5,
         level: `2`,
         shotReward: 40,
         openLevelCost: 100,
@@ -28,7 +28,7 @@ export default [
     {
         name: `no name`,
         weaponType: WEAPONS.colt,
-        gameProgressToUnlock: 7,
+        gameProgressToUnlock: 5,
         level: `10`,
         shotReward: 300,
         openLevelCost: 10000,

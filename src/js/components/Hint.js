@@ -20,6 +20,8 @@ class Hint {
         this._sprite.setParent(this._container);
 
         this._animation();
+
+        this.show();
     }
 
     _animation() {
@@ -35,9 +37,13 @@ class Hint {
         return this._container;
     }
 
-    hide() {}
+    hide() {
+        this._container.alpha = 0;
+    }
 
-    show() {}
+    show() {
+        this._container.alpha = 1;
+    }
 }
 
 export default Hint;
