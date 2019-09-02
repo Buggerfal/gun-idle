@@ -3,6 +3,7 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Emitter from "component-emitter";
 import Hint from "../components/Hint";
+import ScoreBar from "../components/ScoreBar";
 
 class IntroScene {
     constructor() {
@@ -33,6 +34,7 @@ class IntroScene {
             onClick: e => {
                 e.stopPropagation();
                 this.hide();
+                ScoreBar.show();
             },
         });
         this._substrate.setParent(this._container);

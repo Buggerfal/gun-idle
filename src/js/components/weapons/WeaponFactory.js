@@ -1,4 +1,4 @@
-import { AK47, Colt1911 } from "./Weapons";
+import { AK47, Colt1911, BaseWeapon } from "./Weapons";
 import WEAPONS from "./Constants";
 
 export default class WeaponFactory {
@@ -10,6 +10,7 @@ export default class WeaponFactory {
                 return new Colt1911(config);
             default:
                 console.error(`Weapon ${type} not found`);
+                return new BaseWeapon(config);
         }
     }
 }

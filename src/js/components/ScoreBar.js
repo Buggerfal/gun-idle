@@ -2,6 +2,7 @@ import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
 import Button from "./Button";
+import TWEEN from "tween.js";
 
 class ScoreBar {
     constructor() {
@@ -17,10 +18,7 @@ class ScoreBar {
     init() {
         const { width, height, mainBgColor } = this._config;
 
-        this._container = GraphicsHelper.createContainer({
-            x: 0,
-            y: 0,
-        });
+        this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
         this._mainBackground = GraphicsHelper.createColorContainer({
@@ -55,12 +53,22 @@ class ScoreBar {
             fontSize: 70,
         });
         this._ctaDownload.container.position.set(width - 350, 50);
-        this._ctaDownload.container.setParent(starter.app.stage);
+        this._ctaDownload.container.setParent(this._container);
+
+        new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 0).start();
     }
 
     update(val = 0) {
         this._money += val;
         this._moneyText.text = `$${this._money}`;
+    }
+
+    show() {
+        new TWEEN.Tween(this._container.pivot).to({ y: 0 }, 260).start();
+    }
+
+    hide() {
+        new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 260).start();
     }
 
     _ctaHandler() {

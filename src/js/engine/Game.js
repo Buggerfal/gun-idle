@@ -14,6 +14,7 @@ class Game {
         starter.initiated
             .then(() => {
                 this._drawStages();
+                ScoreBar.init();
             })
             .then(() => {
                 this.introScene = new IntroScene();
@@ -62,8 +63,6 @@ class Game {
     }
 
     _initAppComponents() {
-        this.scoreBar.init();
-
         SceneManager.registerScene(`intro`, this.introScene);
         SceneManager.registerScene(`outro`, this.OutroScene);
 

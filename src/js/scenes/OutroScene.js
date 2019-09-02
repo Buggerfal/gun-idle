@@ -1,6 +1,7 @@
 import starter from "../engine/Starter";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import appSettings from "../settings/appSettings";
+import ScoreBar from "../components/ScoreBar";
 
 class OutroScene {
     constructor() {
@@ -31,14 +32,17 @@ class OutroScene {
             onClick: e => {
                 e.stopPropagation();
                 this.hide();
+                ScoreBar.show();
             },
         });
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
 
+        const substrateWidth = 500;
         const rect = GraphicsHelper.drawGraphics({
-            width: width / 3,
-            color: `0x99ff00`,
+            x: substrateWidth / 2,
+            width: substrateWidth,
+            color: `0x696969`,
             height,
         });
         rect.setParent(this._container);
@@ -64,7 +68,10 @@ class OutroScene {
     show() {
         this._container.alpha = 1;
         this._substrate.interactive = true;
+
         this._runAnimation();
+
+        ScoreBar.hide();
     }
 
     hide(e) {
