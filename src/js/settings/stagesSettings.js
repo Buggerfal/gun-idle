@@ -20,7 +20,7 @@ export default [
     {
         name: `no name`,
         weaponType: WEAPONS.colt,
-        gameProgressToUnlock: 5,
+        gameProgressToUnlock: 500,
         level: `3`,
         shotReward: 100,
         openLevelCost: 1000,

@@ -2,6 +2,7 @@ import GraphicsHelper from "../utils/GraphicsHelper";
 import Target from "./Target";
 import TWEEN from "tween.js";
 import Utils from "../utils/utils";
+import Emitter from "component-emitter";
 
 class TargetsManager {
     constructor(config) {
@@ -13,6 +14,8 @@ class TargetsManager {
         //TODO: bonusManager, not stupid logic
         this._isFirstTarget = true;
         this._init(config);
+
+        new Emitter(this);
     }
 
     _init(config) {
@@ -57,6 +60,11 @@ class TargetsManager {
             this._target1 = null;
             this.updateTargets();
             this._container.removeChild(target.container);
+
+            //TODO: refactoring
+            if (name === `flameTarget`) {
+                this.emit("rageMode");
+            }
         });
         return target;
     }

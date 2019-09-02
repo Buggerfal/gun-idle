@@ -1,9 +1,7 @@
 import Stage from "../components/Stage";
-import starter from "../engine/Starter";
 import appSettings from "../settings/appSettings";
 import stagesSettings from "../settings/stagesSettings";
 import ScoreBar from "../components/ScoreBar";
-import SceneManager from "../scenes/SceneManager";
 
 class StageManager {
     constructor() {

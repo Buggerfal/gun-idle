@@ -86,7 +86,9 @@ class Stage {
         });
 
         this.targetsManager.container.setParent(this._unlockContainer);
-
+        this.targetsManager.on("rageMode", () => {
+            this._weapon.startRageMode();
+        });
         this._weaponName = GraphicsHelper.drawText({
             x: 100,
             y: 50,

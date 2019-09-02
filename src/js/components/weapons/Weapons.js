@@ -245,5 +245,10 @@ export class AK47 extends BaseWeapon {
             .start();
     }
 
-    startRageMode() {}
+    startRageMode() {
+        console.log("Rage mode start");
+        setTimeout(() => {
+            console.log("Rage mode end");
+        }, 5000);
+    }
 }
