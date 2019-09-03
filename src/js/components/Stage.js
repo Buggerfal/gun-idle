@@ -283,24 +283,23 @@ class Stage extends Resizable {
     _drawRewardText(value) {
         const y = Utils.random(100, 240);
         const sign = Utils.random(0, 1) === 0 ? -1 : 1;
+        let { innerWidth: currW, innerHeight: currH } = window;
 
-        this._rewardContainer = GraphicsHelper.createContainer({});
-        this._rewardContainer.setParent(this._mainContainer);
+        const offset = currW > currH ? 400 : 300;
 
         const rewardText = GraphicsHelper.drawText({
             text: `${i18n.usdIcon}${value}`,
-            x: this._mainContainer.width - 350,
+            x: window.innerWidth - offset,
             y,
             style: {
                 fill: "white",
-                // fontFamily: "Comic Sans MS",
                 fontSize: 50,
             },
         });
-        rewardText.setParent(this._rewardContainer);
+        rewardText.setParent(this._unlockContainer);
         rewardText.rotation = Math.random() * sign;
 
-        new TWEEN.Tween(this._rewardContainer).to({ alpha: 0 }, 300).start();
+        new TWEEN.Tween(rewardText).to({ alpha: 0 }, 300).start();
     }
 
     hide() {
