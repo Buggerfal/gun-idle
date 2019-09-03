@@ -113,17 +113,14 @@ class OutroScene {
     }
 
     show() {
-        console.log(12);
-        this._container.alpha = 1;
         this._substrate.interactive = true;
+        this._container.visible = true;
 
         ScoreBar.hide();
     }
 
     hide() {
-        this._container.alpha = 0;
         this._container.visible = false;
-
         this._substrate.interactive = false;
     }
 

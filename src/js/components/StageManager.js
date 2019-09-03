@@ -6,6 +6,7 @@ import * as PIXI from "pixi.js";
 import TWEEN from "tween.js";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import starter from "../engine/Starter";
+import SceneManager from "../scenes/SceneManager";
 
 class StageManager {
     constructor() {
@@ -85,6 +86,7 @@ class StageManager {
     }
 
     _runRageMode() {
+        //TODO: refactoring
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
 
@@ -131,12 +133,22 @@ class StageManager {
         });
         flameIcon.setParent(starter.app.stage);
 
+        const timeOnAnimation = 700;
+        const repeatAnimation =
+            Math.floor(timeToOffRageMode / timeOnAnimation) - 1;
+
         new TWEEN.Tween(flameIcon.scale)
-            .to({ x: [1.1, 1], y: [1.1, 1] }, 700)
+            .to({ x: [1.1, 1], y: [1.1, 1] }, timeOnAnimation)
             .onComplete(() => {
-                starter.app.stage.removeChild(flameIcon);
+                new TWEEN.Tween(flameIcon)
+                    .to({ alpha: 0 }, timeOnAnimation)
+                    .start()
+                    .onComplete(() => {
+                        starter.app.stage.removeChild(flameIcon);
+                        SceneManager.showScene("outro");
+                    });
             })
-            .repeat(Infinity)
+            .repeat(repeatAnimation)
             .start();
     }
 
