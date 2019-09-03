@@ -22,6 +22,8 @@ export default class BaseWeapon {
         new Emitter(this);
 
         this.init();
+
+        this._isAnimationEnd = true;
     }
 
     init() {}
@@ -117,6 +119,12 @@ export class Colt1911 extends BaseWeapon {
     }
 
     shot(coordinates) {
+        if (!this._isAnimationEnd) {
+            return;
+        }
+
+        this._isAnimationEnd = false;
+
         this.sleeveAnimation();
         this._bulletAnimation(coordinates);
         this._weaponAnimation();
@@ -137,6 +145,9 @@ export class Colt1911 extends BaseWeapon {
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
             .to({ x: [45, 0] }, 80)
+            .onComplete(() => {
+                this._isAnimationEnd = true;
+            })
             .start();
     }
 
@@ -199,6 +210,12 @@ export class AK47 extends BaseWeapon {
     }
 
     shot(coordinates) {
+        if (!this._isAnimationEnd) {
+            return;
+        }
+
+        this._isAnimationEnd = false;
+
         this.sleeveAnimation();
         this._bulletAnimation(coordinates);
         this._weaponAnimation();
@@ -219,6 +236,9 @@ export class AK47 extends BaseWeapon {
 
         this.moveTween = new TWEEN.Tween(this._weaponContainer)
             .to({ x: [-20, endXPosition] }, 80)
+            .onComplete(() => {
+                this._isAnimationEnd = true;
+            })
             .start();
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.scale)
