@@ -5,6 +5,7 @@ import Emitter from "component-emitter";
 import TexturesLoader from "../../engine/TexturesLoader";
 import Utils from "../../utils/utils";
 import appSettings from "../../settings/appSettings";
+import SceneManager from "../../scenes/SceneManager";
 
 export default class BaseWeapon {
     constructor(config) {
@@ -84,6 +85,13 @@ export default class BaseWeapon {
     }
 
     tick() {}
+
+    startRageMode() {
+        setTimeout(() => {
+            console.log("Rage mode end");
+            // SceneManager.showScene("outro");
+        }, 5000);
+    }
 }
 
 export class Colt1911 extends BaseWeapon {
@@ -243,12 +251,5 @@ export class AK47 extends BaseWeapon {
                 bullet.destroy();
             })
             .start();
-    }
-
-    startRageMode() {
-        console.log("Rage mode start");
-        setTimeout(() => {
-            console.log("Rage mode end");
-        }, 5000);
     }
 }

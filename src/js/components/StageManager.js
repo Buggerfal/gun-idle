@@ -6,6 +6,8 @@ import ScoreBar from "../components/ScoreBar";
 class StageManager {
     constructor() {
         this._stages = [];
+        this._openStages = [];
+
         this._activeStage = null;
         this._nextStage = null;
 
@@ -30,11 +32,17 @@ class StageManager {
             const color = this._getStageBackgroundColor(stageNumber);
             const yPosition = appHeight - stageHeight * stageNumber;
 
-            return new Stage({
+            const stage = new Stage({
                 color: color,
                 y: yPosition,
                 info: stageInfo,
             });
+
+            stage.on("startRageMode", () => {
+                this._runStageMode();
+            });
+
+            return stage;
         });
     }
 
@@ -43,6 +51,7 @@ class StageManager {
 
         if (this._activeStage === null) {
             this._activeStage = this._stages[0];
+            this._openStages.push(this._activeStage);
 
             this._activeStage.show();
 
@@ -58,7 +67,9 @@ class StageManager {
 
         if (this._gameProgress >= gameProgressToUnlock) {
             this._gameProgress = 0;
+
             this._activeStage = this._nextStage;
+            this._openStages.push(this._activeStage);
 
             const nextStageIndex = this._stages.findIndex(
                 x => x == this._activeStage
@@ -69,6 +80,24 @@ class StageManager {
             this._activeStage.showOpenButton();
             this._addEventListener(this._activeStage);
         }
+    }
+
+    _runStageMode() {
+        console.warn("RAGE MODE RUN");
+
+        this._openStages.forEach(stage => {
+            stage.stageModeOn();
+        });
+
+        console.log(this._openStages);
+    }
+
+    _stopStageMode() {
+        console.warn("RAGE MODE RUN");
+
+        const openStages = this._openStages.forEach(stage => {
+            stage.stageModeOn();
+        });
     }
 
     _addEventListener(stage) {

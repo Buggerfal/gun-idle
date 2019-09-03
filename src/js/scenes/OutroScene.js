@@ -113,6 +113,7 @@ class OutroScene {
     }
 
     show() {
+        console.log(12);
         this._container.alpha = 1;
         this._substrate.interactive = true;
 

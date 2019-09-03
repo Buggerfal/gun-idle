@@ -86,9 +86,11 @@ class Stage {
         });
 
         this.targetsManager.container.setParent(this._unlockContainer);
+
         this.targetsManager.on("rageMode", () => {
-            this._weapon.startRageMode();
+            this.emit("startRageMode");
         });
+
         this._weaponName = GraphicsHelper.drawText({
             x: 100,
             y: 50,
@@ -132,8 +134,15 @@ class Stage {
             },
         });
         this._levelInfoText.setParent(this._lockContainer);
+    }
 
-        // this._drawOpenLevelButton();
+    stageModeOn() {
+        console.log("STAGE MODE ON");
+
+        this._weapon.startRageMode();
+        setInterval(() => {
+            this._makeShot();
+        }, 150);
     }
 
     _drawOpenLevelButton() {

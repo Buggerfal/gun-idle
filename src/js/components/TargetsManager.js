@@ -3,6 +3,8 @@ import Target from "./Target";
 import TWEEN from "tween.js";
 import Utils from "../utils/utils";
 import Emitter from "component-emitter";
+import starter from "../engine/Starter";
+import appSettings from "../settings/appSettings";
 
 class TargetsManager {
     constructor(config) {
@@ -64,10 +66,22 @@ class TargetsManager {
             //TODO: refactoring
             if (name === `flameTarget`) {
                 this.emit("rageMode");
+                this.addFlameIcon();
             }
         });
         return target;
     }
+
+    addFlameIcon() {
+        this._flameIcon = GraphicsHelper.createSpriteFromAtlas({
+            x: 50,
+            y: appSettings.app.height - 200,
+            name: `flameIcon`,
+        });
+        this._flameIcon.setParent(starter.app.stage);
+    }
+
+    removeFlameIcon() {}
 
     updateTargets() {
         if (!this._target2) {
