@@ -65,6 +65,11 @@ class Stage extends Resizable {
             this.weapon.container.x = 0;
         }
 
+        if (this._openBtnContainer) {
+            this._openBtnContainer.x = w / 2 - 125; //half button width
+            this._openBtnContainer.y = w > h ? 100 : 150;
+        }
+
         this._unlockContainer.y = this._mainContainer.y;
         this._lockContainer.y = this._mainContainer.y;
         this._lock.x = w / 2 - 120;
@@ -73,19 +78,13 @@ class Stage extends Resizable {
 
     _init() {
         const {
-            // width,
-            height,
             color,
-            y,
             info: { weaponType, level, name },
         } = this._config;
 
         const width = window.innerWidth;
 
-        const offScreenWidth = 20;
-
         let { innerWidth: currW, innerHeight: currH } = window;
-
         let stageHeight = currH / 4;
 
         this._mainContainer = GraphicsHelper.createColorContainer({
@@ -129,7 +128,7 @@ class Stage extends Resizable {
 
         this._initShotListener();
 
-        // this._showStartHint(level);
+        this._showStartHint(level);
 
         this._initAutoPlay();
 
@@ -162,8 +161,13 @@ class Stage extends Resizable {
             info: { openLevelCost },
         } = this._config;
 
+        const { innerWidth: currW, innerHeight: currH } = window;
+
+        const y = currW > currH ? 100 : 150;
+
         this._openBtnContainer = GraphicsHelper.createContainer({
-            x: width / 2 - 125, // 100- half width button
+            x: currW / 2 - 125, // 125- half width button
+            y,
         });
         this._openBtnContainer.setParent(this._lockContainer);
 
@@ -283,7 +287,7 @@ class Stage extends Resizable {
     _drawRewardText(value) {
         const y = Utils.random(100, 240);
         const sign = Utils.random(0, 1) === 0 ? -1 : 1;
-        let { innerWidth: currW, innerHeight: currH } = window;
+        const { innerWidth: currW, innerHeight: currH } = window;
 
         const offset = currW > currH ? 400 : 300;
 
