@@ -3,6 +3,9 @@ import appSettings from "../settings/appSettings";
 import stagesSettings from "../settings/stagesSettings";
 import ScoreBar from "../components/ScoreBar";
 import * as PIXI from "pixi.js";
+import TWEEN from "tween.js";
+import GraphicsHelper from "../utils/GraphicsHelper";
+import starter from "../engine/Starter";
 
 class StageManager {
     constructor() {
@@ -40,7 +43,7 @@ class StageManager {
             });
 
             stage.on("startRageMode", () => {
-                this._runStageMode();
+                this._runRageMode();
             });
 
             return stage;
@@ -81,7 +84,8 @@ class StageManager {
         }
     }
 
-    _runStageMode() {
+    _runRageMode() {
+        console.log("RUN!111");
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
 
@@ -102,6 +106,23 @@ class StageManager {
             }
         });
         ticker.start();
+
+        const stageModeBackground = GraphicsHelper.createColorContainer({
+            width: appSettings.app.width,
+            height: appSettings.app.height,
+            color: "0x990000",
+        });
+        stageModeBackground.setParent(starter.app.stage);
+
+        new TWEEN.Tween(stageModeBackground)
+            .to(
+                { alpha: [0.3, 0.1, 0.4, 0.1, 0.5, 0.2, 0.1, 0.4, 0] },
+                timeToOffRageMode
+            )
+            .onComplete(() => {
+                starter.app.stage.removeChild(stageModeBackground);
+            })
+            .start();
     }
 
     _makeShotAllGroup() {

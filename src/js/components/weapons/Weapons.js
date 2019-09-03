@@ -5,7 +5,6 @@ import Emitter from "component-emitter";
 import TexturesLoader from "../../engine/TexturesLoader";
 import Utils from "../../utils/utils";
 import appSettings from "../../settings/appSettings";
-import SceneManager from "../../scenes/SceneManager";
 
 export default class BaseWeapon {
     constructor(config) {
