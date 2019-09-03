@@ -2,6 +2,7 @@ import Stage from "../components/Stage";
 import appSettings from "../settings/appSettings";
 import stagesSettings from "../settings/stagesSettings";
 import ScoreBar from "../components/ScoreBar";
+import * as PIXI from "pixi.js";
 
 class StageManager {
     constructor() {
@@ -47,8 +48,6 @@ class StageManager {
     }
 
     _checkActiveStage() {
-        // console.info("[StageManager]", "_checkActiveStage");
-
         if (this._activeStage === null) {
             this._activeStage = this._stages[0];
             this._openStages.push(this._activeStage);
@@ -83,27 +82,36 @@ class StageManager {
     }
 
     _runStageMode() {
-        console.warn("RAGE MODE RUN");
+        let timeToOffRageMode = 5000;
+        let timeBeetweenShot = 150;
 
-        this._openStages.forEach(stage => {
-            stage.stageModeOn();
+        const ticker = new PIXI.Ticker();
+        ticker.add(() => {
+            const delta = ticker.deltaMS;
+
+            timeToOffRageMode -= delta;
+            timeBeetweenShot -= delta;
+
+            if (timeBeetweenShot <= 0) {
+                timeBeetweenShot = 150;
+                this._makeShotAllGroup();
+            }
+
+            if (timeToOffRageMode <= 0) {
+                ticker.stop();
+            }
         });
-
-        console.log(this._openStages);
+        ticker.start();
     }
 
-    _stopStageMode() {
-        console.warn("RAGE MODE RUN");
-
-        const openStages = this._openStages.forEach(stage => {
-            stage.stageModeOn();
+    _makeShotAllGroup() {
+        this._openStages.forEach(stage => {
+            stage._makeShot();
         });
     }
 
     _addEventListener(stage) {
         stage.on("stageScoreUpdate", () => {
-            console.info("[StageManager]", "stageScoreUpdate");
-
             const {
                 configuration: { shotReward },
             } = stage;

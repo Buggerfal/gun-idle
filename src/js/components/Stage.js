@@ -119,15 +119,6 @@ class Stage {
         this._levelInfoText.setParent(this._lockContainer);
     }
 
-    stageModeOn() {
-        console.log("STAGE MODE ON");
-
-        this._weapon.startRageMode();
-        setInterval(() => {
-            this._makeShot();
-        }, 150);
-    }
-
     _drawOpenLevelButton() {
         const {
             width,

@@ -85,13 +85,6 @@ export default class BaseWeapon {
     }
 
     tick() {}
-
-    startRageMode() {
-        setTimeout(() => {
-            console.log("Rage mode end");
-            // SceneManager.showScene("outro");
-        }, 5000);
-    }
 }
 
 export class Colt1911 extends BaseWeapon {
