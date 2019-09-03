@@ -9,7 +9,7 @@ class Game {
     constructor() {
         starter.initiated.then(() => {
             StageManager.init();
-            // ScoreBar.init();
+            ScoreBar.init();
 
             // this.introScene = new IntroScene();
             // this.outroScene = new OutroScene();

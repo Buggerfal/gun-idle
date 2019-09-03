@@ -45,21 +45,42 @@ class Stage extends Resizable {
     }
 
     onResize(data) {
-        const { w, h, orientation } = data;
+        const { w, h } = data;
+
+        //landscape
         if (w > h) {
+            this._lock.y = 100;
+            this._levelInfoText.y = 140;
+            this.weapon.container.y = -50;
+            this.weapon.container.scale.set(1);
+            this.weapon.container.x = 100;
         }
+
+        //portrait
         if (h > w) {
+            this._lock.y = 200;
+            this._levelInfoText.y = 240;
+            this.weapon.container.y = 30;
+            this.weapon.container.scale.set(0.7);
+            this.weapon.container.x = 0;
         }
+
+        this._unlockContainer.y = this._mainContainer.y;
+        this._lockContainer.y = this._mainContainer.y;
+        this._lock.x = w / 2 - 120;
+        this._levelInfoText.x = this._lock.x + this._lock.width + 100;
     }
 
     _init() {
         const {
-            width,
+            // width,
             height,
             color,
             y,
             info: { weaponType, level, name },
         } = this._config;
+
+        const width = window.innerWidth;
 
         const offScreenWidth = 20;
 
@@ -75,63 +96,64 @@ class Stage extends Resizable {
         this._mainContainer.setParent(starter.app.stage);
 
         // //Unlocked stage elements
-        // this._unlockContainer = GraphicsHelper.createContainer();
-        // this._unlockContainer.setParent(this._mainContainer);
+        this._unlockContainer = GraphicsHelper.createContainer();
+        this._unlockContainer.setParent(starter.app.stage);
 
-        // this.targetsManager = new TargetsManager({
-        //     x: width - 250,
-        //     level: level,
-        // });
+        this.targetsManager = new TargetsManager({
+            x: width - 250,
+            level: level,
+        });
 
-        // this.targetsManager.container.setParent(this._unlockContainer);
+        this.targetsManager.container.setParent(this._unlockContainer);
 
-        // this.targetsManager.on("rageMode", () => {
-        //     this.emit("startRageMode");
-        // });
+        this.targetsManager.on("rageMode", () => {
+            this.emit("startRageMode");
+        });
 
-        // this._weaponName = GraphicsHelper.drawText({
-        //     x: 120,
-        //     y: 50,
-        //     text: `${name}`,
-        //     style: {
-        //         fill: "white",
-        //         // fontFamily: "Comic Sans MS",
-        //         fontSize: 40,
-        //     },
-        // });
+        this._weaponName = GraphicsHelper.drawText({
+            x: 120,
+            y: 50,
+            text: `${name}`,
+            style: {
+                fill: "white",
+                fontSize: 40,
+            },
+        });
 
-        // this._weaponName.setParent(this._unlockContainer);
+        this._weaponName.setParent(this._unlockContainer);
 
-        // this.weapon = WeaponFactory.createWeapon(weaponType, { y });
-        // this.weapon.container.setParent(this._unlockContainer);
+        this.weapon = WeaponFactory.createWeapon(weaponType, {
+            y: stageHeight / 2,
+        });
+        this.weapon.container.setParent(this._unlockContainer);
 
-        // this._initShotListener();
+        this._initShotListener();
 
         // this._showStartHint(level);
 
-        // this._initAutoPlay();
+        this._initAutoPlay();
 
         // //Locked stage elements
-        // this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
-        // this._lockContainer.setParent(this._mainContainer);
+        this._lockContainer = GraphicsHelper.createContainer({});
+        this._lockContainer.setParent(starter.app.stage);
 
-        // this._lock = GraphicsHelper.createSpriteFromAtlas({
-        //     x: width / 2 - 100,
-        //     name: `lockedIcon`,
-        // });
-        // this._lock.setParent(this._lockContainer);
+        this._lock = GraphicsHelper.createSpriteFromAtlas({
+            x: width / 2 - 100,
+            name: `lockedIcon`,
+        });
+        this._lock.setParent(this._lockContainer);
 
-        // this._levelInfoText = GraphicsHelper.drawText({
-        //     x: this._lock.x + this._lock.width + 80,
-        //     y: 30,
-        //     text: `${i18n.level} ${level}`,
-        //     style: {
-        //         fill: "white",
-        //         // fontFamily: "Comic Sans MS",
-        //         fontSize: 40,
-        //     },
-        // });
-        // this._levelInfoText.setParent(this._lockContainer);
+        this._levelInfoText = GraphicsHelper.drawText({
+            x: this._lock.x + this._lock.width + 80,
+            text: `${i18n.level} ${level}`,
+            style: {
+                fill: "white",
+                fontSize: 40,
+            },
+        });
+        this._levelInfoText.setParent(this._lockContainer);
+
+        this.onResize({ w: currW, h: currH });
     }
 
     _drawOpenLevelButton() {
@@ -211,7 +233,6 @@ class Stage extends Resizable {
 
     _initAutoPlay() {
         // TODO: move setting to config
-
         const timeBetweenShoot = 1000;
         let autoShotsLeft = 5;
         let timeToNextShoot = timeBetweenShoot;
@@ -283,16 +304,16 @@ class Stage extends Resizable {
     }
 
     hide() {
-        // this.weapon.hide();
-        // this._lockContainer.alpha = 1;
-        // this._unlockContainer.alpha = 0;
+        this.weapon.hide();
+        this._lockContainer.alpha = 1;
+        this._unlockContainer.alpha = 0;
     }
 
     show() {
-        //this._openBtnContainer.visible = true;
-        // this.weapon.show();
-        // this._lockContainer.alpha = 0;
-        // this._unlockContainer.alpha = 1;
+        // this._openBtnContainer.visible = true;
+        this.weapon.show();
+        this._lockContainer.alpha = 0;
+        this._unlockContainer.alpha = 1;
     }
 
     showOpenButton() {

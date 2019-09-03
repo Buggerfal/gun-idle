@@ -30,7 +30,7 @@ class Starter {
             transparent: true,
             view: view,
         });
-        this.app.renderer.autoResize = true;
+        // this.app.renderer.autoResize = true;
         container.appendChild(this.app.view);
 
         this._ticker = new PIXI.Ticker();

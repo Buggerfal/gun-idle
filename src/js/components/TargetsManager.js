@@ -3,9 +3,12 @@ import Target from "./Target";
 import TWEEN from "tween.js";
 import Utils from "../utils/utils";
 import Emitter from "component-emitter";
+import Resizable from "../engine/Resizable";
 
-class TargetsManager {
+class TargetsManager extends Resizable {
     constructor(config) {
+        super();
+
         this._container = null;
 
         this._target1 = null;
@@ -29,6 +32,22 @@ class TargetsManager {
 
     get container() {
         return this._container;
+    }
+
+    onResize(data) {
+        const { w, h } = data;
+
+        //landscape
+        if (w > h) {
+            this._container.x = w - 450;
+            this._container.x = w - 300;
+        }
+
+        //portrait
+        if (h > w) {
+            this._container.x = w - 350;
+            this._container.x = w - 200;
+        }
     }
 
     makeHole(coordinates) {
