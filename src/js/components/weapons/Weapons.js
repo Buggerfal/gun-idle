@@ -134,6 +134,8 @@ export class Colt1911 extends BaseWeapon {
         });
 
         this.emit("shotIsDone");
+
+        // this.rageAnimation();
     }
 
     _weaponAnimation() {
@@ -150,6 +152,43 @@ export class Colt1911 extends BaseWeapon {
             })
             .start();
     }
+
+    // rageAnimation() {
+    //     const bullets = [];
+
+    //     this._rageBulletContainer = GraphicsHelper.createContainer({
+    //         x: this._weaponContainer.x + this._mainSprite.width,
+    //         y: this._weaponContainer.y,
+    //     });
+    //     this._rageBulletContainer.setParent(this._weaponContainer);
+
+    //     for (let i = 0; i <= 20; i++) {
+    //         const graphics = new PIXI.Graphics();
+    //         const color = Utils.getRandomColor();
+    //         const radius = Utils.random(10, 30);
+
+    //         graphics.lineStyle(0); // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
+    //         graphics.beginFill(color, 1);
+    //         graphics.drawCircle(-80, -100, radius);
+    //         graphics.endFill();
+
+    //         bullets.push(graphics);
+
+    //         this._rageBulletContainer.addChild(graphics);
+    //     }
+
+    //     bullets.forEach(bullet => {
+    //         const delay = Utils.random(0, 400);
+    //         const a = new TWEEN.Tween(bullet)
+    //             .delay(delay)
+    //             .to({ x: 900, y: 100 }, 360)
+    //             .onComplete(() => {
+    //                 // bullet.destroy();
+    //             })
+    //             .start();
+    //         console.log(a, "a");
+    //     });
+    // }
 
     _bulletAnimation(coordinates) {
         const bullet = GraphicsHelper.createSpriteFromAtlas({

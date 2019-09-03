@@ -16,7 +16,7 @@ class IntroScene {
         new Emitter(this);
 
         this.init();
-        // this._particles();//TODO:
+        // this._particles(); //TODO:
     }
 
     init() {
@@ -112,7 +112,7 @@ class IntroScene {
 
         graphics2.lineStyle(0); // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
         graphics2.beginFill(0xde3249, 1);
-        graphics2.drawCircle(100, 350, 50);
+        graphics2.drawCircle(100, 350, 25);
         graphics2.endFill();
 
         // this._container.addChild(graphics2);
@@ -134,12 +134,12 @@ class IntroScene {
 
         this.emitter = new particles.Emitter(container, [texture, texture3], {
             alpha: {
-                start: 0.4,
-                end: 0,
+                start: 0,
+                end: 1,
             },
             scale: {
-                start: 2,
-                end: 2,
+                start: 0.3,
+                end: 1.2,
                 minimumScaleMultiplier: 1,
             },
             color: {
@@ -147,8 +147,8 @@ class IntroScene {
                 end: "#d8ff4a",
             },
             speed: {
-                start: 10,
-                end: 10,
+                start: 50,
+                end: 50,
                 minimumSpeedMultiplier: 1,
             },
             acceleration: {
@@ -160,7 +160,7 @@ class IntroScene {
                 min: 0,
                 max: 360,
             },
-            noRotation: false,
+            noRotation: true,
             rotationSpeed: {
                 min: 0,
                 max: 0,
@@ -172,17 +172,17 @@ class IntroScene {
             blendMode: "screen",
             frequency: 0.01,
             emitterLifetime: -1,
-            maxParticles: 1000,
+            maxParticles: 10,
             pos: {
                 x: 0.5,
                 y: 0.5,
             },
             addAtBack: true,
-            spawnType: "circle",
+            spawnType: "line",
             spawnCircle: {
-                x: 0,
-                y: 0,
-                r: 300,
+                x: 100,
+                y: 200,
+                r: 120,
             },
         });
 
