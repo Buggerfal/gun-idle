@@ -124,6 +124,7 @@ export default class BaseWeapon {
         }
 
         this._weaponAnimationTime = 60;
+        console.log(1290);
     }
 
     stopRageModeAnimation() {

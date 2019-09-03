@@ -11,9 +11,12 @@ import * as PIXI from "pixi.js";
 import Hint from "./Hint";
 import Button from "./Button";
 import i18n from "../settings/i18n";
+import Resizable from "../engine/Resizable";
 
-class Stage {
+class Stage extends Resizable {
     constructor(config, stageStrategy) {
+        super();
+
         this._config = {
             ...config,
             ...appSettings.stage,
@@ -119,6 +122,10 @@ class Stage {
             },
         });
         this._levelInfoText.setParent(this._lockContainer);
+    }
+
+    onResize(data) {
+        console.log(data, "data");
     }
 
     _drawOpenLevelButton() {

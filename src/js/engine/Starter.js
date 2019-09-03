@@ -55,28 +55,35 @@ class Starter {
         let w, h;
 
         if (window.innerWidth / window.innerHeight >= ratio) {
+            this._orientation = `landscape`;
             w = window.innerHeight * ratio;
             h = window.innerHeight;
 
-            this._emitOrientationChangeEvent("landscape");
+            // this._emitOrientationChangeEvent("landscape");
         } else {
+            this._orientation = `portrait`;
+
             w = window.innerWidth;
             h = window.innerWidth / ratio;
 
-            this._emitOrientationChangeEvent("portrait");
+            // this._emitOrientationChangeEvent("portrait");
         }
+
+        this.app.view.style.width = w + "px";
+        this.app.view.style.height = h + "px";
 
         this.app.renderer.resize(w, h);
-        this.app.stage.scale.x = w / width;
-        this.app.stage.scale.y = h / height;
+        // this.app.stage.scale.x = w / width;
+        // this.app.stage.scale.y = h / height;
+        this.emit(`onResize`, { w, h, orientation: this._orientation });
     }
 
-    _emitOrientationChangeEvent(newOrientation) {
-        if (this._orientation != newOrientation) {
-            this._orientation = newOrientation;
-            this.emit(`orientation_${newOrientation}`);
-        }
-    }
+    // _emitOrientationChangeEvent(newOrientation) {
+    // if (this._orientation != newOrientation) {
+    //     this._orientation = newOrientation;
+    //     this.emit(`orientation_${newOrientation}`);
+    // }
+    // }
 
     get initiated() {
         return this._init.initPromise;

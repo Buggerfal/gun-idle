@@ -9,15 +9,15 @@ class Game {
     constructor() {
         starter.initiated.then(() => {
             StageManager.init();
-            ScoreBar.init();
+            // ScoreBar.init();
 
-            this.introScene = new IntroScene();
-            this.outroScene = new OutroScene();
+            // this.introScene = new IntroScene();
+            // this.outroScene = new OutroScene();
 
-            SceneManager.registerScene(`intro`, this.introScene);
-            SceneManager.registerScene(`outro`, this.outroScene);
+            // SceneManager.registerScene(`intro`, this.introScene);
+            // SceneManager.registerScene(`outro`, this.outroScene);
 
-            SceneManager.showScene(`intro`);
+            // SceneManager.showScene(`intro`);
         });
     }
 }
