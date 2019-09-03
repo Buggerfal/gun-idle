@@ -70,6 +70,10 @@ class Stage extends Resizable {
             this._openBtnContainer.y = w > h ? 100 : 150;
         }
 
+        if (this._hint) {
+            this._hint.sprite.x = w > h ? 300 : 150; //half button width
+        }
+
         this._unlockContainer.y = this._mainContainer.y;
         this._lockContainer.y = this._mainContainer.y;
         this._lock.x = w / 2 - 120;
@@ -226,11 +230,11 @@ class Stage extends Resizable {
 
         if (hintCoordinates !== null) {
             // TODO: add 'destroy' method into hint
-            const hint = new Hint(hintCoordinates);
-            this._unlockContainer.addChild(hint.sprite);
+            this._hint = new Hint(hintCoordinates);
+            this._unlockContainer.addChild(this._hint.sprite);
             this.weapon.once(`shotIsDone`, () => {
-                hint.hide();
-                this._unlockContainer.removeChild(hint.sprite);
+                this._hint.hide();
+                this._unlockContainer.removeChild(this._hint.sprite);
             });
         }
     }
