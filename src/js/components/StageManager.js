@@ -7,9 +7,12 @@ import TWEEN from "tween.js";
 import GraphicsHelper from "../utils/GraphicsHelper";
 import starter from "../engine/Starter";
 import SceneManager from "../scenes/SceneManager";
+import Resizable from "../engine/Resizable";
 
-class StageManager {
+class StageManager extends Resizable {
     constructor() {
+        super();
+
         this._stages = [];
         this._openStages = [];
 
@@ -30,16 +33,14 @@ class StageManager {
     }
 
     _drawStages() {
-        const { stageHeight, appHeight } = this._sizes;
+        let { innerWidth: currW, innerHeight: currH } = window;
 
         this._stages = stagesSettings.map((stageInfo, index) => {
             const stageNumber = index + 1;
             const color = this._getStageBackgroundColor(stageNumber);
-            const yPosition = appHeight - stageHeight * stageNumber;
 
             const stage = new Stage({
                 color: color,
-                y: yPosition,
                 info: stageInfo,
             });
 
@@ -48,6 +49,27 @@ class StageManager {
             });
 
             return stage;
+        });
+
+        this.onResize({ w: currW, h: currH });
+    }
+
+    onResize(data) {
+        const { w, h } = data;
+
+        const displayedLevel = w > h ? 3 : 4;
+
+        let { innerHeight: currH } = window;
+
+        let stageHeight = currH / displayedLevel;
+
+        this._stages.forEach((stage, index) => {
+            const stageNumber = index + 1;
+            const yPosition = currH - stageHeight * stageNumber;
+
+            stage._mainContainer.width = w;
+            stage._mainContainer.height = h / displayedLevel + 10;
+            stage._mainContainer.y = yPosition;
         });
     }
 

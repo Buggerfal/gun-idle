@@ -33,20 +33,4 @@ export default [
         shotReward: 300,
         openLevelCost: 10000,
     },
-    {
-        name: `no name`,
-        weaponType: WEAPONS.colt,
-        gameProgressToUnlock: 10,
-        level: `15`,
-        shotReward: 500,
-        openLevelCost: 100000,
-    },
-    {
-        name: `no name`,
-        weaponType: WEAPONS.colt,
-        gameProgressToUnlock: 13,
-        level: `20`,
-        shotReward: 1000,
-        openLevelCost: 1000000,
-    },
 ];

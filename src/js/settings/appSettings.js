@@ -1,10 +1,10 @@
 export default {
     app: {
-        width: 960,
-        height: 960,
+        width: 1000,
+        height: 1000,
     },
     stage: {
-        height: 400,
+        height: 200,
     },
     score: {
         width: 960,

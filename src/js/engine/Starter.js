@@ -8,8 +8,6 @@ class Starter {
     constructor() {
         this.app = null;
 
-        this._orientation = null;
-
         this._init = {};
 
         this._init.initPromise = new Promise(resolve => {
@@ -24,7 +22,7 @@ class Starter {
     init(container = document.body) {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const view = document.querySelector("content");
+        const view = document.querySelector(`content`);
 
         this.app = new PIXI.Application({
             width,
@@ -51,10 +49,9 @@ class Starter {
     }
 
     resize() {
+        console.log("STARTER");
         const { width, height } = this.size;
         let { innerWidth: currW, innerHeight: currH } = window;
-
-        if (this.glW === currW && this.glH === currH) return;
 
         let newW, newH;
 
@@ -68,12 +65,15 @@ class Starter {
             newW = newH * (currW / currH);
         }
 
-        this.app.view.style.width = newW + "px";
-        this.app.view.style.height = newH + "px";
+        this.app.view.style.width = newW + `px`;
+        this.app.view.style.height = newH + `px`;
 
         this.app.renderer.resize(newW, newH);
 
-        this.emit(`onResize`, { newW, newH, orientation: this._orientation });
+        this.emit(`onResize`, {
+            w: newW,
+            h: newH,
+        });
     }
 
     get initiated() {

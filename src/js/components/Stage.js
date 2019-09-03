@@ -44,6 +44,14 @@ class Stage extends Resizable {
         return this._config.info;
     }
 
+    onResize(data) {
+        const { w, h, orientation } = data;
+        if (w > h) {
+        }
+        if (h > w) {
+        }
+    }
+
     _init() {
         const {
             width,
@@ -55,77 +63,75 @@ class Stage extends Resizable {
 
         const offScreenWidth = 20;
 
+        let { innerWidth: currW, innerHeight: currH } = window;
+
+        let stageHeight = currH / 4;
+
         this._mainContainer = GraphicsHelper.createColorContainer({
-            x: -offScreenWidth / 2,
-            y: y - offScreenWidth / 2,
-            width: width + offScreenWidth,
-            height: height + offScreenWidth,
+            width: currW,
+            height: stageHeight,
             color: color,
         });
         this._mainContainer.setParent(starter.app.stage);
 
-        //Unlocked stage elements
-        this._unlockContainer = GraphicsHelper.createContainer();
-        this._unlockContainer.setParent(this._mainContainer);
+        // //Unlocked stage elements
+        // this._unlockContainer = GraphicsHelper.createContainer();
+        // this._unlockContainer.setParent(this._mainContainer);
 
-        this.targetsManager = new TargetsManager({
-            x: width - 250,
-            level: level,
-        });
+        // this.targetsManager = new TargetsManager({
+        //     x: width - 250,
+        //     level: level,
+        // });
 
-        this.targetsManager.container.setParent(this._unlockContainer);
+        // this.targetsManager.container.setParent(this._unlockContainer);
 
-        this.targetsManager.on("rageMode", () => {
-            this.emit("startRageMode");
-        });
+        // this.targetsManager.on("rageMode", () => {
+        //     this.emit("startRageMode");
+        // });
 
-        this._weaponName = GraphicsHelper.drawText({
-            x: 120,
-            y: 50,
-            text: `${name}`,
-            style: {
-                fill: "white",
-                // fontFamily: "Comic Sans MS",
-                fontSize: 40,
-            },
-        });
+        // this._weaponName = GraphicsHelper.drawText({
+        //     x: 120,
+        //     y: 50,
+        //     text: `${name}`,
+        //     style: {
+        //         fill: "white",
+        //         // fontFamily: "Comic Sans MS",
+        //         fontSize: 40,
+        //     },
+        // });
 
-        this._weaponName.setParent(this._unlockContainer);
+        // this._weaponName.setParent(this._unlockContainer);
 
-        this.weapon = WeaponFactory.createWeapon(weaponType, { y });
-        this.weapon.container.setParent(this._unlockContainer);
+        // this.weapon = WeaponFactory.createWeapon(weaponType, { y });
+        // this.weapon.container.setParent(this._unlockContainer);
 
-        this._initShotListener();
+        // this._initShotListener();
 
-        this._showStartHint(level);
+        // this._showStartHint(level);
 
-        this._initAutoPlay();
+        // this._initAutoPlay();
 
-        //Locked stage elements
-        this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
-        this._lockContainer.setParent(this._mainContainer);
+        // //Locked stage elements
+        // this._lockContainer = GraphicsHelper.createContainer({ y: height / 2 });
+        // this._lockContainer.setParent(this._mainContainer);
 
-        this._lock = GraphicsHelper.createSpriteFromAtlas({
-            x: width / 2 - 100,
-            name: `lockedIcon`,
-        });
-        this._lock.setParent(this._lockContainer);
+        // this._lock = GraphicsHelper.createSpriteFromAtlas({
+        //     x: width / 2 - 100,
+        //     name: `lockedIcon`,
+        // });
+        // this._lock.setParent(this._lockContainer);
 
-        this._levelInfoText = GraphicsHelper.drawText({
-            x: this._lock.x + this._lock.width + 80,
-            y: 30,
-            text: `${i18n.level} ${level}`,
-            style: {
-                fill: "white",
-                // fontFamily: "Comic Sans MS",
-                fontSize: 40,
-            },
-        });
-        this._levelInfoText.setParent(this._lockContainer);
-    }
-
-    onResize(data) {
-        console.log(data, "data");
+        // this._levelInfoText = GraphicsHelper.drawText({
+        //     x: this._lock.x + this._lock.width + 80,
+        //     y: 30,
+        //     text: `${i18n.level} ${level}`,
+        //     style: {
+        //         fill: "white",
+        //         // fontFamily: "Comic Sans MS",
+        //         fontSize: 40,
+        //     },
+        // });
+        // this._levelInfoText.setParent(this._lockContainer);
     }
 
     _drawOpenLevelButton() {
@@ -277,17 +283,16 @@ class Stage extends Resizable {
     }
 
     hide() {
-        this.weapon.hide();
-        this._lockContainer.alpha = 1;
-        this._unlockContainer.alpha = 0;
+        // this.weapon.hide();
+        // this._lockContainer.alpha = 1;
+        // this._unlockContainer.alpha = 0;
     }
 
     show() {
         //this._openBtnContainer.visible = true;
-
-        this.weapon.show();
-        this._lockContainer.alpha = 0;
-        this._unlockContainer.alpha = 1;
+        // this.weapon.show();
+        // this._lockContainer.alpha = 0;
+        // this._unlockContainer.alpha = 1;
     }
 
     showOpenButton() {
