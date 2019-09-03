@@ -12,23 +12,6 @@ import Hint from "./Hint";
 import Button from "./Button";
 import i18n from "../settings/i18n";
 
-class StageStrategy {
-    availableToOpen() {
-        return false;
-    }
-}
-
-class ScoreDependentStrategy extends StageStrategy {
-    constructor(requiredScore) {
-        super();
-        this._requiredScore = requiredScore;
-    }
-
-    availableToOpen() {
-        return ScoreBar.score >= this._requiredScore;
-    }
-}
-
 class Stage {
     constructor(config, stageStrategy) {
         this._config = {
