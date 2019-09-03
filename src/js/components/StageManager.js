@@ -87,6 +87,7 @@ class StageManager {
 
     _runRageMode() {
         //TODO: refactoring
+        //AUTOSHOT (RAGE-MODE) LOGIC
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
 
@@ -108,6 +109,7 @@ class StageManager {
         });
         ticker.start();
 
+        //RED BACKGROUND LOGIC
         const stageModeBackground = GraphicsHelper.createColorContainer({
             width: appSettings.app.width,
             height: appSettings.app.height,
@@ -125,6 +127,7 @@ class StageManager {
             })
             .start();
 
+        //FLAME ICON LOGIC
         const flameIcon = GraphicsHelper.createSpriteFromAtlas({
             x: 100,
             y: appSettings.app.height - 130,

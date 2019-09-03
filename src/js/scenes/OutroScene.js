@@ -99,6 +99,7 @@ class OutroScene {
             height: 150,
             color: installButton,
             text: i18n.installButton,
+            rounded: 20,
             onClick: () => {
                 this._ctaHandler();
             },
