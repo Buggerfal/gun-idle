@@ -24,7 +24,7 @@ class Stage {
         this._mainContainer = null;
         this._lockContainer = null;
         this._unlockContainer = null;
-        this._weapon = null;
+        this.weapon = null;
         this._lock = null;
 
         this._ticker = null;
@@ -89,8 +89,8 @@ class Stage {
 
         this._weaponName.setParent(this._unlockContainer);
 
-        this._weapon = WeaponFactory.createWeapon(weaponType, { y });
-        this._weapon.container.setParent(this._unlockContainer);
+        this.weapon = WeaponFactory.createWeapon(weaponType, { y });
+        this.weapon.container.setParent(this._unlockContainer);
 
         this._initShotListener();
 
@@ -167,7 +167,7 @@ class Stage {
     }
 
     _initShotListener() {
-        this._weapon.on(`shotRequest`, () => {
+        this.weapon.on(`shotRequest`, () => {
             this._makeShot();
         });
     }
@@ -189,7 +189,7 @@ class Stage {
             // TODO: add 'destroy' method into hint
             const hint = new Hint(hintCoordinates);
             this._unlockContainer.addChild(hint.sprite);
-            this._weapon.once(`shotIsDone`, () => {
+            this.weapon.once(`shotIsDone`, () => {
                 hint.hide();
                 this._unlockContainer.removeChild(hint.sprite);
             });
@@ -203,12 +203,12 @@ class Stage {
         let autoShotsLeft = 5;
         let timeToNextShoot = timeBetweenShoot;
 
-        this._weapon.on(`shotIsDone`, () => {
+        this.weapon.on(`shotIsDone`, () => {
             autoShotsLeft -= 1;
             timeToNextShoot = timeBetweenShoot;
         });
 
-        this._weapon.once(`shotIsDone`, () => {
+        this.weapon.once(`shotIsDone`, () => {
             this._ticker = new PIXI.Ticker();
             this._ticker.add(() => {
                 if (autoShotsLeft <= 0) {
@@ -233,7 +233,7 @@ class Stage {
     _makeShot() {
         const coordinates = this.targetsManager.getHolePosition();
 
-        this._weapon.once(`shotIsDone`, () => {
+        this.weapon.once(`shotIsDone`, () => {
             const {
                 info: { shotReward },
             } = this._config;
@@ -243,7 +243,7 @@ class Stage {
             this.emit("stageScoreUpdate");
         });
 
-        this._weapon.shot(coordinates);
+        this.weapon.shot(coordinates);
     }
 
     _drawRewardText(value) {
@@ -270,7 +270,7 @@ class Stage {
     }
 
     hide() {
-        this._weapon.hide();
+        this.weapon.hide();
         this._lockContainer.alpha = 1;
         this._unlockContainer.alpha = 0;
     }
@@ -278,7 +278,7 @@ class Stage {
     show() {
         //this._openBtnContainer.visible = true;
 
-        this._weapon.show();
+        this.weapon.show();
         this._lockContainer.alpha = 0;
         this._unlockContainer.alpha = 1;
     }

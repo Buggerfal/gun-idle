@@ -5,6 +5,9 @@ import Emitter from "component-emitter";
 import TexturesLoader from "../../engine/TexturesLoader";
 import Utils from "../../utils/utils";
 import appSettings from "../../settings/appSettings";
+import * as particles from "pixi-particles";
+import particlesSettings from "../../settings/particles";
+import starter from "../../engine/Starter";
 
 export default class BaseWeapon {
     constructor(config) {
@@ -13,12 +16,10 @@ export default class BaseWeapon {
         this._container = null;
         this._weaponContainer = null;
 
-        this._ticker = new PIXI.Ticker();
-        this._ticker.start();
+        this._weaponAnimationTime = 80;
 
-        this._ticker.add(delta => {
-            this.tick(delta);
-        });
+        this._rageEmitters = [];
+
         new Emitter(this);
 
         this.init();
@@ -85,7 +86,54 @@ export default class BaseWeapon {
         return this._container;
     }
 
-    tick() {}
+    runRageModeAnimation() {
+        for (let i = 0; i < 4; i++) {
+            const color = Utils.getRandomColor();
+
+            let container = new PIXI.ParticleContainer();
+
+            this._container.addChild(container);
+
+            container.x =
+                this._weaponContainer.x +
+                this._slideSprite.x +
+                this._slideSprite.width;
+            container.y = this._slideSprite.y + 170;
+
+            const graphics = new PIXI.Graphics();
+
+            graphics.lineStyle(0);
+            graphics.beginFill(color, 1);
+            graphics.drawCircle(100, 250, 50);
+            graphics.endFill();
+
+            const texture = starter.app.renderer.generateTexture(graphics);
+
+            const emitter = new particles.Emitter(
+                container,
+                [texture],
+                particlesSettings
+            );
+
+            const ticker = new PIXI.Ticker();
+            ticker.start();
+            ticker.add(() => {
+                emitter.update(ticker.deltaMS * 0.003);
+            });
+
+            emitter.emit = true;
+
+            this._rageEmitters.push(emitter);
+        }
+
+        this._weaponAnimationTime = 40;
+    }
+
+    stopRageModeAnimation() {
+        this._rageEmitters.forEach(emitter => {
+            emitter.emit = false;
+        });
+    }
 }
 
 export class Colt1911 extends BaseWeapon {
@@ -134,61 +182,22 @@ export class Colt1911 extends BaseWeapon {
         });
 
         this.emit("shotIsDone");
-
-        // this.rageAnimation();
     }
 
     _weaponAnimation() {
         //TODO: WEAPON POSITION
 
         this.rotationTween = new TWEEN.Tween(this._weaponContainer)
-            .to({ rotation: [-0.17, 0] }, 80)
+            .to({ rotation: [-0.17, 0] }, this._weaponAnimationTime)
             .start();
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.pivot)
-            .to({ x: [45, 0] }, 80)
+            .to({ x: [45, 0] }, this._weaponAnimationTime)
             .onComplete(() => {
                 this._isAnimationEnd = true;
             })
             .start();
     }
-
-    // rageAnimation() {
-    //     const bullets = [];
-
-    //     this._rageBulletContainer = GraphicsHelper.createContainer({
-    //         x: this._weaponContainer.x + this._mainSprite.width,
-    //         y: this._weaponContainer.y,
-    //     });
-    //     this._rageBulletContainer.setParent(this._weaponContainer);
-
-    //     for (let i = 0; i <= 20; i++) {
-    //         const graphics = new PIXI.Graphics();
-    //         const color = Utils.getRandomColor();
-    //         const radius = Utils.random(10, 30);
-
-    //         graphics.lineStyle(0); // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
-    //         graphics.beginFill(color, 1);
-    //         graphics.drawCircle(-80, -100, radius);
-    //         graphics.endFill();
-
-    //         bullets.push(graphics);
-
-    //         this._rageBulletContainer.addChild(graphics);
-    //     }
-
-    //     bullets.forEach(bullet => {
-    //         const delay = Utils.random(0, 400);
-    //         const a = new TWEEN.Tween(bullet)
-    //             .delay(delay)
-    //             .to({ x: 900, y: 100 }, 360)
-    //             .onComplete(() => {
-    //                 // bullet.destroy();
-    //             })
-    //             .start();
-    //         console.log(a, "a");
-    //     });
-    // }
 
     _bulletAnimation(coordinates) {
         const bullet = GraphicsHelper.createSpriteFromAtlas({
@@ -270,22 +279,25 @@ export class AK47 extends BaseWeapon {
         const endXPosition = this._weaponContainer.x;
 
         this.rotationTween = new TWEEN.Tween(this._weaponContainer)
-            .to({ rotation: [-0.17, 0] }, 80)
+            .to({ rotation: [-0.17, 0] }, this._weaponAnimationTime)
             .start();
 
         this.moveTween = new TWEEN.Tween(this._weaponContainer)
-            .to({ x: [-20, endXPosition] }, 80)
+            .to({ x: [-20, endXPosition] }, this._weaponAnimationTime)
             .onComplete(() => {
                 this._isAnimationEnd = true;
             })
             .start();
 
         this.slideTween = new TWEEN.Tween(this._slideSprite.scale)
-            .to({ x: [1, 0, 1] }, 80)
+            .to({ x: [1, 0, 1] }, this._weaponAnimationTime)
             .start();
 
         this.knifeRotationTween = new TWEEN.Tween(this._knife)
-            .to({ rotation: [-0.3, 0.3, -0.2, 0.2, 0.1, 0.1, 0] }, 180)
+            .to(
+                { rotation: [-0.3, 0.3, -0.2, 0.2, 0.1, 0.1, 0] },
+                this._weaponAnimationTime * 2
+            )
             .start();
     }
 

@@ -87,6 +87,10 @@ class StageManager {
 
     //TODO: refactoring, move logic
     _runRageMode() {
+        this._openStages.forEach(stage => {
+            stage.weapon.runRageModeAnimation();
+        });
+
         //AUTOSHOT (RAGE-MODE) LOGIC
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
@@ -124,6 +128,9 @@ class StageManager {
             )
             .onComplete(() => {
                 starter.app.stage.removeChild(stageModeBackground);
+                this._openStages.forEach(stage => {
+                    stage.weapon.stopRageModeAnimation();
+                });
             })
             .start();
 
@@ -160,7 +167,13 @@ class StageManager {
     //TODO: refactoring, move logic
     _shakeBackground() {
         new TWEEN.Tween(starter.app.stage)
-            .to({ x: [-5, 0, 5, -3, 0, 3], y: [0, 3, 0, -3, 0, -5, 0, 5] }, 480)
+            .to(
+                {
+                    x: [-5, 0, 5, -3, 0, 3, 0],
+                    y: [0, 3, 0, -3, 0, -5, 0, 5, 0],
+                },
+                480
+            )
             .repeat(10)
             .start();
     }
