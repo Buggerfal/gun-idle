@@ -3,8 +3,6 @@ import Target from "./Target";
 import TWEEN from "tween.js";
 import Utils from "../utils/utils";
 import Emitter from "component-emitter";
-import starter from "../engine/Starter";
-import appSettings from "../settings/appSettings";
 
 class TargetsManager {
     constructor(config) {
