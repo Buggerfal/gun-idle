@@ -115,7 +115,7 @@ export default {
     },
     flameIcon: {
         x: 400,
-        y: 100,
+        y: 103,
         width: 140,
         height: 175,
     },
