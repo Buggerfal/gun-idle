@@ -1,6 +1,6 @@
 export default {
     alpha: {
-        start: 0.31,
+        start: 0,
         end: 1,
     },
     scale: {

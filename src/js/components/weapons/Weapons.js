@@ -94,10 +94,7 @@ export default class BaseWeapon {
 
             this._container.addChild(container);
 
-            container.x =
-                this._weaponContainer.x +
-                this._slideSprite.x +
-                this._slideSprite.width;
+            container.x = -100;
             container.y = this._slideSprite.y + 170;
 
             const graphics = new PIXI.Graphics();
@@ -126,7 +123,7 @@ export default class BaseWeapon {
             this._rageEmitters.push(emitter);
         }
 
-        this._weaponAnimationTime = 40;
+        this._weaponAnimationTime = 60;
     }
 
     stopRageModeAnimation() {
