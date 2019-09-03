@@ -46,7 +46,7 @@ class OutroScene {
             text: i18n.outroHeader,
             style: {
                 fill: "white",
-                fontFamily: "Courier New",
+                // fontFamily: "Courier New",
                 fontSize: 70,
                 fontWeight: 900,
             },
@@ -88,7 +88,7 @@ class OutroScene {
             text: i18n.outroDescription,
             style: {
                 fill: "white",
-                fontFamily: "Courier New",
+                // fontFamily: "Courier New",
                 fontSize: 50,
                 fontWeight: 900,
             },

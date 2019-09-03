@@ -37,7 +37,7 @@ class ScoreBar extends Resizable {
             y: height / 2,
             style: {
                 fill: "white",
-                fontFamily: "Comic Sans MS",
+                // fontFamily: "Comic Sans MS",
                 fontSize: 110,
             },
         });

@@ -77,12 +77,12 @@ class Stage {
         });
 
         this._weaponName = GraphicsHelper.drawText({
-            x: 100,
+            x: 120,
             y: 50,
             text: `${name}`,
             style: {
                 fill: "white",
-                fontFamily: "Comic Sans MS",
+                // fontFamily: "Comic Sans MS",
                 fontSize: 40,
             },
         });
@@ -114,7 +114,7 @@ class Stage {
             text: `${i18n.level} ${level}`,
             style: {
                 fill: "white",
-                fontFamily: "Comic Sans MS",
+                // fontFamily: "Comic Sans MS",
                 fontSize: 40,
             },
         });
@@ -259,7 +259,7 @@ class Stage {
             y,
             style: {
                 fill: "white",
-                fontFamily: "Comic Sans MS",
+                // fontFamily: "Comic Sans MS",
                 fontSize: 50,
             },
         });

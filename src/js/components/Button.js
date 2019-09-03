@@ -36,7 +36,7 @@ class Button {
             text,
             style: {
                 fill: "white",
-                fontFamily: "Comic Sans MS",
+                // fontFamily: "Comic Sans MS",
                 fontSize: fontSize,
             },
         });

@@ -20,7 +20,7 @@ class IntroScene {
         const { width, height } = { ...appSettings.app };
         const textStyles = {
             fill: "white",
-            fontFamily: "Courier New",
+            // fontFamily: "Courier New",
             fontSize: 200,
             fontWeight: 900,
         };
