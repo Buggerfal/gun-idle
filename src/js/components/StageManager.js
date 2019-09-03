@@ -85,8 +85,8 @@ class StageManager {
         }
     }
 
+    //TODO: refactoring, move logic
     _runRageMode() {
-        //TODO: refactoring
         //AUTOSHOT (RAGE-MODE) LOGIC
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
@@ -152,6 +152,16 @@ class StageManager {
                     });
             })
             .repeat(repeatAnimation)
+            .start();
+
+        this._shakeBackground();
+    }
+
+    //TODO: refactoring, move logic
+    _shakeBackground() {
+        new TWEEN.Tween(starter.app.stage)
+            .to({ x: [-5, 0, 5, -3, 0, 3], y: [0, 3, 0, -3, 0, -5, 0, 5] }, 480)
+            .repeat(10)
             .start();
     }
 

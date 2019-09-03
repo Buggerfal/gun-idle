@@ -50,11 +50,13 @@ class Stage {
             info: { weaponType, level, name },
         } = this._config;
 
+        const offScreenWidth = 20;
+
         this._mainContainer = GraphicsHelper.createColorContainer({
-            x: 0,
-            y,
-            width: width,
-            height: height,
+            x: -offScreenWidth / 2,
+            y: y - offScreenWidth / 2,
+            width: width + offScreenWidth,
+            height: height + offScreenWidth,
             color: color,
         });
         this._mainContainer.setParent(starter.app.stage);
