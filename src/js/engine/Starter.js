@@ -24,12 +24,13 @@ class Starter {
     init(container = document.body) {
         const width = window.innerWidth;
         const height = window.innerHeight;
+        const view = document.querySelector("content");
 
         this.app = new PIXI.Application({
             width,
             height,
             transparent: true,
-            resizeTo: container,
+            view: view,
         });
         this.app.renderer.autoResize = true;
         container.appendChild(this.app.view);
@@ -51,39 +52,29 @@ class Starter {
 
     resize() {
         const { width, height } = this.size;
-        const ratio = width / height;
-        let w, h;
+        let { innerWidth: currW, innerHeight: currH } = window;
 
-        if (window.innerWidth / window.innerHeight >= ratio) {
-            this._orientation = `landscape`;
-            w = window.innerHeight * ratio;
-            h = window.innerHeight;
+        if (this.glW === currW && this.glH === currH) return;
 
-            // this._emitOrientationChangeEvent("landscape");
+        let newW, newH;
+
+        if (currH > currW) {
+            //portrait
+            newW = width;
+            newH = newW * (currH / currW);
         } else {
-            this._orientation = `portrait`;
-
-            w = window.innerWidth;
-            h = window.innerWidth / ratio;
-
-            // this._emitOrientationChangeEvent("portrait");
+            //landscape
+            newH = height;
+            newW = newH * (currW / currH);
         }
 
-        this.app.view.style.width = w + "px";
-        this.app.view.style.height = h + "px";
+        this.app.view.style.width = newW + "px";
+        this.app.view.style.height = newH + "px";
 
-        this.app.renderer.resize(w, h);
-        // this.app.stage.scale.x = w / width;
-        // this.app.stage.scale.y = h / height;
-        this.emit(`onResize`, { w, h, orientation: this._orientation });
+        this.app.renderer.resize(newW, newH);
+
+        this.emit(`onResize`, { newW, newH, orientation: this._orientation });
     }
-
-    // _emitOrientationChangeEvent(newOrientation) {
-    // if (this._orientation != newOrientation) {
-    //     this._orientation = newOrientation;
-    //     this.emit(`orientation_${newOrientation}`);
-    // }
-    // }
 
     get initiated() {
         return this._init.initPromise;
