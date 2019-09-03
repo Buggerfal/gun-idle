@@ -129,6 +129,8 @@ export class Colt1911 extends BaseWeapon {
     }
 
     _weaponAnimation() {
+        //TODO: WEAPON POSITION
+
         this.rotationTween = new TWEEN.Tween(this._weaponContainer)
             .to({ rotation: [-0.17, 0] }, 80)
             .start();

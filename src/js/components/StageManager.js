@@ -85,7 +85,6 @@ class StageManager {
     }
 
     _runRageMode() {
-        console.log("RUN!111");
         let timeToOffRageMode = 5000;
         let timeBeetweenShot = 150;
 
@@ -122,6 +121,22 @@ class StageManager {
             .onComplete(() => {
                 starter.app.stage.removeChild(stageModeBackground);
             })
+            .start();
+
+        const flameIcon = GraphicsHelper.createSpriteFromAtlas({
+            x: 100,
+            y: appSettings.app.height - 130,
+            name: `flameIcon`,
+            anchor: 0.5,
+        });
+        flameIcon.setParent(starter.app.stage);
+
+        new TWEEN.Tween(flameIcon.scale)
+            .to({ x: [1.1, 1], y: [1.1, 1] }, 700)
+            .onComplete(() => {
+                starter.app.stage.removeChild(flameIcon);
+            })
+            .repeat(Infinity)
             .start();
     }
 

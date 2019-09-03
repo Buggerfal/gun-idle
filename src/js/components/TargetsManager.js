@@ -66,22 +66,10 @@ class TargetsManager {
             //TODO: refactoring
             if (name === `flameTarget`) {
                 this.emit("rageMode");
-                this.addFlameIcon();
             }
         });
         return target;
     }
-
-    addFlameIcon() {
-        this._flameIcon = GraphicsHelper.createSpriteFromAtlas({
-            x: 50,
-            y: appSettings.app.height - 200,
-            name: `flameIcon`,
-        });
-        this._flameIcon.setParent(starter.app.stage);
-    }
-
-    removeFlameIcon() {}
 
     updateTargets() {
         if (!this._target2) {
