@@ -18,27 +18,49 @@ class ScoreBar extends Resizable {
         this._config = { ...appSettings.score };
     }
 
+    onResize(data) {
+        const { w, h } = data;
+
+        if (w > h) {
+            //landscape
+        }
+
+        if (w < h) {
+            //portrait
+        }
+
+        if (this._backgroundPolygon) {
+            this._backgroundPolygon.width = w;
+            this._moneyText.x = w / 2;
+            this._moneyText.y = 100;
+            this._ctaDownload.container.x =
+                w - this._ctaDownload.container.width - 50;
+        }
+    }
+
     init() {
         const { width, height } = this._config;
         const { scoreBar } = appSettings.colors;
 
+        const { innerWidth: w } = window;
+        const h = appSettings.score.height;
+
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
-        const backgroundPolygon = GraphicsHelper.drawPolygon({
-            path: polygonsPath.scoreBar,
+        this._backgroundPolygon = GraphicsHelper.drawPolygon({
+            path: polygonsPath,
             color: scoreBar,
         });
 
-        this._container.addChild(backgroundPolygon);
+        this._container.addChild(this._backgroundPolygon);
 
         this._moneyText = GraphicsHelper.drawText({
             x: width / 2,
             y: height / 2,
             style: {
                 fill: "white",
-                // fontFamily: "Comic Sans MS",
-                fontSize: 110,
+                fontSize: 130,
             },
         });
         this._moneyText.setParent(this._container);
@@ -63,6 +85,10 @@ class ScoreBar extends Resizable {
         new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 0).start();
 
         this._container.visible = false;
+
+        setTimeout(() => {
+            this.onResize({ w, h });
+        }, 100);
     }
 
     onLandscape() {
