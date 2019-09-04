@@ -31,7 +31,7 @@ class OutroScene extends Resizable {
             this._substrate.width = w;
             this._substrate.height = h;
             this._rect.x = w / 2 - this._rect.width / 2;
-            this._rect.y = h / 2 - 300;
+            this._rect.y = h / 2 - 350;
         }
     }
 
@@ -52,16 +52,16 @@ class OutroScene extends Resizable {
         const { substrateOutro, installButton } = appSettings.colors;
 
         this._rect = GraphicsHelper.createColorContainer({
-            x: w / 2 - 300,
-            y: h / 2 - 300,
-            width: 600,
+            x: w / 2 - 350,
+            y: h / 2 - 350,
+            width: 700,
             height: 600,
             color: substrateOutro,
         });
         this._rect.setParent(this._container);
 
         const headerText = GraphicsHelper.drawText({
-            x: 300,
+            x: 350,
             y: 100,
             text: i18n.outroHeader,
             style: {
@@ -76,7 +76,7 @@ class OutroScene extends Resizable {
         this._weaponContainer.setParent(this._rect);
 
         const shotGun = GraphicsHelper.createSpriteFromAtlas({
-            x: 300,
+            x: 350,
             y: 250,
             anchor: 0.5,
             name: `shotgun`,
@@ -100,7 +100,7 @@ class OutroScene extends Resizable {
         shotGunSlide.setParent(this._weaponContainer);
 
         const description = GraphicsHelper.drawText({
-            x: 300,
+            x: 350,
             y: 530,
             text: i18n.outroDescription,
             style: {
@@ -123,7 +123,7 @@ class OutroScene extends Resizable {
             fontSize: 70,
         });
         this._ctaDownload.container.setParent(this._rect);
-        this._ctaDownload.container.position.set(130, 350);
+        this._ctaDownload.container.position.set(170, 350);
 
         this.hide();
     }

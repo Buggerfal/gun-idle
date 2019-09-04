@@ -91,14 +91,6 @@ class ScoreBar extends Resizable {
         }, 500);
     }
 
-    onLandscape() {
-        console.log("LANDSCAPE");
-    }
-
-    onPortrait() {
-        console.log("PORTRAIT");
-    }
-
     update(val = 0) {
         this._money += val;
 

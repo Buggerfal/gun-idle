@@ -167,7 +167,7 @@ class StageManager extends Resizable {
         //RED BACKGROUND ANIMATION
         new TWEEN.Tween(this._rageModeBackground)
             .to(
-                { alpha: [0.3, 0.1, 0.4, 0.1, 0.5, 0.2, 0.1, 0.4, 0] },
+                { alpha: [0.5, 0.1, 0.7, 0.1, 0.5, 0.7, 0.3, 0.4, 0] },
                 timeToOffRageMode
             )
             .onComplete(() => {
@@ -205,8 +205,8 @@ class StageManager extends Resizable {
         new TWEEN.Tween(starter.app.stage)
             .to(
                 {
-                    x: [-5, 0, 8, -9, 0, 6, 0, -8, 0, 7],
-                    y: [0, 4, 0, 6, -7, 3, -5, 0, 6, 0, 9, 0],
+                    x: [-7, 0, 9, -4, 8, -9, 0, 7, -3, -8, 0, 7, 0],
+                    y: [0, 7, 0, 0, -7, 3, -5, 0, 6, 0, -7, 0, 8, 0],
                 },
                 480
             )

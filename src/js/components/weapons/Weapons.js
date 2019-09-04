@@ -91,7 +91,6 @@ export default class BaseWeapon {
 
         for (let i = 1; i < 4; i++) {
             let container = new PIXI.ParticleContainer();
-            console.log(particleColors[i - 1]);
             this._container.addChild(container);
 
             container.x = -100;
@@ -122,12 +121,10 @@ export default class BaseWeapon {
 
             emitter.emit = true;
 
-            console.log(emitter);
             this._rageEmitters.push(emitter);
         }
 
         this._weaponAnimationTime = 60;
-        console.log(1290);
     }
 
     stopRageModeAnimation() {

@@ -44,7 +44,7 @@ class Stage extends Resizable {
         //TODO: create new logic. Resizable
         setTimeout(() => {
             this.onResize({ w: currW, h: currH });
-        }, 20);
+        }, 100);
     }
 
     get configuration() {
