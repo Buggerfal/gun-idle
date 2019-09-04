@@ -22,6 +22,7 @@ export default class GraphicsHelper {
             height = 0,
             color,
             onClick,
+            alpha = 1,
         } = settings;
 
         const container = new PIXI.Container();
@@ -29,7 +30,7 @@ export default class GraphicsHelper {
         // move container to screen center
         container.x = x;
         container.y = y;
-
+        container.alpha = alpha;
         container.width = width;
         container.height = height;
 
@@ -50,12 +51,13 @@ export default class GraphicsHelper {
     }
 
     static createSpriteFromAtlas(settings = {}) {
-        const { x = 0, y = 0, name, anchor } = settings;
+        const { x = 0, y = 0, alpha = 1, name, anchor } = settings;
         const texture = texturesLoader.getByName(name);
 
         const sprite = new PIXI.Sprite(texture);
         sprite.x = x;
         sprite.y = y;
+        sprite.alpha = alpha;
 
         if (anchor) {
             sprite.anchor.set(anchor);

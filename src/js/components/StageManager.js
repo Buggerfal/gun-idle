@@ -28,8 +28,32 @@ class StageManager extends Resizable {
     }
 
     init() {
+        let { innerHeight: h, innerWidth: w } = window;
+
         this._drawStages();
         this._checkActiveStage();
+
+        this._container = GraphicsHelper.createContainer({});
+        this._container.setParent(starter.app.stage);
+
+        this._rageModeBackground = GraphicsHelper.createColorContainer({
+            x: -10,
+            y: -10,
+            width: w + 20,
+            height: h + 20,
+            color: "0x990000",
+            alpha: 0,
+        });
+        this._rageModeBackground.setParent(this._container);
+
+        this._flameIcon = GraphicsHelper.createSpriteFromAtlas({
+            x: 100,
+            y: h - 150,
+            name: `flameIcon`,
+            anchor: 0.5,
+            alpha: 0,
+        });
+        this._flameIcon.setParent(this._container);
     }
 
     _drawStages() {
@@ -73,6 +97,12 @@ class StageManager extends Resizable {
             stage._mainContainer.height = h / displayedLevel + 10;
             stage._mainContainer.y = yPosition;
         });
+
+        if (this._rageModeBackground) {
+            this._rageModeBackground.width = w;
+            this._rageModeBackground.height = h;
+            this._flameIcon.y = h - 100;
+        }
     }
 
     _checkActiveStage() {
@@ -137,48 +167,33 @@ class StageManager extends Resizable {
         });
         ticker.start();
 
-        //RED BACKGROUND LOGIC
-        const stageModeBackground = GraphicsHelper.createColorContainer({
-            width: appSettings.app.width,
-            height: appSettings.app.height,
-            color: "0x990000",
-        });
-        stageModeBackground.setParent(starter.app.stage);
-
-        new TWEEN.Tween(stageModeBackground)
+        //RED BACKGROUND ANIMATION
+        new TWEEN.Tween(this._rageModeBackground)
             .to(
                 { alpha: [0.3, 0.1, 0.4, 0.1, 0.5, 0.2, 0.1, 0.4, 0] },
                 timeToOffRageMode
             )
             .onComplete(() => {
-                starter.app.stage.removeChild(stageModeBackground);
+                starter.app.stage.removeChild(this._rageModeBackground);
                 this._openStages.forEach(stage => {
                     stage.weapon.stopRageModeAnimation();
                 });
             })
             .start();
 
-        //FLAME ICON LOGIC
-        const flameIcon = GraphicsHelper.createSpriteFromAtlas({
-            x: 100,
-            y: appSettings.app.height - 130,
-            name: `flameIcon`,
-            anchor: 0.5,
-        });
-        flameIcon.setParent(starter.app.stage);
-
         const timeOnAnimation = 700;
         const repeatAnimation =
             Math.floor(timeToOffRageMode / timeOnAnimation) - 1;
 
-        new TWEEN.Tween(flameIcon.scale)
+        this._flameIcon.alpha = 1;
+        new TWEEN.Tween(this._flameIcon.scale)
             .to({ x: [1.1, 1], y: [1.1, 1] }, timeOnAnimation)
             .onComplete(() => {
-                new TWEEN.Tween(flameIcon)
+                new TWEEN.Tween(this._flameIcon)
                     .to({ alpha: 0 }, timeOnAnimation)
                     .start()
                     .onComplete(() => {
-                        starter.app.stage.removeChild(flameIcon);
+                        starter.app.stage.removeChild(this._flameIcon);
                         SceneManager.showScene("outro");
                     });
             })
