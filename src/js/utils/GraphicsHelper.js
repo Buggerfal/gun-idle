@@ -15,7 +15,14 @@ export default class GraphicsHelper {
     }
 
     static createColorContainer(settings = {}) {
-        const { x = 0, y = 0, width = 0, height = 0, color } = settings;
+        const {
+            x = 0,
+            y = 0,
+            width = 0,
+            height = 0,
+            color,
+            onClick,
+        } = settings;
 
         const container = new PIXI.Container();
 
@@ -32,6 +39,12 @@ export default class GraphicsHelper {
         sprite.height = height;
         sprite.tint = color;
         sprite.setParent(container);
+
+        if (onClick) {
+            container.buttonMode = true;
+            container.interactive = true;
+            container.on("pointerdown", onClick);
+        }
 
         return container;
     }
