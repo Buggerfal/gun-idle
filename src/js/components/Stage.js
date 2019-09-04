@@ -40,7 +40,11 @@ class Stage extends Resizable {
         this.hide();
 
         let { innerWidth: currW, innerHeight: currH } = window;
-        this.onResize({ w: currW, h: currH });
+
+        //TODO: create new logic. Resizable
+        setTimeout(() => {
+            this.onResize({ w: currW, h: currH });
+        }, 20);
     }
 
     get configuration() {

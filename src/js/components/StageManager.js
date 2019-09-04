@@ -51,7 +51,9 @@ class StageManager extends Resizable {
             return stage;
         });
 
-        this.onResize({ w: currW, h: currH });
+        setTimeout(() => {
+            this.onResize({ w: currW, h: currH });
+        }, 0);
     }
 
     onResize(data) {
