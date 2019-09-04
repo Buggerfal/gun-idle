@@ -38,6 +38,9 @@ class Stage extends Resizable {
 
         this._init();
         this.hide();
+
+        let { innerWidth: currW, innerHeight: currH } = window;
+        this.onResize({ w: currW, h: currH });
     }
 
     get configuration() {
@@ -72,6 +75,7 @@ class Stage extends Resizable {
 
         if (this._hint) {
             this._hint.sprite.x = w > h ? 300 : 150; //half button width
+            this._hint.sprite.y = 150;
         }
 
         this._unlockContainer.y = this._mainContainer.y;
@@ -155,8 +159,6 @@ class Stage extends Resizable {
             },
         });
         this._levelInfoText.setParent(this._lockContainer);
-
-        this.onResize({ w: currW, h: currH });
     }
 
     _drawOpenLevelButton() {
@@ -220,11 +222,11 @@ class Stage extends Resizable {
         let hintCoordinates = null;
         switch (level) {
             case "1":
-                hintCoordinates = { x: 250, y: 200 };
+                hintCoordinates = { x: 250, y: 160 };
                 break;
 
             case "2":
-                hintCoordinates = { x: 350, y: 180 };
+                hintCoordinates = { x: 350, y: 160 };
                 break;
         }
 

@@ -4,23 +4,35 @@ import appSettings from "../settings/appSettings";
 import Emitter from "component-emitter";
 import ScoreBar from "../components/ScoreBar";
 import i18n from "../settings/i18n";
+import Resizable from "../engine/Resizable";
 
-class IntroScene {
+class IntroScene extends Resizable {
     constructor() {
+        super();
+
         this._container = null;
         this._substrate = null;
         this._hintTween = null;
 
         new Emitter(this);
 
-        this.init();
+        this._drwaAllElements();
+        this.hide();
     }
 
-    init() {
-        const { width, height } = { ...appSettings.app };
+    onResize(data) {
+        const { w, h } = data;
+        this._container.removeChildren();
+        this._drwaAllElements();
+    }
+
+    _drawSubstrate() {}
+
+    _drwaAllElements() {
+        const { innerWidth: w, innerHeight: h } = window;
+
         const textStyles = {
             fill: "white",
-            // fontFamily: "Courier New",
             fontSize: 200,
             fontWeight: 900,
         };
@@ -28,54 +40,32 @@ class IntroScene {
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
+        this._substrate = null;
         this._substrate = GraphicsHelper.drawGraphics({
-            width,
-            height,
-            holeX: 80,
-            holeY: height - 280,
-            holeWidth: 340,
-            holeHeight: 240,
+            width: w,
+            height: h,
             onClick: e => {
                 this.hide();
                 ScoreBar.show();
                 e.stopPropagation();
-                this._container.removeChild(this._blockedInteractionGraphics);
             },
         });
         this._substrate.setParent(this._container);
-        this._substrate.alpha = 0.5;
-
-        //Block interaction in hole
-        this._blockedInteractionGraphics = GraphicsHelper.drawGraphics({
-            width: 340,
-            height: 240,
-            x: 80,
-            y: height - 280,
-            onClick: e => {
-                this.hide();
-                ScoreBar.show();
-                this._blockedInteractionGraphics.visible = false;
-                e.stopPropagation();
-            },
-        });
-        this._blockedInteractionGraphics.setParent(this._container);
-        this._blockedInteractionGraphics.alpha = 0;
+        this._substrate.alpha = 0.3;
 
         GraphicsHelper.drawText({
-            x: width / 2,
-            y: height / 2,
+            x: w / 2,
+            y: h / 2,
             text: i18n.introScene_1,
             style: textStyles,
         }).setParent(this._container);
 
         GraphicsHelper.drawText({
-            x: width / 2,
-            y: height / 2 + 220,
+            x: w / 2,
+            y: h / 2 + 220,
             text: i18n.introScene_2,
             style: textStyles,
         }).setParent(this._container);
-
-        this.hide();
     }
 
     show() {

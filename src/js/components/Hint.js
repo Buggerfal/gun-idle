@@ -1,6 +1,5 @@
 import GraphicsHelper from "../utils/GraphicsHelper";
 import TWEEN from "tween.js";
-import starter from "../engine/Starter";
 
 class Hint {
     constructor(coordinates) {
