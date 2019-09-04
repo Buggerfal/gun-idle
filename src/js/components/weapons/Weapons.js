@@ -87,11 +87,11 @@ export default class BaseWeapon {
     }
 
     runRageModeAnimation() {
-        for (let i = 0; i < 4; i++) {
-            const color = Utils.getRandomColor();
+        const particleColors = appSettings.colors.particles;
 
+        for (let i = 1; i < 4; i++) {
             let container = new PIXI.ParticleContainer();
-
+            console.log(particleColors[i - 1]);
             this._container.addChild(container);
 
             container.x = -100;
@@ -100,7 +100,7 @@ export default class BaseWeapon {
             const graphics = new PIXI.Graphics();
 
             graphics.lineStyle(0);
-            graphics.beginFill(color, 1);
+            graphics.beginFill(particleColors[i - 1], 1);
             graphics.drawCircle(100, 250, 50);
             graphics.endFill();
 
@@ -115,11 +115,14 @@ export default class BaseWeapon {
             const ticker = new PIXI.Ticker();
             ticker.start();
             ticker.add(() => {
+                emitter.spawnPos.x = this._weaponContainer.width;
+                emitter.spawnPos.y = 30;
                 emitter.update(ticker.deltaMS * 0.003);
             });
 
             emitter.emit = true;
 
+            console.log(emitter);
             this._rageEmitters.push(emitter);
         }
 

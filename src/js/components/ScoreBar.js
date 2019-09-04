@@ -6,6 +6,7 @@ import TWEEN from "tween.js";
 import i18n from "../settings/i18n";
 import polygonsPath from "../settings/polygonsPath";
 import Resizable from "../engine/Resizable";
+import * as PIXI from "pixi.js";
 
 class ScoreBar extends Resizable {
     constructor() {
@@ -33,8 +34,7 @@ class ScoreBar extends Resizable {
             this._backgroundPolygon.width = w;
             this._moneyText.x = w / 2;
             this._moneyText.y = 100;
-            this._ctaDownload.container.x =
-                w - this._ctaDownload.container.width - 50;
+            this._ctaDownload.container.x = PIXI.utils.isMobile ? w - 350 : 0;
         }
     }
 
@@ -88,7 +88,7 @@ class ScoreBar extends Resizable {
 
         setTimeout(() => {
             this.onResize({ w, h });
-        }, 100);
+        }, 500);
     }
 
     onLandscape() {

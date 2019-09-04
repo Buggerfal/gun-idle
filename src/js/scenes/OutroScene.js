@@ -4,95 +4,112 @@ import appSettings from "../settings/appSettings";
 import ScoreBar from "../components/ScoreBar";
 import Button from "../components/Button";
 import i18n from "../settings/i18n";
+import Resizable from "../engine/Resizable";
 
-class OutroScene {
+class OutroScene extends Resizable {
     constructor() {
+        super();
+
         this._container = null;
         this._substrate = null;
 
         this.init();
     }
 
+    onResize(data) {
+        const { w, h } = data;
+
+        //landscape
+        if (w > h) {
+        }
+
+        //portrait
+        if (h > w) {
+        }
+
+        if (this._substrate) {
+            this._substrate.width = w;
+            this._substrate.height = h;
+            this._rect.x = w / 2 - this._rect.width / 2;
+            this._rect.y = h / 2 - 300;
+        }
+    }
+
     init() {
-        const { width, height } = { ...appSettings.app };
+        const { innerWidth: w, innerHeight: h } = window;
 
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
-        this._substrate = GraphicsHelper.drawGraphics({
-            width,
-            height,
+        this._substrate = GraphicsHelper.createColorContainer({
+            width: w,
+            height: h,
         });
+
         this._substrate.setParent(this._container);
         this._substrate.alpha = 0.5;
 
-        const substrateWidth = 800;
-
         const { substrateOutro, installButton } = appSettings.colors;
 
-        const rect = GraphicsHelper.drawGraphics({
-            x: width / 2 - substrateWidth / 2,
-            y: 300,
-            width: substrateWidth,
-            height: 700,
+        this._rect = GraphicsHelper.createColorContainer({
+            x: w / 2 - 300,
+            y: h / 2 - 300,
+            width: 600,
+            height: 600,
             color: substrateOutro,
-            rounded: 100,
         });
-        rect.setParent(this._container);
+        this._rect.setParent(this._container);
 
-        GraphicsHelper.drawText({
-            x: width / 2,
-            y: 380,
+        const headerText = GraphicsHelper.drawText({
+            x: 300,
+            y: 100,
             text: i18n.outroHeader,
             style: {
                 fill: "white",
-                // fontFamily: "Courier New",
                 fontSize: 70,
                 fontWeight: 900,
             },
-        }).setParent(this._container);
-
-        this._weaponContainer = GraphicsHelper.createContainer({
-            x: width / 2,
-            y: 550,
         });
-        this._weaponContainer.setParent(this._container);
+        headerText.setParent(this._rect);
+
+        this._weaponContainer = GraphicsHelper.createContainer({});
+        this._weaponContainer.setParent(this._rect);
 
         const shotGun = GraphicsHelper.createSpriteFromAtlas({
-            x: 0,
-            y: 0,
+            x: 300,
+            y: 250,
             anchor: 0.5,
             name: `shotgun`,
         });
         shotGun.setParent(this._weaponContainer);
 
         const shotGunRefresh = GraphicsHelper.createSpriteFromAtlas({
-            x: 150,
-            y: 0,
+            x: 450,
+            y: 250,
             anchor: 0.5,
             name: `shotgunRefresh`,
         });
         shotGunRefresh.setParent(this._weaponContainer);
 
         const shotGunSlide = GraphicsHelper.createSpriteFromAtlas({
-            x: -8,
-            y: -32,
+            x: 290,
+            y: 215,
             anchor: 0.5,
             name: `shotgunSlide`,
         });
         shotGunSlide.setParent(this._weaponContainer);
 
-        GraphicsHelper.drawText({
-            x: width / 2,
-            y: 940,
+        const description = GraphicsHelper.drawText({
+            x: 300,
+            y: 530,
             text: i18n.outroDescription,
             style: {
                 fill: "white",
-                // fontFamily: "Courier New",
-                fontSize: 50,
+                fontSize: 45,
                 fontWeight: 900,
             },
-        }).setParent(this._container);
+        });
+        description.setParent(this._rect);
 
         this._ctaDownload = new Button({
             width: 350,
@@ -105,10 +122,8 @@ class OutroScene {
             },
             fontSize: 70,
         });
-        const ctaContainer = this._ctaDownload.container;
-
-        ctaContainer.position.set(width / 2 - 175, 700);
-        ctaContainer.setParent(this._container);
+        this._ctaDownload.container.setParent(this._rect);
+        this._ctaDownload.container.position.set(130, 350);
 
         this.hide();
     }

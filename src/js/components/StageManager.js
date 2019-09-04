@@ -82,16 +82,13 @@ class StageManager extends Resizable {
 
     onResize(data) {
         const { w, h } = data;
-
         const displayedLevel = w > h ? 3 : 4;
 
-        let { innerHeight: currH } = window;
-
-        let stageHeight = currH / displayedLevel;
+        let stageHeight = h / displayedLevel;
 
         this._stages.forEach((stage, index) => {
             const stageNumber = index + 1;
-            const yPosition = currH - stageHeight * stageNumber;
+            const yPosition = h - stageHeight * stageNumber;
 
             stage._mainContainer.width = w;
             stage._mainContainer.height = h / displayedLevel + 10;

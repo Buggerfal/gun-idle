@@ -18,8 +18,9 @@ export default {
         installButton: `0xf902ff`,
         openStageButton: `0x4ccea8`,
         substrateOutro: `0x696969`,
-        stage1: `0x2d1c38`,
-        stage2: `0x26152f`,
+        stage1: `0x050505`,
+        stage2: `0x131313`,
         scoreBar: `0x4c4c4c`,
+        particles: [`0xe23024`, `0xe76d18`, `0xe2aa0c`],
     },
 };
