@@ -27,7 +27,7 @@ class ScoreBar extends Resizable {
         if (this._backgroundPolygon) {
             this._backgroundPolygon.width = w;
             this._moneyText.x = w / 2;
-            this._moneyText.y = 100;
+            this._moneyText.y = 160;
             this._ctaDownload.container.position.set(btnX, 25);
         }
     }

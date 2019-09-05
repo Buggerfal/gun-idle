@@ -8,7 +8,7 @@ export default {
     },
     score: {
         width: 960,
-        height: 200,
+        height: 230,
     },
     weaponPosition: {
         x: 100,

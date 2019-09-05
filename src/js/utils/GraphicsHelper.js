@@ -51,21 +51,21 @@ export default class GraphicsHelper {
         return container;
     }
 
-    static createSpriteFromAtlas(settings = {}) {
-        // const { x = 0, y = 0, alpha = 1, name, anchor } = settings;
-        // const texture = texturesLoader.getByName(name);
-        // const sprite = new PIXI.Sprite(texture);
-        // sprite.x = x;
-        // sprite.y = y;
-        // sprite.alpha = alpha;
-        // if (anchor) {
-        //     sprite.anchor.set(anchor);
-        // }
-        // return sprite;
-    }
+    // static createSpriteFromAtlas(settings = {}) {
+    // const { x = 0, y = 0, alpha = 1, name, anchor } = settings;
+    // const texture = texturesLoader.getByName(name);
+    // const sprite = new PIXI.Sprite(texture);
+    // sprite.x = x;
+    // sprite.y = y;
+    // sprite.alpha = alpha;
+    // if (anchor) {
+    //     sprite.anchor.set(anchor);
+    // }
+    // return sprite;
+    // }
 
     static createSprite(settings) {
-        const { name, x = 0, y = 0, onClick } = settings;
+        const { name, x = 0, y = 0, onClick, alpha = 1 } = settings;
 
         const base64source = IMAGES[name];
         const texture = PIXI.Texture.fromLoader(base64source);
@@ -73,6 +73,7 @@ export default class GraphicsHelper {
 
         sprite.x = x;
         sprite.y = y;
+        sprite.alpha = alpha;
 
         if (onClick) {
             sprite.buttonMode = true;

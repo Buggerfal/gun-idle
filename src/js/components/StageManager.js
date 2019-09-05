@@ -98,7 +98,8 @@ class StageManager extends Resizable {
         if (this._rageModeBackground) {
             this._rageModeBackground.width = w;
             this._rageModeBackground.height = h;
-            this._flameIcon.y = h - 100;
+            this._flameIcon.y = h - 200;
+            this._flameIcon.x = 50;
         }
     }
 
@@ -185,16 +186,15 @@ class StageManager extends Resizable {
         this._flameIcon.alpha = 1;
         new TWEEN.Tween(this._flameIcon.scale)
             .to({ x: [1.1, 1], y: [1.1, 1] }, timeOnAnimation)
-            .onComplete(() => {
-                new TWEEN.Tween(this._flameIcon)
-                    .to({ alpha: 0 }, timeOnAnimation)
-                    .start()
-                    .onComplete(() => {
-                        starter.app.stage.removeChild(this._flameIcon);
-                        SceneManager.showScene("outro");
-                    });
-            })
             .repeat(repeatAnimation)
+            .start();
+
+        new TWEEN.Tween(this._flameIcon)
+            .to({ alpha: 0 }, 5000)
+            .onComplete(() => {
+                starter.app.stage.removeChild(this._flameIcon);
+                SceneManager.showScene("outro");
+            })
             .start();
 
         this._shakeBackground();
