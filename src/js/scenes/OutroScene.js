@@ -76,8 +76,8 @@ class OutroScene extends Resizable {
         this._weaponContainer.setParent(this._rect);
 
         const shotGun = GraphicsHelper.createSprite({
-            x: 350,
-            y: 250,
+            x: 100,
+            y: 170,
             anchor: 0.5,
             name: `shotgun`,
         });
@@ -85,7 +85,7 @@ class OutroScene extends Resizable {
 
         const shotGunRefresh = GraphicsHelper.createSprite({
             x: 450,
-            y: 250,
+            y: 220,
             anchor: 0.5,
             name: `shotgunRefresh`,
         });
@@ -93,7 +93,7 @@ class OutroScene extends Resizable {
 
         const shotGunSlide = GraphicsHelper.createSprite({
             x: 290,
-            y: 215,
+            y: 200,
             anchor: 0.5,
             name: `shotgunSlide`,
         });
