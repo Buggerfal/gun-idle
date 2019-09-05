@@ -8,6 +8,7 @@ import appSettings from "../../settings/appSettings";
 import * as particles from "pixi-particles";
 import particlesSettings from "../../settings/particles";
 import starter from "../../engine/Starter";
+import IMAGES from "@images";
 
 export default class BaseWeapon {
     constructor(config) {
@@ -63,22 +64,24 @@ export default class BaseWeapon {
     }
 
     fireAnimation(positions) {
-        // const { x, y } = positions;
-        // const animatedSprite = new PIXI.AnimatedSprite([
-        //     TexturesLoader.getByName(`fireAnimation_1`),
-        //     TexturesLoader.getByName(`fireAnimation_2`),
-        // ]);
-        // animatedSprite.animationSpeed = 0.7;
-        // animatedSprite.loop = false;
-        // animatedSprite.position.set(
-        //     this._mainSprite.x + x,
-        //     this._mainSprite.y + y
-        // );
-        // animatedSprite.onComplete = () => {
-        //     animatedSprite.destroy();
-        // };
-        // this._weaponContainer.addChild(animatedSprite);
-        // animatedSprite.play();
+        const { x, y } = positions;
+
+        const jjj = PIXI.Texture.fromLoader(IMAGES["fireAnimation_1"]);
+        const kkk = PIXI.Texture.fromLoader(IMAGES["fireAnimation_2"]);
+
+        const animatedSprite = new PIXI.AnimatedSprite([jjj, kkk]);
+
+        animatedSprite.animationSpeed = 0.7;
+        animatedSprite.loop = false;
+        animatedSprite.position.set(
+            this._mainSprite.x + x,
+            this._mainSprite.y + y
+        );
+        animatedSprite.onComplete = () => {
+            animatedSprite.destroy();
+        };
+        this._weaponContainer.addChild(animatedSprite);
+        animatedSprite.play();
     }
 
     get container() {
