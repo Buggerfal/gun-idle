@@ -3,7 +3,7 @@ const header = require("gulp-header");
 const footer = require("gulp-footer");
 const gulpBase64 = require("gulp-to-base64");
 
-const imagesSourceFolder = "./src/assets";
+const imagesSourceFolder = "./src/assets/";
 const imagesDestFolder = "./src/base64";
 const imagesDestFileName = `${imagesDestFolder}/images.js`;
 

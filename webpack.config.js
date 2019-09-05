@@ -60,6 +60,7 @@ module.exports = {
 
     resolve: {
         alias: {
+            "@images": path.resolve(__dirname, "./src/base64/images.js"),
             "@styles": path.resolve(__dirname, "./src/styles/default.sass"),
         },
     },
