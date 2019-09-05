@@ -101,13 +101,11 @@ class IntroScene extends Resizable {
     show() {
         this._container.alpha = 1;
         this._substrate.visible = true;
-        this._substrate.interactive = true;
     }
 
     hide() {
         this._container.alpha = 0;
         this._substrate.visible = false;
-        this._substrate.interactive = false;
     }
 
     destroy() {}

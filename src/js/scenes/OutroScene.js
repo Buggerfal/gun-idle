@@ -19,19 +19,11 @@ class OutroScene extends Resizable {
     onResize(data) {
         const { w, h } = data;
 
-        //landscape
-        if (w > h) {
-        }
-
-        //portrait
-        if (h > w) {
-        }
-
         if (this._substrate) {
             this._substrate.width = w;
             this._substrate.height = h;
             this._rect.x = w / 2 - this._rect.width / 2;
-            this._rect.y = h / 2 - 350;
+            this._rect.y = h / 2 - this._rect.height / 2;
         }
     }
 
@@ -51,11 +43,10 @@ class OutroScene extends Resizable {
 
         const { substrateOutro, installButton } = appSettings.colors;
 
-        this._rect = GraphicsHelper.createColorContainer({
-            x: w / 2 - 350,
-            y: h / 2 - 350,
+        this._rect = GraphicsHelper.createColorContainer2({
             width: 700,
             height: 600,
+            rounded: 100,
             color: substrateOutro,
         });
         this._rect.setParent(this._container);
@@ -124,6 +115,8 @@ class OutroScene extends Resizable {
         });
         this._ctaDownload.container.setParent(this._rect);
         this._ctaDownload.container.position.set(170, 350);
+
+        this.onResize({ w, h });
 
         this.hide();
     }

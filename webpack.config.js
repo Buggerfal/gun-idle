@@ -4,7 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-    mode: "none",
+    // mode: "none",
 
     entry: ["./src/js/index.js", "./src/styles/default.sass"],
 

@@ -17,7 +17,7 @@ class Game {
             SceneManager.registerScene(`intro`, this.introScene);
             SceneManager.registerScene(`outro`, this.outroScene);
 
-            SceneManager.showScene(`intro`);
+            SceneManager.showScene(`outro`);
         });
     }
 }
