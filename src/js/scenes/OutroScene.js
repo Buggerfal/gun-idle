@@ -75,7 +75,7 @@ class OutroScene extends Resizable {
         this._weaponContainer = GraphicsHelper.createContainer({});
         this._weaponContainer.setParent(this._rect);
 
-        const shotGun = GraphicsHelper.createSpriteFromAtlas({
+        const shotGun = GraphicsHelper.createSprite({
             x: 350,
             y: 250,
             anchor: 0.5,
@@ -83,7 +83,7 @@ class OutroScene extends Resizable {
         });
         shotGun.setParent(this._weaponContainer);
 
-        const shotGunRefresh = GraphicsHelper.createSpriteFromAtlas({
+        const shotGunRefresh = GraphicsHelper.createSprite({
             x: 450,
             y: 250,
             anchor: 0.5,
@@ -91,7 +91,7 @@ class OutroScene extends Resizable {
         });
         shotGunRefresh.setParent(this._weaponContainer);
 
-        const shotGunSlide = GraphicsHelper.createSpriteFromAtlas({
+        const shotGunSlide = GraphicsHelper.createSprite({
             x: 290,
             y: 215,
             anchor: 0.5,

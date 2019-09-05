@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
-import texturesLoader from "../engine/TexturesLoader";
+// import texturesLoader from "../engine/TexturesLoader";
+import IMAGES from "@images";
 
 export default class GraphicsHelper {
     static createContainer(settings = {}) {
@@ -51,16 +52,32 @@ export default class GraphicsHelper {
     }
 
     static createSpriteFromAtlas(settings = {}) {
-        const { x = 0, y = 0, alpha = 1, name, anchor } = settings;
-        const texture = texturesLoader.getByName(name);
+        // const { x = 0, y = 0, alpha = 1, name, anchor } = settings;
+        // const texture = texturesLoader.getByName(name);
+        // const sprite = new PIXI.Sprite(texture);
+        // sprite.x = x;
+        // sprite.y = y;
+        // sprite.alpha = alpha;
+        // if (anchor) {
+        //     sprite.anchor.set(anchor);
+        // }
+        // return sprite;
+    }
 
+    static createSprite(settings) {
+        const { name, x = 0, y = 0, onClick } = settings;
+
+        const base64source = IMAGES[name];
+        const texture = PIXI.Texture.fromLoader(base64source);
         const sprite = new PIXI.Sprite(texture);
+
         sprite.x = x;
         sprite.y = y;
-        sprite.alpha = alpha;
 
-        if (anchor) {
-            sprite.anchor.set(anchor);
+        if (onClick) {
+            sprite.buttonMode = true;
+            sprite.interactive = true;
+            sprite.on("pointerdown", onClick);
         }
 
         return sprite;

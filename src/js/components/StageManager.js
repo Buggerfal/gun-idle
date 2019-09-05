@@ -46,9 +46,9 @@ class StageManager extends Resizable {
         });
         this._rageModeBackground.setParent(this._container);
 
-        this._flameIcon = GraphicsHelper.createSpriteFromAtlas({
+        this._flameIcon = GraphicsHelper.createSprite({
             x: 100,
-            y: h - 150,
+            y: -150,
             name: `flameIcon`,
             anchor: 0.5,
             alpha: 0,

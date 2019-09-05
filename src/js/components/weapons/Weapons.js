@@ -2,7 +2,7 @@ import GraphicsHelper from "../../utils/GraphicsHelper";
 import TWEEN from "tween.js";
 import * as PIXI from "pixi.js";
 import Emitter from "component-emitter";
-import TexturesLoader from "../../engine/TexturesLoader";
+// import TexturesLoader from "../../engine/TexturesLoader";
 import Utils from "../../utils/utils";
 import appSettings from "../../settings/appSettings";
 import * as particles from "pixi-particles";
@@ -42,7 +42,7 @@ export default class BaseWeapon {
     shot() {}
 
     sleeveAnimation() {
-        const sleeve = GraphicsHelper.createSpriteFromAtlas({
+        const sleeve = GraphicsHelper.createSprite({
             x: 190,
             y: 160,
             name: `sleeve`,
@@ -63,23 +63,22 @@ export default class BaseWeapon {
     }
 
     fireAnimation(positions) {
-        const { x, y } = positions;
-
-        const animatedSprite = new PIXI.AnimatedSprite([
-            TexturesLoader.getByName(`fireAnimation_1`),
-            TexturesLoader.getByName(`fireAnimation_2`),
-        ]);
-        animatedSprite.animationSpeed = 0.7;
-        animatedSprite.loop = false;
-        animatedSprite.position.set(
-            this._mainSprite.x + x,
-            this._mainSprite.y + y
-        );
-        animatedSprite.onComplete = () => {
-            animatedSprite.destroy();
-        };
-        this._weaponContainer.addChild(animatedSprite);
-        animatedSprite.play();
+        // const { x, y } = positions;
+        // const animatedSprite = new PIXI.AnimatedSprite([
+        //     TexturesLoader.getByName(`fireAnimation_1`),
+        //     TexturesLoader.getByName(`fireAnimation_2`),
+        // ]);
+        // animatedSprite.animationSpeed = 0.7;
+        // animatedSprite.loop = false;
+        // animatedSprite.position.set(
+        //     this._mainSprite.x + x,
+        //     this._mainSprite.y + y
+        // );
+        // animatedSprite.onComplete = () => {
+        //     animatedSprite.destroy();
+        // };
+        // this._weaponContainer.addChild(animatedSprite);
+        // animatedSprite.play();
     }
 
     get container() {
@@ -153,12 +152,12 @@ export class Colt1911 extends BaseWeapon {
         this._weaponContainer.interactive = true;
         this._weaponContainer.setParent(this._container);
 
-        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
+        this._mainSprite = GraphicsHelper.createSprite({
             name: `colt1911`,
         });
         this._mainSprite.setParent(this._weaponContainer);
 
-        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
+        this._slideSprite = GraphicsHelper.createSprite({
             name: `slide1911`,
         });
         this._slideSprite.setParent(this._weaponContainer);
@@ -198,7 +197,7 @@ export class Colt1911 extends BaseWeapon {
     }
 
     _bulletAnimation(coordinates) {
-        const bullet = GraphicsHelper.createSpriteFromAtlas({
+        const bullet = GraphicsHelper.createSprite({
             x: this._weaponContainer.x + this._mainSprite.width,
             y: this._weaponContainer.y,
             name: `bullet`,
@@ -235,19 +234,19 @@ export class AK47 extends BaseWeapon {
         this._weaponContainer.interactive = true;
         this._weaponContainer.setParent(this._container);
 
-        this._mainSprite = GraphicsHelper.createSpriteFromAtlas({
+        this._mainSprite = GraphicsHelper.createSprite({
             name: `ak47`,
         });
         this._mainSprite.setParent(this._weaponContainer);
 
-        this._knife = GraphicsHelper.createSpriteFromAtlas({
+        this._knife = GraphicsHelper.createSprite({
             x: 350,
             y: 80,
             name: `ak47_knife`,
         });
         this._knife.setParent(this._weaponContainer);
 
-        this._slideSprite = GraphicsHelper.createSpriteFromAtlas({
+        this._slideSprite = GraphicsHelper.createSprite({
             x: 75,
             y: 18,
             name: `ak47_slide`,
@@ -300,7 +299,7 @@ export class AK47 extends BaseWeapon {
     }
 
     _bulletAnimation(coordinates) {
-        const bullet = GraphicsHelper.createSpriteFromAtlas({
+        const bullet = GraphicsHelper.createSprite({
             x: this._weaponContainer.x + this._mainSprite.width,
             y: this._weaponContainer.y + 60,
             name: `bullet`,

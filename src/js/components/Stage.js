@@ -148,7 +148,7 @@ class Stage extends Resizable {
         this._lockContainer = GraphicsHelper.createContainer({});
         this._lockContainer.setParent(starter.app.stage);
 
-        this._lock = GraphicsHelper.createSpriteFromAtlas({
+        this._lock = GraphicsHelper.createSprite({
             x: width / 2 - 100,
             name: `lockedIcon`,
         });
@@ -207,7 +207,7 @@ class Stage extends Resizable {
 
         this._openBtnContainer.visible = false;
 
-        this._lockBtnIcon = GraphicsHelper.createSpriteFromAtlas({
+        this._lockBtnIcon = GraphicsHelper.createSprite({
             x: 20,
             y: 10,
             name: `lockedIcon`,

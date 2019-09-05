@@ -25,7 +25,7 @@ class Target {
             y: y + 100,
         });
 
-        this._target = GraphicsHelper.createSpriteFromAtlas({
+        this._target = GraphicsHelper.createSprite({
             name: name,
         });
         this._target.scale.set(this._scale);
@@ -48,7 +48,7 @@ class Target {
             return;
         }
 
-        const hole = GraphicsHelper.createSpriteFromAtlas({
+        const hole = GraphicsHelper.createSprite({
             x,
             y,
             name: `hole`,
@@ -70,7 +70,7 @@ class Target {
         const animationsCompletions = [];
 
         const addAnimation = ({ x, y, name, tweenAnimationSettings }) => {
-            const animation = GraphicsHelper.createSpriteFromAtlas({
+            const animation = GraphicsHelper.createSprite({
                 name,
                 x,
                 y,

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import appSettings from "../settings/appSettings";
-import TexturesLoader from "./TexturesLoader";
+// import TexturesLoader from "./TexturesLoader";
 import TWEEN from "tween.js";
 import Emitter from "component-emitter";
 
@@ -44,7 +44,6 @@ class Starter {
 
         this._init.setInitiated();
         this.resize();
-        return this._init.initPromise.then(() => TexturesLoader.ensureLoaded());
     }
 
     resize() {

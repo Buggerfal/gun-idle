@@ -12,7 +12,7 @@ class Hint {
 
         this._container = GraphicsHelper.createContainer({ x, y });
 
-        this._sprite = GraphicsHelper.createSpriteFromAtlas({
+        this._sprite = GraphicsHelper.createSprite({
             name: `hand`,
         });
         this._sprite.scale.set(1.6);
