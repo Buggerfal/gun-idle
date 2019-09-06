@@ -66,10 +66,10 @@ export default class BaseWeapon {
     fireAnimation(positions) {
         const { x, y } = positions;
 
-        const jjj = PIXI.Texture.fromLoader(IMAGES["fireAnimation_1"]);
-        const kkk = PIXI.Texture.fromLoader(IMAGES["fireAnimation_2"]);
+        const flame1 = PIXI.Texture.fromLoader(IMAGES["fireAnimation_1"]);
+        const flame2 = PIXI.Texture.fromLoader(IMAGES["fireAnimation_2"]);
 
-        const animatedSprite = new PIXI.AnimatedSprite([jjj, kkk]);
+        const animatedSprite = new PIXI.AnimatedSprite([flame1, flame2]);
 
         animatedSprite.animationSpeed = 0.7;
         animatedSprite.loop = false;

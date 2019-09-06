@@ -110,7 +110,7 @@ export default class GraphicsHelper {
         return sprite;
     }
 
-    static drawHoleGraphics(settings) {
+    static drawHoleGraphics(settings = {}) {
         const {
             color = 0x000000,
             x = 0,
@@ -135,11 +135,11 @@ export default class GraphicsHelper {
         graphics.endHole();
         graphics.endFill();
 
-        if (onClick) {
-            graphics.buttonMode = true;
-            graphics.interactive = true;
-            graphics.on("pointerdown", onClick);
-        }
+        // if (onClick) {
+        //     graphics.buttonMode = true;
+        //     graphics.interactive = true;
+        //     graphics.on("pointerdown", onClick);
+        // }
 
         return graphics;
     }

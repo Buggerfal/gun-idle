@@ -111,7 +111,7 @@ class ScoreBar extends Resizable {
     }
 
     hide() {
-        new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 260).start();
+        new TWEEN.Tween(this._container.pivot).to({ y: 300 }, 260).start();
     }
 
     _ctaHandler() {

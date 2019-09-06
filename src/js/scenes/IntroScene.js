@@ -79,7 +79,7 @@ class IntroScene extends Resizable {
         });
 
         this._substrate.setParent(this._container);
-        this._substrate.alpha = 0.3;
+        this._substrate.alpha = 0.4;
 
         this._textHeader_1 = GraphicsHelper.drawText({
             x: w / 2,
