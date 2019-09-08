@@ -1,13 +1,12 @@
 export default {
     app: {
-        width: 1200,
-        height: 1200,
+        width: 960,
+        height: 960,
     },
     stage: {
         height: 200,
     },
     score: {
-        width: 960,
         height: 230,
     },
     weaponPosition: {

@@ -113,7 +113,7 @@ class TargetsManager extends Resizable {
         const yShift = Utils.random(height * 0.2, height * 0.55);
         return {
             x: xShift + x,
-            y: yShift + y,
+            y: yShift + y - 20,
         };
     }
 }

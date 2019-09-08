@@ -75,9 +75,7 @@ class StageManager extends Resizable {
             return stage;
         });
 
-        setTimeout(() => {
-            this.onResize({ w: currW, h: currH });
-        }, 0);
+        this.onResize({ w: currW, h: currH });
     }
 
     onResize(data) {
@@ -175,6 +173,7 @@ class StageManager extends Resizable {
                 starter.app.stage.removeChild(this._rageModeBackground);
                 this._openStages.forEach(stage => {
                     stage.weapon.stopRageModeAnimation();
+                    stage.stopShot();
                 });
             })
             .start();

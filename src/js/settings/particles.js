@@ -9,7 +9,7 @@ export default {
         minimumScaleMultiplier: 0.5,
     },
     speed: {
-        start: 300,
+        start: 400,
         end: 500,
         minimumSpeedMultiplier: 2,
     },
@@ -19,8 +19,8 @@ export default {
     },
     maxSpeed: 3,
     startRotation: {
-        min: -6,
-        max: 6,
+        min: -5,
+        max: 5,
     },
     noRotation: true,
     rotationSpeed: {
@@ -34,7 +34,7 @@ export default {
     blendMode: "normal",
     frequency: 0.1,
     emitterLifetime: -1,
-    maxParticles: 500,
+    maxParticles: 1000,
     pos: {
         x: 0,
         y: 0,

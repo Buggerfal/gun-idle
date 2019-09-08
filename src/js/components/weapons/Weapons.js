@@ -52,7 +52,7 @@ export default class BaseWeapon {
         sleeve.setParent(this._container);
 
         this.rotationTween = new TWEEN.Tween(sleeve)
-            .to({ x: sleeve.x - Utils.random(100, 150), y: [20, 300] }, 180)
+            .to({ x: sleeve.x - Utils.random(100, 150), y: [80, 300] }, 180)
             .onUpdate(k => {
                 sleeve.rotation = -k;
             })
@@ -209,7 +209,7 @@ export class Colt1911 extends BaseWeapon {
         bullet.setParent(this._container);
 
         new TWEEN.Tween(bullet)
-            .to({ x: coordinates.x, y: coordinates.y + 100 }, 60)
+            .to({ x: coordinates.x, y: coordinates.y + 120 }, 60)
             .onComplete(() => {
                 bullet.destroy();
             })

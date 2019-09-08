@@ -41,10 +41,7 @@ class Stage extends Resizable {
 
         let { innerWidth: currW, innerHeight: currH } = window;
 
-        //TODO: create new logic. Resizable
-        setTimeout(() => {
-            this.onResize({ w: currW, h: currH });
-        }, 20);
+        this.onResize({ w: currW, h: currH });
     }
 
     get configuration() {
@@ -54,8 +51,9 @@ class Stage extends Resizable {
     onResize(data) {
         const { w, h } = data;
 
+        const isLandScape = w > h;
         //landscape
-        if (w > h) {
+        if (isLandScape) {
             this._lock.y = 100;
             this._levelInfoText.y = 140;
             this.weapon.container.y = -50;
@@ -64,7 +62,7 @@ class Stage extends Resizable {
         }
 
         //portrait
-        if (h > w) {
+        if (!isLandScape) {
             this._lock.y = 200;
             this._levelInfoText.y = 240;
             this.weapon.container.y = 30;
@@ -74,15 +72,29 @@ class Stage extends Resizable {
 
         if (this._openBtnContainer) {
             this._openBtnContainer.x = w / 2 - 125; //half button width
-            this._openBtnContainer.y = w > h ? 100 : 150;
+            this._openBtnContainer.y = isLandScape ? 100 : 150;
         }
 
         if (this._hint) {
-            this._hint.sprite.x = w > h ? 300 : 150; //half button width
+            this._hint.sprite.x = isLandScape ? 300 : 150; //half button width
             this._hint.sprite.y = 150;
         }
 
         this._unlockContainer.y = this._mainContainer.y;
+
+        if (this.rect) {
+            this._unlockContainer.removeChild(this.rect);
+        }
+
+        this.rect = GraphicsHelper.drawRect({
+            x: this._unlockContainer.x,
+            y: this._unlockContainer.y,
+            width: this._unlockContainer.width,
+            height: this._unlockContainer.height,
+        });
+
+        this.rect.setParent(this._lockContainer);
+
         this._lockContainer.y = this._mainContainer.y;
         this._lock.x = w / 2 - 120;
         this._levelInfoText.x = this._lock.x + this._lock.width + 100;
@@ -245,25 +257,30 @@ class Stage extends Resizable {
         }
     }
 
+    stopShot() {
+        this._ticker.stop();
+        this._ticker.destroy();
+    }
+
     _initAutoPlay() {
         // TODO: move setting to config
         const timeBetweenShoot = 1000;
-        let autoShotsLeft = 5;
+        // let autoShotsLeft = 5;
         let timeToNextShoot = timeBetweenShoot;
 
         this.weapon.on(`shotIsDone`, () => {
-            autoShotsLeft -= 1;
+            // autoShotsLeft -= 1;
             timeToNextShoot = timeBetweenShoot;
         });
 
         this.weapon.once(`shotIsDone`, () => {
             this._ticker = new PIXI.Ticker();
             this._ticker.add(() => {
-                if (autoShotsLeft <= 0) {
-                    this._ticker.stop();
-                    this._ticker.destroy();
-                    return;
-                }
+                // if (autoShotsLeft <= 0) {
+                // this._ticker.stop();
+                // this._ticker.destroy();
+                // return;
+                // }
 
                 const delta = this._ticker.deltaMS;
 
@@ -299,7 +316,7 @@ class Stage extends Resizable {
         const sign = Utils.random(0, 1) === 0 ? -1 : 1;
         const { innerWidth: currW, innerHeight: currH } = window;
 
-        const offset = currW > currH ? 400 : 300;
+        const offset = 100;
 
         const rewardText = GraphicsHelper.drawText({
             text: `${i18n.usdIcon}${value}`,

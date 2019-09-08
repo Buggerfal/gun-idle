@@ -117,8 +117,6 @@ export default class GraphicsHelper {
             y = 0,
             width = 20,
             height = 20,
-            rounded = 0,
-            onClick,
             holeX = 0,
             holeY = 0,
             holeWidth = 0,
@@ -130,16 +128,26 @@ export default class GraphicsHelper {
         graphics.beginFill(color);
         graphics.drawRect(x, y, width, height);
         graphics.beginHole();
-        graphics.drawRect(holeX, holeY, holeWidth, holeHeight, rounded);
-
+        graphics.drawRect(holeX, holeY, holeWidth, holeHeight);
         graphics.endHole();
         graphics.endFill();
 
-        // if (onClick) {
-        //     graphics.buttonMode = true;
-        //     graphics.interactive = true;
-        //     graphics.on("pointerdown", onClick);
-        // }
+        return graphics;
+    }
+
+    static drawRect(settings) {
+        const {
+            x = 0,
+            y = 0,
+            width,
+            height,
+            color = 0x00ff00,
+            alpha = 1,
+        } = settings;
+        const graphics = new PIXI.Graphics();
+
+        graphics.lineStyle(1, color, alpha);
+        graphics.drawRect(x, y, width, height);
 
         return graphics;
     }
@@ -184,20 +192,12 @@ export default class GraphicsHelper {
             height = 20,
             rounded = 0,
             onClick,
-            holeX = 0,
-            holeY = 0,
-            holeWidth = 0,
-            holeHeight = 0,
         } = settings;
 
         const graphics = new PIXI.Graphics();
 
         graphics.beginFill(color);
         graphics.drawRoundedRect(x, y, width, height, rounded); //TODO Nine splice
-        graphics.beginHole();
-        graphics.drawRoundedRect(holeX, holeY, holeWidth, holeHeight, rounded);
-
-        graphics.endHole();
         graphics.endFill();
 
         if (onClick) {

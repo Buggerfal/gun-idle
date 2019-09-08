@@ -17,6 +17,8 @@ class Starter {
         this.size = { ...appSettings.app };
 
         new Emitter(this);
+
+        PIXI.utils.skipHello();
     }
 
     init(container = document.body) {
@@ -44,33 +46,82 @@ class Starter {
 
         this._init.setInitiated();
         this.resize();
+
+        setTimeout(() => {
+            this.resize();
+        }, 0);
     }
 
     resize() {
         const { width, height } = this.size;
         let { innerWidth: currW, innerHeight: currH } = window;
 
-        let newW, newH;
+        let newW,
+            newH,
+            isLandscape = currW > currH;
 
-        if (currH > currW) {
-            //portrait
-            newW = width;
-            newH = newW * (currH / currW);
+        document.body.style.width = currW + "px";
+        document.body.style.height = currH + "px";
+
+        var gw, gh;
+
+        if (isLandscape) {
+            gh = width;
+            gw = Math.floor(gh * (currW / currH));
+
+            if (gw < height) {
+                gw = height;
+                gh = Math.floor(height * (currH / currW));
+            }
         } else {
-            //landscape
-            newH = height;
-            newW = newH * (currW / currH);
+            gh = height;
+            gw = Math.floor(gh * (currW / currH));
+
+            if (gw < width) {
+                gw = width;
+                gh = Math.floor(width * (currH / currW));
+            }
         }
 
-        this.app.view.style.width = newW + `px`;
-        this.app.view.style.height = newH + `px`;
+        this.app.view.style.width = currW + `px`;
+        this.app.view.style.height = currH + `px`;
 
-        this.app.renderer.resize(newW, newH);
+        this.app.renderer.resize(gw, gh);
 
         this.emit(`onResize`, {
-            w: newW,
-            h: newH,
+            w: gw,
+            h: gh,
+            isLandscape,
         });
+        console.log("RESIZE CALL", gw, gh, isLandscape);
+
+        // if (currH > currW) {
+        //     //portrait
+        //     newW = currW;
+        //     newH = newW * (currH / currW);
+        // } else {
+        //     //landscape
+        //     isLandscape = true;
+
+        //     newH = currH;
+        //     newW = newH * (currW / currH);
+
+        //     // this.app.view.scale = currW / currH;
+        //     // this.app.stage.scale.x = newW / width;
+        //     // this.app.stage.scale.y = newH / height;
+        // }
+
+        // this.app.view.style.width = newW + `px`;
+        // this.app.view.style.height = newH + `px`;
+
+        // this.app.renderer.resize(newW, newH);
+
+        // this.emit(`onResize`, {
+        //     w: newW,
+        //     h: newH,
+        //     isLandscape,
+        // });
+        // console.log("RESIZE CALL", newW, newH, isLandscape);
     }
 
     get initiated() {

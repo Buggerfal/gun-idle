@@ -6,5 +6,5 @@ export default {
     usdIcon: `$`,
     level: `level`,
     introScene_1: `TAP TO`,
-    introScene_2: `PLAY`,
+    introScene_2: `PLAY!`,
 };

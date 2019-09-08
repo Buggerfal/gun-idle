@@ -4,9 +4,7 @@ import appSettings from "../settings/appSettings";
 import Button from "./Button";
 import TWEEN from "tween.js";
 import i18n from "../settings/i18n";
-import polygonsPath from "../settings/polygonsPath";
 import Resizable from "../engine/Resizable";
-import * as PIXI from "pixi.js";
 
 class ScoreBar extends Resizable {
     constructor() {
@@ -22,19 +20,18 @@ class ScoreBar extends Resizable {
     onResize(data) {
         const { w, h } = data;
         const isLandscape = w > h;
-        const btnX = isLandscape ? w - 350 : w - 310;
+        const btnX = isLandscape ? w - 325 : w - 310;
 
-        if (this._backgroundPolygon) {
-            this._backgroundPolygon.width = w;
+        if (this._moneyText) {
+            this._bgTopBar.width = w;
             this._moneyText.x = w / 2;
-            this._moneyText.y = 160;
-            this._ctaDownload.container.position.set(btnX, 25);
+            this._moneyText.y = 70;
+            this._ctaDownload.container.position.set(btnX, 15);
         }
     }
 
     init() {
         const { width, height } = this._config;
-        const { scoreBar } = appSettings.colors;
 
         const { innerWidth: w, innerHeight: h } = window;
         const scoreHeight = appSettings.score.height;
@@ -42,12 +39,10 @@ class ScoreBar extends Resizable {
         this._container = GraphicsHelper.createContainer({});
         this._container.setParent(starter.app.stage);
 
-        this._backgroundPolygon = GraphicsHelper.drawPolygon({
-            path: polygonsPath,
-            color: scoreBar,
+        this._bgTopBar = GraphicsHelper.createSprite({
+            name: `TopBar`,
         });
-
-        this._container.addChild(this._backgroundPolygon);
+        this._bgTopBar.setParent(this._container);
 
         this._moneyText = GraphicsHelper.drawText({
             x: width / 2,
@@ -62,6 +57,8 @@ class ScoreBar extends Resizable {
 
         const { installButton } = appSettings.colors;
 
+        const btnX = w > h ? w - 300 : w - 310;
+
         this._ctaDownload = new Button({
             width: 300,
             height: 100,
@@ -73,24 +70,15 @@ class ScoreBar extends Resizable {
             },
             fontSize: 70,
         });
-        this._ctaDownload.container.position.set(w - 290, 50);
         this._ctaDownload.container.setParent(this._container);
 
         new TWEEN.Tween(this._container.pivot).to({ y: 250 }, 0).start();
 
         this._container.visible = false;
 
-        setTimeout(() => {
-            this.onResize({ w, h: scoreHeight });
-        }, 100);
-    }
-
-    onLandscape() {
-        console.log("LANDSCAPE");
-    }
-
-    onPortrait() {
-        console.log("PORTRAIT");
+        //setTimeout(() => {
+        this.onResize({ w, h: scoreHeight });
+        // }, 100);
     }
 
     update(val = 0) {
